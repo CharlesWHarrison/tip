@@ -39,6 +39,7 @@ get_cpt_neighbors <- function(.distance_matrix){
 #' @param  .prior_estimates_for_likelihood A list of hyperparameters that are computed using
 #' the data and are used in the likelihood function.
 #' @param .likelihood_model The name of the likelihood model being used. Example: "NIW".
+#' @importFrom stats cov rpois
 log_likelihood_fn <- function(.cluster_vector, .i, .prior_estimates_for_likelihood, .likelihood_model){
   if(toupper(.likelihood_model) == "NONE"){
     return(0)
@@ -186,13 +187,12 @@ get_candidates <- function(.i, .similarity_matrix, .num_candidates){
 #' @param .burn The number of burn-in iterations in the Gibbs sampler.
 #' @param .samples The number of sampling iterations in the Gibbs sampler.
 #' @param .similarity_matrix An n x x marix of simlarity values.
-#' @param .init_num_neighbors A vector of integers corresponding to the estimate of the number of \
-#'  number of subjects that are similar to the (i)th subject.
-#'  @param .likelihood_model The name of the likelihood model used to compute the posterior probabilities.
-#'  @param .subject_names An optional vector of names for the individual subjects.
-#'  @param .num_cores The number of cores to use.
-#'  @param .tolerance A parameter used to ensure matrices are invertible. A small number is iteratively \
-#'  added to a matrix diagonal (if necessary) until the matrix is invertible.
+#' @param .init_num_neighbors A vector of integers corresponding to the estimate of the number of subjects that are similar to the (i)th subject.
+#' @param .likelihood_model The name of the likelihood model used to compute the posterior probabilities.
+#' @param .subject_names An optional vector of names for the individual subjects.
+#' @param .num_cores The number of cores to use.
+#' @param .tolerance A parameter used to ensure matrices are invertible. A small number is iteratively added to a matrix diagonal (if necessary) until the matrix is invertible.
+#' @importFrom utils setTxtProgressBar txtProgressBar
 #' @export
 tip <- function(.data,
                 .burn,
