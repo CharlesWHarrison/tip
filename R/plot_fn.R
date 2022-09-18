@@ -1,10 +1,11 @@
 # --- Functions used to generate useful plots for Bayesian clustering ---
-library(ggplot2)
-library(igraph)
-library(network)
-library(GGally)
-library(network)
+# library(ggplot2)
+# library(igraph)
+# library(network)
+# library(GGally)
+# library(network)
 
+#' @export
 ggplot_line_point <- function(.x, .y, .ylab, .xlab){
   # --- A function to plot a line and the corresponding points ---
   plot_df <- data.frame(x = .x, y = .y)
@@ -13,6 +14,7 @@ ggplot_line_point <- function(.x, .y, .ylab, .xlab){
   return(p)
 }
 
+#' @export
 ggplot_number_of_clusters_hist <- function(.posterior_number_of_clusters){
   # --- A function to construct the posterior distribution of the number of clusters ---
   .df_tip <- data.frame(num_clusters = .posterior_number_of_clusters)
@@ -25,9 +27,10 @@ ggplot_number_of_clusters_hist <- function(.posterior_number_of_clusters){
   return(plot)
 }
 
+#' @export
 ggplot_number_of_clusters_trace <- function(.posterior_number_of_clusters){
   # --- A function to construct the posterior distribution of the number of clusters ---
-  .df_tip <- data.frame(iteration = 1:length(.posterior_number_of_clusters), 
+  .df_tip <- data.frame(iteration = 1:length(.posterior_number_of_clusters),
                         num_clusters = .posterior_number_of_clusters)
   library(ggplot2)
   plot <- ggplot(data = .df_tip, aes(y = num_clusters, x = iteration)) + geom_line()
@@ -36,34 +39,35 @@ ggplot_number_of_clusters_trace <- function(.posterior_number_of_clusters){
   return(plot)
 }
 
+#' @export
 ggnet2_network_plot <- function(.matrix_graph, .subject_names = NA, .subject_class_names = NA,
                              .class_colors, .class_shapes, .random_seed = 007, .node_size = 6,
                              .add_node_labels = TRUE){
-  # --- A function to construct a network plot --- 
-  
+  # --- A function to construct a network plot ---
+
   # Construct the network object
-  .network_temp <- network::network(x = .matrix_graph, 
-                                    directed = FALSE, 
+  .network_temp <- network::network(x = .matrix_graph,
+                                    directed = FALSE,
                                     ignore.eval = FALSE,
                                     names.eval = "weights")
-  
+
   # Add labels to the graph nodes (i.e., the subjects)
   if(length(.subject_names) != dim(.matrix_graph)[1]){
     network.vertex.names(.network_temp) <- paste("Subject", 1:dim(.matrix_graph)[1], sep = "")
   }else{
     # network.vertex.names(.network_temp) <- .subject_names
   }
-  
+
   if(length(.subject_class_names) == dim(.matrix_graph)[1]){
     .network_temp %v% "Category" <- as.character(.subject_class_names)
-    
+
     # Set a random seed so that the graph node (subject) layouts are reproducible
     set.seed(.random_seed)
-    
-    ggnet2(.network_temp, 
-           shape = "Category", 
+
+    ggnet2(.network_temp,
+           shape = "Category",
            shape.palette = .class_shapes,
-           color = "Category", 
+           color = "Category",
            color.palette = .class_colors,
            label = .add_node_labels,
            node.size = .node_size)
