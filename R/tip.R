@@ -1,9 +1,13 @@
 # An R implementation of Bayesian clustering with the Table Invitation Prior (TIP)
 
+# Global variables
+globalVariables(c("%dopar%"))
+
 # Read in some utility and plotting functions
 # source("util.R")
 
 #' @export
+#' @param .distance_matrix A symmetric n x n matrix of distances
 get_cpt_neighbors <- function(.distance_matrix){
   # --- A function used to obtain the nearest
   # neighbors for each subjects based on their
@@ -26,6 +30,8 @@ get_cpt_neighbors <- function(.distance_matrix){
   # get_cpt_neighbors(.distance_matrix = matrix(abs(rnorm(100)),nrow=10,ncol=10))
 }
 
+#' @param .log_likelihood_name The name of the likelihood model such NIW or MNIW
+#' @param .tolerance The amount added to each diagonal element in a matrix to make it invertible.
 set_log_likelihood_function <- function(.log_likelihood_name, .tolerance){
   # --- A function that sets the likelihood function based
   # on the <.log_likelihood_name> input given by the analyst ---
@@ -161,11 +167,11 @@ prob_tip_i <- function(.i, .similarity_matrix, .previous_posterior_assignments, 
   return(.prob_k_vector)
 }
 
-get_candidates <- function(.i, .similarity, .num_candidates){
+get_candidates <- function(.i, .similarity_matrix, .num_candidates){
   # --- A function to return the <num_candidates> indices corresponding to
   # the subjects that are most similar to subject .i ---
   # Note: start at 2 since 1 is always the candidate itself
-  return(order(.similarity[.i,], decreasing = TRUE)[2:(.num_candidates + 1)])
+  return(order(.similarity_matrix[.i,], decreasing = TRUE)[2:(.num_candidates + 1)])
 }
 
 tip <- function(.burn,
@@ -250,7 +256,7 @@ tip <- function(.burn,
 
     # Find the <p*.n> most similar neighbors to the random candidate
     .candidate_indices <- get_candidates(.i = .rand_init_candidate,
-                                         .similarity = .similarity_matrix,
+                                         .similarity_matrix = .similarity_matrix,
                                          .num_candidates = rpois(n = 1, lambda = .num_candidates))
 
     # The random candidate and its <p*.n> most similar subjects sit at the new table
@@ -313,7 +319,7 @@ tip <- function(.burn,
       for(.i in 1:.n){
         # Compute the log-prior for subject i for each cluster in the modified cluster vector
         .posterior_vector_i <- log(prob_tip_i(.i = .i,
-                                              .similarity = .similarity_matrix,
+                                              .similarity_matrix = .similarity_matrix,
                                               .num_clusters = .num_clusters,
                                               .previous_posterior_assignments = .temp_cluster) + 1e-100)
 
