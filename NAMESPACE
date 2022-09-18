@@ -1,1 +1,6 @@
 exportPattern("^[[:alpha:]]+")
+import("ggplot2")
+import("GGally")
+import("network")
+importFrom("stats", "cov", "rpois")
+importFrom("utils", "setTxtProgressBar", "txtProgressBar")
