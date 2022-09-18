@@ -5,6 +5,9 @@
 # library(GGally)
 # library(network)
 
+requireNamespace(ggplot2)
+requireNamespace(GGally)
+
 #' @export
 ggplot_line_point <- function(.x, .y, .ylab, .xlab){
   # --- A function to plot a line and the corresponding points ---
