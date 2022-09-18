@@ -1,7 +1,7 @@
 # An R implementation of Bayesian clustering with the Table Invitation Prior (TIP)
 
 # Read in some utility and plotting functions
-source("util.R")
+# source("util.R")
 
 #' @export
 get_cpt_neighbors <- function(.distance_matrix){
