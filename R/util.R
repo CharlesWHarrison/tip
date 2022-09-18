@@ -1,5 +1,3 @@
-globalVariables(c("..count.."))
-
 #' @title Automatic matrix inversion
 #' @param .matrix The matrix that may or may not be invertible.
 #' @param .tolerance If necessary, a small value that is ITERATIVELY added to
@@ -144,6 +142,7 @@ partition_undirected_graph <-function(.graph_matrix, .num_components, .step_size
 #' @description A function to "recode" a vector. For example, 2, 3, 5, 6, 10, 2, 2, 2, 5 needs
 #' to be recoded to 1, 2, 3, 4, 5, 1, 1, 1, 3. This function is used to ensure that the posterior
 #' cluster assignments start at 1 (otherwise an error occurs).
+#' @param .posterior_assignments A vector of posterior cluster assignments (i.e. they are integers)
 recode <- function(.posterior_assignments){
   # --- A function to recode the current cluster assignments so that each
   # cluster assignment is in the set {1, 2, 3, ..., K} and there are no gaps.
@@ -166,6 +165,7 @@ recode <- function(.posterior_assignments){
 #' @title Compute a Proximity Matrix
 #' @description A function to convert a vector of posterior cluster assignments into
 #' an n x n matrix B where Bij = 1 if vector[i] == vector[j] and 0 otherwise.
+#' @param .assignments A vector of posterior cluster assignments (i.e. they are integers)
 get_proximity_matrix <- function(.assignments){
   # --- A function to construct a proximity matrix based on
   # a vector of .assignments ---
