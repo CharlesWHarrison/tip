@@ -5,10 +5,17 @@
 # library(GGally)
 # library(network)
 
-#' @export
+#' @title Plot connected points using ggplot2.
+#' @description A function to that produces a ggplot2 plot of .y versus .x
+#' where points are added via geom_point() and the points are connected via geom_line().
+#' @param .x The variable on the horizontal axis.
+#' @param .y The variable on the vertical axis.
+#' @param .ylab The label on the vertical axis.
+#' @param .xlab The label on the horizontal axis.
 #' @importFrom ggplot2 ggplot aes geom_line geom_point xlab ylab
 #' @importFrom rlang .data
-ggplot_line_point <- function(.x, .y, .ylab, .xlab){
+#' @export
+ggplot_line_point <- function(.x, .y, .xlab = "", .ylab = ""){
   # --- A function to plot a line and the corresponding points ---
   plot_df <- data.frame(x = .x, y = .y)
   p <- ggplot(data = plot_df, aes(x = .data$x, y = .data$y)) + geom_line()
@@ -16,9 +23,15 @@ ggplot_line_point <- function(.x, .y, .ylab, .xlab){
   return(p)
 }
 
-#' @export
+#' @title Plot the posterior distribution of the number of clusters.
+#' @description A function that produces a ggplot bar chart (i.e. geom_bar) that corresponds
+#' to the posterior number of clusters. The vertical axis is normalized so that it displays
+#' the posterior probability.
+#' @param .posterior_number_of_clusters A vector of the number of clusters after posterior sampling
+#' for each iteration in the Gibbs sampler.
 #' @importFrom ggplot2 ggplot aes geom_bar ..count.. xlab ylab scale_x_continuous
 #' @importFrom rlang .data
+#' @export
 ggplot_number_of_clusters_hist <- function(.posterior_number_of_clusters){
   # --- A function to construct the posterior distribution of the number of clusters ---
   .df_tip <- data.frame(num_clusters = .posterior_number_of_clusters)
@@ -30,9 +43,14 @@ ggplot_number_of_clusters_hist <- function(.posterior_number_of_clusters){
   return(plot)
 }
 
-#' @export
+#' @title Plot the trace plot of the posterior number of clusters.
+#' @description A function that produces a ggplot2 trace plot (i.e. geom_line)
+#' with respect to the posterior number of clusters.
+#' @param .posterior_number_of_clusters A vector of the number of clusters after posterior sampling
+#' for each iteration in the Gibbs sampler.
 #' @importFrom ggplot2 ggplot aes geom_line xlab ylab
 #' @importFrom rlang .data
+#' @export
 ggplot_number_of_clusters_trace <- function(.posterior_number_of_clusters){
   # --- A function to construct the posterior distribution of the number of clusters ---
   .df_tip <- data.frame(iteration = 1:length(.posterior_number_of_clusters),
@@ -43,10 +61,24 @@ ggplot_number_of_clusters_trace <- function(.posterior_number_of_clusters){
   return(plot)
 }
 
-#' @export
+#' @title Visualize the posterior similarity matrix (i.e. posterior probability matrix)
+#' @description A function that produces a ggnet2 network plot to visualize the posterior similarity matrix (i.e. the matrix of posterior probabilities).
+#' @param .matrix_graph A matrix M where each element Mij corresponds to the posterior
+#' probability that subjects i and j are in the same cluster.
+#' @param .subject_names An optional vector of subject names that will appear in the graph plot.
+#' @param .subject_class_names An optional vector of class names that will influence each vertex's color and shape.
+#' @param .class_colors An optional named vector of colors. The vector names are required to be
+#' the unique .subject_class_names whereas the vector values are required to be the colors.
+#' @param .class_shapes An optional named vector of shapes. The vector names are required to be
+#' the unique .subject_class_names whereas the vector values areq required to be integers
+#' (i.e. pch values like 15, 16, 17, and so on).
+#' @param .random_seed The plot uses the random layout, so set a seed for reproducibility.
+#' @param .node_size The size of each node (i.e. vertex) in the graph plot.
+#' @param .add_node_labels TRUE or FALSE. Should individual node labels be added to each node (i.e. vertex) in the graph plot?
 #' @import GGally
 #' @import network
-ggnet2_network_plot <- function(.matrix_graph, .subject_names = NA, .subject_class_names = NA,
+#' @export
+ggnet2_network_plot <- function(.matrix_graph, .subject_names = vector(), .subject_class_names = NA,
                              .class_colors, .class_shapes, .random_seed = 007, .node_size = 6,
                              .add_node_labels = TRUE){
   # --- A function to construct a network plot ---
