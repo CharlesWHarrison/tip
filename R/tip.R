@@ -6,6 +6,7 @@ globalVariables(c("%dopar%"))
 # Read in some utility and plotting functions
 # source("util.R")
 
+#' @title Estimate The Number of Similar Subjects
 #' @description Estimate the number of similar subjects \
 #' using univariate multiple change point detection (i.e. binary segmentation).
 #' @param .distance_matrix A symmetric n x n matrix of distances
@@ -32,9 +33,12 @@ get_cpt_neighbors <- function(.distance_matrix){
   # get_cpt_neighbors(.distance_matrix = matrix(abs(rnorm(100)),nrow=10,ncol=10))
 }
 
-#' @param .log_likelihood_name The name of the likelihood model such NIW or MNIW
-#' @param .tolerance The amount added to each diagonal element in a matrix to make it invertible.
-
+#' @title Likelihood Models
+#' @param .cluster_vector A vector of cluster assignments after the invitation step.
+#' @param .i The subject index that the likelihood is computed for.
+#' @param  .prior_estimates_for_likelihood A list of hyperparameters that are computed using
+#' the data and are used in the likelihood function.
+#' @param .likelihood_model The name of the likelihood model being used. Example: "NIW".
 log_likelihood_fn <- function(.cluster_vector, .i, .prior_estimates_for_likelihood, .likelihood_model){
   if(toupper(.likelihood_model) == "NONE"){
     return(0)
@@ -142,9 +146,13 @@ log_likelihood_fn <- function(.cluster_vector, .i, .prior_estimates_for_likeliho
     }
 }
 
-
-#' @export
-prob_tip_i <- function(.i, .similarity_matrix, .previous_posterior_assignments, .num_clusters){
+#' @title Table Invitation Prior Probability
+#' @description Compute the prior probability that a subject belongs to a cluster.
+#' @param .i The subject index (i.e. row index in a matrix for vector-variate data).
+#' @param .similarity_matrix The matrix of similarity values.
+#' @param .current_assignments The posterior assignments after the invitation step.
+#' @param .num_clusters The number of clusters after the invitation step.
+prob_tip_i <- function(.i, .similarity_matrix, .current_assignments, .num_clusters){
   # --- A function to compute the conditional posterior probability of a
   # subject joining a cluster (table) ---
 
@@ -153,13 +161,18 @@ prob_tip_i <- function(.i, .similarity_matrix, .previous_posterior_assignments, 
 
   # Compute sum lambda(i,j) for j s.t. cluster[j] == k
   for(.k in 1:.num_clusters){
-    .prob_k_vector[.k] <- sum(.similarity_matrix[.i, which(.previous_posterior_assignments == .k)])
+    .prob_k_vector[.k] <- sum(.similarity_matrix[.i, which(.current_assignments == .k)])
   }
 
   # Return the vector of probabilities
   return(.prob_k_vector)
 }
 
+#' @title Compute the Set of Similar Subjects
+#' @description Find the <.num_candidates> subjects that are most similar to subject .i.
+#' @param .i The subject index (i.e. row index in a matrix for vector-variate data).
+#' @param .similarity_matrix The matrix of similarity values.
+#' @param .num_candidates The number of similar subjects extracted.
 get_candidates <- function(.i, .similarity_matrix, .num_candidates){
   # --- A function to return the <num_candidates> indices corresponding to
   # the subjects that are most similar to subject .i ---
@@ -167,8 +180,22 @@ get_candidates <- function(.i, .similarity_matrix, .num_candidates){
   return(order(.similarity_matrix[.i,], decreasing = TRUE)[2:(.num_candidates + 1)])
 }
 
-tip <- function(.burn,
-                .data,
+#' @title Bayesian Clustering with the Table Invitation Prior
+#' @description Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihood functions.
+#' @param .data A list of vectors, matrices, or tensors that the analyst wishes to cluster.
+#' @param .burn The number of burn-in iterations in the Gibbs sampler.
+#' @param .samples The number of sampling iterations in the Gibbs sampler.
+#' @param .similarity_matrix An n x x marix of simlarity values.
+#' @param .init_num_neighbors A vector of integers corresponding to the estimate of the number of \
+#'  number of subjects that are similar to the (i)th subject.
+#'  @param .likelihood_model The name of the likelihood model used to compute the posterior probabilities.
+#'  @param .subject_names An optional vector of names for the individual subjects.
+#'  @param .num_cores The number of cores to use.
+#'  @param .tolerance A parameter used to ensure matrices are invertible. A small number is iteratively \
+#'  added to a matrix diagonal (if necessary) until the matrix is invertible.
+#' @export
+tip <- function(.data,
+                .burn,
                 .samples,
                 .similarity_matrix,
                 .init_num_neighbors,
@@ -282,7 +309,7 @@ tip <- function(.burn,
         .posterior_vector_i <- log(prob_tip_i(.i = .i,
                                               .similarity_matrix = .similarity_matrix,
                                               .num_clusters = .num_clusters,
-                                              .previous_posterior_assignments = .temp_cluster) + 1e-100)
+                                              .current_assignments = .temp_cluster) + 1e-100)
 
         # Add the log-likelihood for subject i to the log prior
         .posterior_vector_i = .posterior_vector_i + log_likelihood_fn(.cluster_vector = .temp_cluster,
@@ -310,7 +337,7 @@ tip <- function(.burn,
         .posterior_vector_i <- log(prob_tip_i(.i = .i,
                                               .similarity_matrix = .similarity_matrix,
                                               .num_clusters = .num_clusters,
-                                              .previous_posterior_assignments = .temp_cluster) + 1e-100)
+                                              .current_assignments = .temp_cluster) + 1e-100)
 
         # Add the log-likelihood for subject i to the log prior
         .posterior_vector_i = .posterior_vector_i + log_likelihood_fn(.cluster_vector = .temp_cluster,
