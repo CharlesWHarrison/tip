@@ -6,6 +6,9 @@
 \usage{
 get_proximity_matrix(.assignments)
 }
+\arguments{
+\item{.assignments}{A vector of posterior cluster assignments (i.e. they are integers)}
+}
 \description{
 A function to convert a vector of posterior cluster assignments into
 an n x n matrix B where Bij = 1 if vector[i] == vector[j] and 0 otherwise.
