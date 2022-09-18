@@ -19,6 +19,7 @@ make_invertible <- function(.matrix, .tolerance = 0.01){
   #                 .tolerance = 0.01)
 }
 
+#' @export
 partition_undirected_graph <-function(.graph_matrix, .num_components, .step_size){
 
   # --- A function to partition an undirected graph_matrix (i.e. an n x n symmetric matrix) into
