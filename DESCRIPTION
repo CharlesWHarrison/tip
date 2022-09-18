@@ -6,7 +6,7 @@ Author: Charles W. Harrison
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+License: MIT
 Encoding: UTF-8
 LazyData: true
 Imports: igraph, ggplot2, network, GGally, LaplacesDemon, changepoint, parallel, doParallel, foreach
