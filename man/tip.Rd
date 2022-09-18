@@ -25,13 +25,15 @@ tip(
 
 \item{.similarity_matrix}{An n x x marix of simlarity values.}
 
-\item{.init_num_neighbors}{A vector of integers corresponding to the estimate of the number of \
-number of subjects that are similar to the (i)th subject.
-@param .likelihood_model The name of the likelihood model used to compute the posterior probabilities.
-@param .subject_names An optional vector of names for the individual subjects.
-@param .num_cores The number of cores to use.
-@param .tolerance A parameter used to ensure matrices are invertible. A small number is iteratively \
-added to a matrix diagonal (if necessary) until the matrix is invertible.}
+\item{.init_num_neighbors}{A vector of integers corresponding to the estimate of the number of subjects that are similar to the (i)th subject.}
+
+\item{.likelihood_model}{The name of the likelihood model used to compute the posterior probabilities.}
+
+\item{.subject_names}{An optional vector of names for the individual subjects.}
+
+\item{.num_cores}{The number of cores to use.}
+
+\item{.tolerance}{A parameter used to ensure matrices are invertible. A small number is iteratively added to a matrix diagonal (if necessary) until the matrix is invertible.}
 }
 \description{
 Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihood functions.
