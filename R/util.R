@@ -1,3 +1,5 @@
+globalVariables(c("..count.."))
+
 make_invertible <- function(.matrix, .tolerance = 0.01){
   # --- A function used to make a matrix invertible by
   # adding a small number to the matrix's diagonal.
@@ -59,7 +61,10 @@ partition_undirected_graph <-function(.graph_matrix, .num_components, .step_size
     # and the number of desired components is also <n>
     if(length(unique(.graph_component_members)) == dim(.graph_matrix)[1] & .num_components == dim(.graph_matrix)[1]){
       .graph_matrix_temp <- ifelse(.graph_matrix >= .cutoff, .graph_matrix, 0)
-      .net <- graph.adjacency(.graph_matrix_temp, mode = 'undirected', weighted = TRUE, diag = FALSE)
+      .net <- igraph::graph.adjacency(.graph_matrix_temp,
+                                      mode = 'undirected',
+                                      weighted = TRUE,
+                                      diag = FALSE)
       .graph_component_members <- igraph::components(.net)$membership
       return(list(graph_component_members = .graph_component_members, .cutoff = .cutoff, partitioned_graph_matrix = .graph_matrix_temp))
     }
