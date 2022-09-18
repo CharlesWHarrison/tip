@@ -32,123 +32,114 @@ get_cpt_neighbors <- function(.distance_matrix){
 
 #' @param .log_likelihood_name The name of the likelihood model such NIW or MNIW
 #' @param .tolerance The amount added to each diagonal element in a matrix to make it invertible.
-set_log_likelihood_function <- function(.log_likelihood_name, .tolerance){
-  # --- A function that sets the likelihood function based
-  # on the <.log_likelihood_name> input given by the analyst ---
 
-  # If the user specifies "NIW", then the likelihood model is "Normal-Inverse-Wishart"
-  if(toupper(.log_likelihood_name) == "NIW"){
+log_likelihood_fn <- function(.cluster_vector, .i, .prior_estimates_for_likelihood, .likelihood_model){
+  if(toupper(.likelihood_model) == "NONE"){
+    return(0)
+  }else if(toupper(.likelihood_model == "NIW")){
+    # Extract the prior parameters
+    .data <- data.matrix(.prior_estimates_for_likelihood$.data)
+    .lambda_0 <- as.numeric(.prior_estimates_for_likelihood$.lambda_0)
+    .nu_0 <- as.numeric(.prior_estimates_for_likelihood$.nu_0)
+    .mu_0 <- as.numeric(.prior_estimates_for_likelihood$.mu_0)
+    .Psi_0 <- data.matrix(.prior_estimates_for_likelihood$.Psi_0)
 
-    log_likelihood_fn <- function(.cluster_vector, .i, .prior_estimates_for_likelihood){
-      # Extract the prior parameters
-      .data <- data.matrix(.prior_estimates_for_likelihood$.data)
-      .lambda_0 <- as.numeric(.prior_estimates_for_likelihood$.lambda_0)
-      .nu_0 <- as.numeric(.prior_estimates_for_likelihood$.nu_0)
-      .mu_0 <- as.numeric(.prior_estimates_for_likelihood$.mu_0)
-      .Psi_0 <- data.matrix(.prior_estimates_for_likelihood$.Psi_0)
+    # number of variables for each subject
+    .num_variables <- dim(.data)[2]
 
-      # number of variables for each subject
-      .num_variables <- dim(.data)[2]
+    # .n = number of subjects = sample size = number of rows in the dataset
+    .n <- dim(.data)[1]
 
-      # .n = number of subjects = sample size = number of rows in the dataset
-      .n <- dim(.data)[1]
+    # Extract the vector under consideration
+    .yi <- .data[.i,]
 
-      # Extract the vector under consideration
-      .yi <- .data[.i,]
+    # Save the log-likelihood for each cluster
+    .log_likelihood_vector <- vector()
 
-      # Save the log-likelihood for each cluster
-      .log_likelihood_vector <- vector()
-
-      # Compute the number of clusters K
-      if(length(.cluster_vector) == 0){
-        return(0)
-      }else{
-        max_K <- max(.cluster_vector)
-      }
-
-      for(k in 1:max_K){
-        # Find the subjects in the same cluster as subject .i (i.e. yi)
-        .cluster_indices <- which(.cluster_vector == k)
-
-        # Joint Prior: (mu, Sigma) ~ NIW(.mu_0, .lambda_0, .Psi_0, .nu_0)
-        # Sampling Density: y_i|mu,Sigma ~ Np(mu,Sigma)
-        # Joint Posterior: NIW(.mu_n, .lambda_n, Psi_n, .nu_n)
-
-        # If the number of subjects in the same cluster as yi (including yi) is >= 3
-        if(length(.cluster_indices) >= 3){
-          .cluster_indices <- .cluster_indices[which(.cluster_indices != .i)]
-        }else{
-          # If the number of subjects in the same cluster as yi (including yi) is in {0,1,2},
-          # then just set the cluster indices to 1, 2, ... .i - 1, .i + 1, .i + 2, ... , .n
-          # since we need to have at least 2 subjects in each cluster (excluding yi) in order to
-          # compute a log-likelihood
-          .cluster_indices <- 1:.n
-          .cluster_indices <- .cluster_indices[which(.cluster_indices != .i)]
-        }
-
-        # Isolate the subjects in the cluster
-        .cluster_data <- .data[.cluster_indices,]
-
-        # Compute the cluster size
-        .n_k <- dim(.cluster_data)[1]
-
-        # .ybar = column means where .ybar in R^p
-        .ybar <- colMeans(.cluster_data)
-
-        # .mu_n = (.lambda_0*.mu_0 + .n_k*.ybar)/(.lambda_0 + .n_k) where .mu_n in R^p
-        .mu_n <- (.lambda_0*.mu_0 + .n_k*.ybar)/(.lambda_0 + .n_k)
-
-        # .lambda_n = .lambda_0 + .n_k where .lambda_n in R^+
-        .lambda_n = .lambda_0 + .n_k
-
-        # .nu_n = .nu_0 + .n_k where .nu_n > p + 1
-        .nu_n = .nu_0 + .n_k
-
-        # .Psi_0 in R^{p x p} is the INVERSE scale matrix and is positive definite
-        # Psi_n = .Psi_0 + S + (.lambda_0*.n_k)/(.lambda_0 + .n_k)(.ybar - .mu_0)(.ybar-.mu_0)^T
-        # where S = sum_{i=1}^.n_k (y_i - .ybar)(y_i - .ybar)^T = Sigma*(.n_k-1) = cov(Y)*(.n_k-1), so we have
-        # Psi_n = .Psi_0 + cov(.data)*(.n_k-1) + (.lambda_0*.n_k)/(.lambda_0 + .n_k)(.ybar - .mu_0)(.ybar-.mu_0)^T
-        Psi_n = .Psi_0 + cov(.cluster_data)*(.n_k-1) + ((.lambda_0*.n_k)/(.lambda_0 + .n_k))*(.ybar - .mu_0)%*%t((.ybar-.mu_0))
-
-        # Compute the scale matrix using the updated inverse scale matrix
-        # If .S_temp is not symmetric, then round to make it symmetric
-        # Note: symmetry of .S_temp is required for the Normal Inverse Wishart functions
-        # Note: ---> thus we round to 5 digits for each matrix element
-        .S_temp <- Psi_n #round(solve(Psi_n),digits = 5)
-
-        # Draw mu and Sigma from their joint posterior distribution
-        .draw <- LaplacesDemon::rnorminvwishart(n = 1,
-                                                mu0 = as.numeric(.mu_n),
-                                                lambda = as.numeric(.lambda_n),
-                                                S = .S_temp,
-                                                nu = as.numeric(.nu_n))
-
-        # Add a small number to the diagonal until .S_temp is invertible
-        # If .S_temp is already invertible, then do nothing
-        .S_temp <- make_invertible(.matrix = .S_temp, .tolerance = .tolerance)
-
-        # Compute the Normal-Inverse-Wishart log-likelihood
-        .log_likelihood_vector[k] <- LaplacesDemon::dnorminvwishart(mu = .yi,
-                                                                    mu0 = .draw$mu,
-                                                                    Sigma = .draw$Sigma,
-                                                                    S = .S_temp,
-                                                                    lambda = as.numeric(.lambda_n),
-                                                                    nu = as.numeric(.nu_n),
-                                                                    log = TRUE)
-      }
-      return(.log_likelihood_vector)
+    # Compute the number of clusters K
+    if(length(.cluster_vector) == 0){
+      return(0)
+    }else{
+      max_K <- max(.cluster_vector)
     }
-  }else if(toupper(.log_likelihood_name) == "MNIW"){
-    log_likelihood_fn <- function(...) return(0)
-  }else if(toupper(.log_likelihood_name) == "NONE"){
-    log_likelihood_fn <- function(...) return(0)
+
+    for(k in 1:max_K){
+      # Find the subjects in the same cluster as subject .i (i.e. yi)
+      .cluster_indices <- which(.cluster_vector == k)
+
+      # Joint Prior: (mu, Sigma) ~ NIW(.mu_0, .lambda_0, .Psi_0, .nu_0)
+      # Sampling Density: y_i|mu,Sigma ~ Np(mu,Sigma)
+      # Joint Posterior: NIW(.mu_n, .lambda_n, Psi_n, .nu_n)
+
+      # If the number of subjects in the same cluster as yi (including yi) is >= 3
+      if(length(.cluster_indices) >= 3){
+        .cluster_indices <- .cluster_indices[which(.cluster_indices != .i)]
+      }else{
+        # If the number of subjects in the same cluster as yi (including yi) is in {0,1,2},
+        # then just set the cluster indices to 1, 2, ... .i - 1, .i + 1, .i + 2, ... , .n
+        # since we need to have at least 2 subjects in each cluster (excluding yi) in order to
+        # compute a log-likelihood
+        .cluster_indices <- 1:.n
+        .cluster_indices <- .cluster_indices[which(.cluster_indices != .i)]
+      }
+
+      # Isolate the subjects in the cluster
+      .cluster_data <- .data[.cluster_indices,]
+
+      # Compute the cluster size
+      .n_k <- dim(.cluster_data)[1]
+
+      # .ybar = column means where .ybar in R^p
+      .ybar <- colMeans(.cluster_data)
+
+      # .mu_n = (.lambda_0*.mu_0 + .n_k*.ybar)/(.lambda_0 + .n_k) where .mu_n in R^p
+      .mu_n <- (.lambda_0*.mu_0 + .n_k*.ybar)/(.lambda_0 + .n_k)
+
+      # .lambda_n = .lambda_0 + .n_k where .lambda_n in R^+
+      .lambda_n = .lambda_0 + .n_k
+
+      # .nu_n = .nu_0 + .n_k where .nu_n > p + 1
+      .nu_n = .nu_0 + .n_k
+
+      # .Psi_0 in R^{p x p} is the INVERSE scale matrix and is positive definite
+      # Psi_n = .Psi_0 + S + (.lambda_0*.n_k)/(.lambda_0 + .n_k)(.ybar - .mu_0)(.ybar-.mu_0)^T
+      # where S = sum_{i=1}^.n_k (y_i - .ybar)(y_i - .ybar)^T = Sigma*(.n_k-1) = cov(Y)*(.n_k-1), so we have
+      # Psi_n = .Psi_0 + cov(.data)*(.n_k-1) + (.lambda_0*.n_k)/(.lambda_0 + .n_k)(.ybar - .mu_0)(.ybar-.mu_0)^T
+      Psi_n = .Psi_0 + cov(.cluster_data)*(.n_k-1) + ((.lambda_0*.n_k)/(.lambda_0 + .n_k))*(.ybar - .mu_0)%*%t((.ybar-.mu_0))
+
+      # Compute the scale matrix using the updated inverse scale matrix
+      # If .S_temp is not symmetric, then round to make it symmetric
+      # Note: symmetry of .S_temp is required for the Normal Inverse Wishart functions
+      # Note: ---> thus we round to 5 digits for each matrix element
+      .S_temp <- Psi_n #round(solve(Psi_n),digits = 5)
+
+      # Draw mu and Sigma from their joint posterior distribution
+      .draw <- LaplacesDemon::rnorminvwishart(n = 1,
+                                              mu0 = as.numeric(.mu_n),
+                                              lambda = as.numeric(.lambda_n),
+                                              S = .S_temp,
+                                              nu = as.numeric(.nu_n))
+
+      # Add a small number to the diagonal until .S_temp is invertible
+      # If .S_temp is already invertible, then do nothing
+      .S_temp <- make_invertible(.matrix = .S_temp, .tolerance = .tolerance)
+
+      # Compute the Normal-Inverse-Wishart log-likelihood
+      .log_likelihood_vector[k] <- LaplacesDemon::dnorminvwishart(mu = .yi,
+                                                                  mu0 = .draw$mu,
+                                                                  Sigma = .draw$Sigma,
+                                                                  S = .S_temp,
+                                                                  lambda = as.numeric(.lambda_n),
+                                                                  nu = as.numeric(.nu_n),
+                                                                  log = TRUE)
+
   }
-  else{
-    stop("Error: specify a valid likelihood model")
-  }
-  return(log_likelihood_fn)
-  # set_log_likelihood_function(.log_likelihood_name = "NIW", .tolerance = 0.01)
+    return(.log_likelihood_vector)
+  }else{
+      stop("Choose a valid likelihood function. Options are \"NIW\" and \"NONE\".")
+    }
 }
+
 
 #' @export
 prob_tip_i <- function(.i, .similarity_matrix, .previous_posterior_assignments, .num_clusters){
@@ -198,10 +189,6 @@ tip <- function(.burn,
                                            .nu_0 = .nu_0,
                                            .mu_0 = .mu_0)
   }
-
-  # Set the likelihood function
-  .log_likelihood_fn <- set_log_likelihood_function(.log_likelihood_name = .likelihood_model,
-                                                    .tolerance = .tolerance)
 
   # Compute the total number of subjects
   .n <- dim(.similarity_matrix)[1]
@@ -280,7 +267,7 @@ tip <- function(.burn,
 
       # Export the following functions to each core
       parallel::clusterExport(cl,list('prob_tip_i',
-                                      '.log_likelihood_fn',
+                                      'log_likelihood_fn',
                                       'make_invertible'),
                               envir=environment())
 
@@ -296,7 +283,7 @@ tip <- function(.burn,
                                               .previous_posterior_assignments = .temp_cluster) + 1e-100)
 
         # Add the log-likelihood for subject i to the log prior
-        .posterior_vector_i = .posterior_vector_i + .log_likelihood_fn(.cluster_vector = .temp_cluster,
+        .posterior_vector_i = .posterior_vector_i + log_likelihood_fn(.cluster_vector = .temp_cluster,
                                                                       .i = .i,
                                                                       .prior_estimates_for_likelihood = .prior_estimates_for_likelihood)
 
@@ -324,9 +311,9 @@ tip <- function(.burn,
                                               .previous_posterior_assignments = .temp_cluster) + 1e-100)
 
         # Add the log-likelihood for subject i to the log prior
-        .posterior_vector_i = .posterior_vector_i + .log_likelihood_fn(.cluster_vector = .temp_cluster,
-                                                                       .i = .i,
-                                                                       .prior_estimates_for_likelihood = .prior_estimates_for_likelihood)
+        .posterior_vector_i = .posterior_vector_i + log_likelihood_fn(.cluster_vector = .temp_cluster,
+                                                                      .i = .i,
+                                                                      .prior_estimates_for_likelihood = .prior_estimates_for_likelihood)
         # Convert to a posterior probability
         .posterior_vector_i <- sapply(.posterior_vector_i, function(qq) exp(qq - max(.posterior_vector_i)))
         .posterior_vector_i <- sapply(.posterior_vector_i, function(qq) qq/sum(.posterior_vector_i))
