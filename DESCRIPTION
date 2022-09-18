@@ -1,11 +1,10 @@
 Package: tip
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Bayesian Clustering Using the Table Invtitation Prior (TIP)
 Version: 0.1.0
 Author: Charles W. Harrison
 Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: Cluster data without specifying the number of clusters using the Table Invtitation Prior (TIP), a Bayesian nonparametric prior.
 License: MIT
 Encoding: UTF-8
 LazyData: true
@@ -19,3 +18,4 @@ Imports:
     parallel,
     doParallel, 
     foreach
+RoxygenNote: 7.2.1
