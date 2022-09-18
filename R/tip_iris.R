@@ -8,6 +8,7 @@
 # # The first 4 columns are the data whereas
 # # the 5th column refers to the true labels
 # X <- data.matrix(iris[,c("Sepal.Length",
+#
 #                          "Sepal.Width",
 #                          "Petal.Length",
 #                          "Petal.Width")])
