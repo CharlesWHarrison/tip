@@ -1,5 +1,9 @@
 globalVariables(c("..count.."))
 
+#' @title Automatic matrix inversion
+#' @param .matrix The matrix that may or may not be invertible.
+#' @param .tolerance If necessary, a small value that is ITERATIVELY added to
+#' each diagonal element of a matrix until the matrix is invertible.
 make_invertible <- function(.matrix, .tolerance = 0.01){
   # --- A function used to make a matrix invertible by
   # adding a small number to the matrix's diagonal.
@@ -21,6 +25,13 @@ make_invertible <- function(.matrix, .tolerance = 0.01){
   #                 .tolerance = 0.01)
 }
 
+#' @title Partition an Undirected Graph
+#' @description A function that iteratively applies the transformation max(0, .graph_matrix - cutoff) until
+#' there are <.num_components> graph components where cutoff = cutoff + .step_size.
+#' @param .graph_matrix A symmetric matrix that the analyst wishes to decompose into <.num_components> components.
+#' @param .num_components The number of components that the analyst wishes to decompose <.graph_matrix> into.
+#' @param .step_size The size of the update for the cutoff in the transformation max(0, .graph_matrix - cutoff)
+#' where cutoff = cutoff + .step_size.
 #' @export
 partition_undirected_graph <-function(.graph_matrix, .num_components, .step_size){
 
@@ -129,6 +140,10 @@ partition_undirected_graph <-function(.graph_matrix, .num_components, .step_size
   #                 .step_size = 0.01)
 }
 
+#' @title Recode a vector of integer values to start at 1
+#' @description A function to "recode" a vector. For example, 2, 3, 5, 6, 10, 2, 2, 2, 5 needs
+#' to be recoded to 1, 2, 3, 4, 5, 1, 1, 1, 3. This function is used to ensure that the posterior
+#' cluster assignments start at 1 (otherwise an error occurs).
 recode <- function(.posterior_assignments){
   # --- A function to recode the current cluster assignments so that each
   # cluster assignment is in the set {1, 2, 3, ..., K} and there are no gaps.
@@ -148,6 +163,9 @@ recode <- function(.posterior_assignments){
   # recode(.posterior_assignments = c(2, 3, 5, 6, 10, 2, 2, 2, 5))
 }
 
+#' @title Compute a Proximity Matrix
+#' @description A function to convert a vector of posterior cluster assignments into
+#' an n x n matrix B where Bij = 1 if vector[i] == vector[j] and 0 otherwise.
 get_proximity_matrix <- function(.assignments){
   # --- A function to construct a proximity matrix based on
   # a vector of .assignments ---
