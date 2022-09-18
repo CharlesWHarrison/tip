@@ -6,8 +6,10 @@ globalVariables(c("%dopar%"))
 # Read in some utility and plotting functions
 # source("util.R")
 
-#' @export
+#' @description Estimate the number of similar subjects \
+#' using univariate multiple change point detection (i.e. binary segmentation).
 #' @param .distance_matrix A symmetric n x n matrix of distances
+#' @export
 get_cpt_neighbors <- function(.distance_matrix){
   # --- A function used to obtain the nearest
   # neighbors for each subjects based on their
@@ -122,7 +124,7 @@ log_likelihood_fn <- function(.cluster_vector, .i, .prior_estimates_for_likeliho
 
       # Add a small number to the diagonal until .S_temp is invertible
       # If .S_temp is already invertible, then do nothing
-      .S_temp <- make_invertible(.matrix = .S_temp, .tolerance = .tolerance)
+      .S_temp <- make_invertible(.matrix = .S_temp, .tolerance = 0.001)
 
       # Compute the Normal-Inverse-Wishart log-likelihood
       .log_likelihood_vector[k] <- LaplacesDemon::dnorminvwishart(mu = .yi,
