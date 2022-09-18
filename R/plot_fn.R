@@ -59,9 +59,9 @@ ggnet2_network_plot <- function(.matrix_graph, .subject_names = NA, .subject_cla
 
   # Add labels to the graph nodes (i.e., the subjects)
   if(length(.subject_names) != dim(.matrix_graph)[1]){
-    network::network.vertex.names(.network_temp) <- paste("Subject", 1:dim(.matrix_graph)[1], sep = "")
+    # network::network.vertex.names(.network_temp) <- paste("Subject", 1:dim(.matrix_graph)[1], sep = "")
   }else{
-    # network.vertex.names(.network_temp) <- .subject_names
+    network.vertex.names(.network_temp) <- .subject_names
   }
 
   if(length(.subject_class_names) == dim(.matrix_graph)[1]){
