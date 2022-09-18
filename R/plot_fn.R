@@ -29,17 +29,18 @@ ggplot_line_point <- function(.x, .y, .xlab = "", .ylab = ""){
 #' the posterior probability.
 #' @param .posterior_number_of_clusters A vector of the number of clusters after posterior sampling
 #' for each iteration in the Gibbs sampler.
-#' @importFrom ggplot2 ggplot aes geom_bar ..count.. xlab ylab scale_x_continuous
+#' @importFrom ggplot2 ggplot aes geom_bar xlab ylab scale_x_continuous
 #' @importFrom rlang .data
 #' @export
 ggplot_number_of_clusters_hist <- function(.posterior_number_of_clusters){
+  .table = table(.posterior_number_of_clusters)
   # --- A function to construct the posterior distribution of the number of clusters ---
-  .df_tip <- data.frame(num_clusters = .posterior_number_of_clusters)
-  plot <- ggplot(data = .df_tip, aes(x = .data$num_clusters))
-  plot <- plot + geom_bar(aes(y = (..count..)/sum(..count..)))
+  .df_tip <- data.frame(y = as.numeric(.table)/sum(.table),
+                        x = as.numeric(names(.table)))
+  plot <- ggplot(data = .df_tip) + geom_bar(aes(x = .data$x, y = .data$y), stat = "identity")
   plot <- plot + xlab("Number of Clusters")
   plot <- plot + ylab("Posterior Probability")
-  plot <- plot + scale_x_continuous(breaks = 1:max(.df_tip$num_clusters))
+  plot <- plot + scale_x_continuous(breaks = 1:max(.df_tip$x))
   return(plot)
 }
 
