@@ -6,6 +6,9 @@
 \usage{
 recode(.posterior_assignments)
 }
+\arguments{
+\item{.posterior_assignments}{A vector of posterior cluster assignments (i.e. they are integers)}
+}
 \description{
 A function to "recode" a vector. For example, 2, 3, 5, 6, 10, 2, 2, 2, 5 needs
 to be recoded to 1, 2, 3, 4, 5, 1, 1, 1, 3. This function is used to ensure that the posterior
