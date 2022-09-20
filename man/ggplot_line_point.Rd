@@ -20,8 +20,5 @@ A function to that produces a ggplot2 plot of .y versus .x
 where points are added via geom_point() and the points are connected via geom_line().
 }
 \examples{
-ggplot_line_point(.x = rnorm(10),
-.y = rnorm(10),
-.xlab = "x",
-.ylab = "y")
+ggplot_line_point(.x = rnorm(10), .y = rnorm(10), .xlab = "x", .ylab = "y")
 }
