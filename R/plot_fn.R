@@ -32,6 +32,9 @@ ggplot_line_point <- function(.x, .y, .xlab = "", .ylab = ""){
 #' for each iteration in the Gibbs sampler.
 #' @importFrom ggplot2 ggplot aes geom_bar xlab ylab scale_x_continuous
 #' @importFrom rlang .data
+#' @examples
+#' num_clusters <- c(1,2,2,2,2,3,3,1,2,3,3,3,1,3)
+#' ggplot_number_of_clusters_hist(.posterior_number_of_clusters = num_clusters)
 #' @export
 ggplot_number_of_clusters_hist <- function(.posterior_number_of_clusters){
   .table = table(.posterior_number_of_clusters)
@@ -52,6 +55,9 @@ ggplot_number_of_clusters_hist <- function(.posterior_number_of_clusters){
 #' for each iteration in the Gibbs sampler.
 #' @importFrom ggplot2 ggplot aes geom_line xlab ylab
 #' @importFrom rlang .data
+#' @examples
+#' num_clusters <- c(1,2,2,2,2,3,3,1,2,3,3,3,1,3)
+#' ggplot_number_of_clusters_trace(.posterior_number_of_clusters = num_clusters)
 #' @export
 ggplot_number_of_clusters_trace <- function(.posterior_number_of_clusters){
   # --- A function to construct the posterior distribution of the number of clusters ---
@@ -80,7 +86,7 @@ ggplot_number_of_clusters_trace <- function(.posterior_number_of_clusters){
 #' @import GGally
 #' @import network
 #' @export
-ggnet2_network_plot <- function(.matrix_graph, .subject_names = vector(), .subject_class_names = NA,
+ggnet2_network_plot <- function(.matrix_graph, .subject_names = vector(), .subject_class_names = vector(),
                              .class_colors, .class_shapes, .random_seed = 007, .node_size = 6,
                              .add_node_labels = TRUE){
   # --- A function to construct a network plot ---
