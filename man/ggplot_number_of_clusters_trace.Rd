@@ -14,3 +14,7 @@ for each iteration in the Gibbs sampler.}
 A function that produces a ggplot2 trace plot (i.e. geom_line)
 with respect to the posterior number of clusters.
 }
+\examples{
+num_clusters <- c(1,2,2,2,2,3,3,1,2,3,3,3,1,3)
+ggplot_number_of_clusters_trace(.posterior_number_of_clusters = num_clusters)
+}
