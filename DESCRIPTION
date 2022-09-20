@@ -3,8 +3,8 @@ Type: Package
 Title: Bayesian Clustering Using the Table Invtitation Prior (TIP)
 Version: 0.1.0
 Author: Charles W. Harrison, Qing He, Hsin-Hsiung Huang
-Maintainer: Charles W. Harrison <charleswharrison@knights.ucf.edu>
-Description: Cluster data without specifying the number of clusters using the Table Invtitation Prior (TIP), a Bayesian nonparametric prior.
+Maintainer: Charles W. Harrison \email{charleswharrison@knights.ucf.edu}
+Description: Cluster data without specifying the number of clusters using the Table Invtitation Prior (TIP). TIP is a Bayesian nonparametric prior that uses pairwise distance and similarity information to cluster observations (subjects).
 License: MIT
 Encoding: UTF-8
 LazyData: true
@@ -18,5 +18,11 @@ Imports:
     changepoint, 
     parallel,
     doParallel, 
-    foreach
+    foreach,
+    sna
 RoxygenNote: 7.2.1
+Suggests: 
+    knitr,
+    mcclust,
+    rmarkdown
+VignetteBuilder: knitr
