@@ -15,3 +15,7 @@ A function that produces a ggplot bar chart (i.e. geom_bar) that corresponds
 to the posterior number of clusters. The vertical axis is normalized so that it displays
 the posterior probability.
 }
+\examples{
+num_clusters <- c(1,2,2,2,2,3,3,1,2,3,3,3,1,3)
+ggplot_number_of_clusters_hist(.posterior_number_of_clusters = num_clusters)
+}
