@@ -2,6 +2,7 @@
 #' @param .matrix The matrix that may or may not be invertible.
 #' @param .tolerance If necessary, a small value that is ITERATIVELY added to
 #' each diagonal element of a matrix until the matrix is invertible.
+#' @noRd
 make_invertible <- function(.matrix, .tolerance = 0.01){
   # --- A function used to make a matrix invertible by
   # adding a small number to the matrix's diagonal.
@@ -143,6 +144,7 @@ partition_undirected_graph <-function(.graph_matrix, .num_components, .step_size
 #' to be recoded to 1, 2, 3, 4, 5, 1, 1, 1, 3. This function is used to ensure that the posterior
 #' cluster assignments start at 1 (otherwise an error occurs).
 #' @param .posterior_assignments A vector of posterior cluster assignments (i.e. they are integers)
+#' @noRd
 recode <- function(.posterior_assignments){
   # --- A function to recode the current cluster assignments so that each
   # cluster assignment is in the set {1, 2, 3, ..., K} and there are no gaps.
@@ -166,6 +168,7 @@ recode <- function(.posterior_assignments){
 #' @description A function to convert a vector of posterior cluster assignments into
 #' an n x n matrix B where Bij = 1 if vector[i] == vector[j] and 0 otherwise.
 #' @param .assignments A vector of posterior cluster assignments (i.e. they are integers)
+#' @noRd
 get_proximity_matrix <- function(.assignments){
   # --- A function to construct a proximity matrix based on
   # a vector of .assignments ---
