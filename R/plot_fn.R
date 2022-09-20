@@ -14,7 +14,7 @@
 #' @param .xlab The label on the horizontal axis.
 #' @importFrom ggplot2 ggplot aes geom_line geom_point xlab ylab
 #' @importFrom rlang .data
-#' @example ggplot_line_point(.x = rnorm(10), .y = rnorm(10), .xlab = "x", .ylab = "y")
+#' @examples ggplot_line_point(.x = rnorm(10), .y = rnorm(10), .xlab = "x", .ylab = "y")
 #' @export
 ggplot_line_point <- function(.x, .y, .xlab = "", .ylab = ""){
   # --- A function to plot a line and the corresponding points ---
