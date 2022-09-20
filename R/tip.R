@@ -175,7 +175,7 @@ prob_tip_i <- function(.i, .similarity_matrix, .current_assignments, .num_cluste
 #' @param .similarity_matrix The matrix of similarity values.
 #' @param .num_candidates The number of similar subjects extracted.
 get_candidates <- function(.i, .similarity_matrix, .num_candidates){
-  # --- A function to return the <num_candidates> indices corresponding to
+  # --- A function to return the .num_candidates indices corresponding to
   # the subjects that are most similar to subject .i ---
   # Note: start at 2 since 1 is always the candidate itself
   return(order(.similarity_matrix[.i,], decreasing = TRUE)[2:(.num_candidates + 1)])
