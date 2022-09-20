@@ -31,9 +31,6 @@ make_invertible <- function(.matrix, .tolerance = 0.01){
 #' @param .step_size The size of the update for the cutoff in the transformation max(0, .graph_matrix - cutoff)
 #' where cutoff = cutoff + .step_size.
 #' @returns A list with three elements.
-#' graph_component_members: the subject indices corresponding to each of the <.num_components> graph components (i.e., <.num_components> islands)
-#' .cutoff: partitioned_graph_matrix = max(0,.matrix_graph-cutoff) such that there are <.num_components> components (i.e., <.num_components> islands).
-#' partitioned_graph_matrix: a symmetric matrix corresponding an undirected graph with <.num_components> components (i.e., <.num_components> islands).
 #' @export
 partition_undirected_graph <-function(.graph_matrix, .num_components, .step_size){
 
