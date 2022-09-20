@@ -10,7 +10,7 @@ tip(
   .samples,
   .similarity_matrix,
   .init_num_neighbors,
-  .likelihood_model = "NONE",
+  .likelihood_model = "CONSTANT",
   .subject_names = vector(),
   .num_cores = 1,
   .tolerance = 0.001
