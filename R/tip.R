@@ -10,6 +10,7 @@ globalVariables(c("%dopar%"))
 #' @description Estimate the number of similar subjects \
 #' using univariate multiple change point detection (i.e. binary segmentation).
 #' @param .distance_matrix A symmetric n x n matrix of distances
+#' @returns A vector of integers where the (i)th integer corresponds to the number of subjects (observations) that are similar to the (i)th subject (observation).
 #' @export
 get_cpt_neighbors <- function(.distance_matrix){
   # --- A function used to obtain the nearest
