@@ -7,7 +7,7 @@
 ggnet2_network_plot(
   .matrix_graph,
   .subject_names = vector(),
-  .subject_class_names = NA,
+  .subject_class_names = vector(),
   .class_colors,
   .class_shapes,
   .random_seed = 7,
