@@ -12,6 +12,7 @@
 #' @param .y The variable on the vertical axis.
 #' @param .ylab The label on the vertical axis.
 #' @param .xlab The label on the horizontal axis.
+#' @returns A ggplot2 plot of .y versus .x with a label .xlab on the horizontal axis and label .ylab on the vertical axis.
 #' @importFrom ggplot2 ggplot aes geom_line geom_point xlab ylab
 #' @importFrom rlang .data
 #' @examples ggplot_line_point(.x = rnorm(10), .y = rnorm(10), .xlab = "x", .ylab = "y")
@@ -25,13 +26,14 @@ ggplot_line_point <- function(.x, .y, .xlab = "", .ylab = ""){
 }
 
 #' @title Plot the posterior distribution of the number of clusters.
-#' @description A function that produces a ggplot bar chart (i.e. geom_bar) that corresponds
+#' @description A function that produces a ggplot bar chart (i.e., geom_bar) that corresponds
 #' to the posterior number of clusters. The vertical axis is normalized so that it displays
 #' the posterior probability.
 #' @param .posterior_number_of_clusters A vector of the number of clusters after posterior sampling
 #' for each iteration in the Gibbs sampler.
 #' @importFrom ggplot2 ggplot aes geom_bar xlab ylab scale_x_continuous
 #' @importFrom rlang .data
+#' @returns A histogram of the posterior number of clusters taken from each sampling iteration in the Gibbs sampler.
 #' @examples
 #' num_clusters <- c(1,2,2,2,2,3,3,1,2,3,3,3,1,3)
 #' ggplot_number_of_clusters_hist(.posterior_number_of_clusters = num_clusters)
@@ -49,10 +51,11 @@ ggplot_number_of_clusters_hist <- function(.posterior_number_of_clusters){
 }
 
 #' @title Plot the trace plot of the posterior number of clusters.
-#' @description A function that produces a ggplot2 trace plot (i.e. geom_line)
+#' @description A function that produces a ggplot2 trace plot (i.e., geom_line)
 #' with respect to the posterior number of clusters.
 #' @param .posterior_number_of_clusters A vector of the number of clusters after posterior sampling
 #' for each iteration in the Gibbs sampler.
+#' @returns A plot of the posterior number of clusters in each Gibbs sampling iteration versus the Gibss sampling iteration number.
 #' @importFrom ggplot2 ggplot aes geom_line xlab ylab
 #' @importFrom rlang .data
 #' @examples
@@ -69,8 +72,8 @@ ggplot_number_of_clusters_trace <- function(.posterior_number_of_clusters){
   return(plot)
 }
 
-#' @title Visualize the posterior similarity matrix (i.e. posterior probability matrix)
-#' @description A function that produces a ggnet2 network plot to visualize the posterior similarity matrix (i.e. the matrix of posterior probabilities).
+#' @title Visualize the posterior similarity matrix (i.e., posterior probability matrix)
+#' @description A function that produces a ggnet2 network plot to visualize the posterior similarity matrix (i.e., the matrix of posterior probabilities).
 #' @param .matrix_graph A matrix M where each element Mij corresponds to the posterior
 #' probability that subjects i and j are in the same cluster.
 #' @param .subject_names An optional vector of subject names that will appear in the graph plot.
@@ -79,10 +82,11 @@ ggplot_number_of_clusters_trace <- function(.posterior_number_of_clusters){
 #' the unique .subject_class_names whereas the vector values are required to be the colors.
 #' @param .class_shapes An optional named vector of shapes. The vector names are required to be
 #' the unique .subject_class_names whereas the vector values areq required to be integers
-#' (i.e. pch values like 15, 16, 17, and so on).
+#' (i.e., pch values like 15, 16, 17, and so on).
 #' @param .random_seed The plot uses the random layout, so set a seed for reproducibility.
-#' @param .node_size The size of each node (i.e. vertex) in the graph plot.
-#' @param .add_node_labels TRUE or FALSE. Should individual node labels be added to each node (i.e. vertex) in the graph plot?
+#' @param .node_size The size of each node (i.e., vertex) in the graph plot.
+#' @param .add_node_labels TRUE or FALSE. Should individual node labels be added to each node (i.e., vertex) in the graph plot?
+#' @returns A network plot with respect to the undirected network given by .matrix_graph. This is used to visualize the posterior similarity matrix.
 #' @import GGally
 #' @import network
 #' @export
