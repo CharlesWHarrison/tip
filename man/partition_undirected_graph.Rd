@@ -16,9 +16,6 @@ where cutoff = cutoff + .step_size.}
 }
 \value{
 A list with three elements.
-graph_component_members: the subject indices corresponding to each of the <.num_components> graph components (i.e., <.num_components> islands)
-.cutoff: partitioned_graph_matrix = max(0,.matrix_graph-cutoff) such that there are <.num_components> components (i.e., <.num_components> islands).
-partitioned_graph_matrix: a symmetric matrix corresponding an undirected graph with <.num_components> components (i.e., <.num_components> islands).
 }
 \description{
 A function that iteratively applies the transformation max(0, .graph_matrix - cutoff) until
