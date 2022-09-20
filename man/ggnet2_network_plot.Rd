@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_fn.R
 \name{ggnet2_network_plot}
 \alias{ggnet2_network_plot}
-\title{Visualize the posterior similarity matrix (i.e. posterior probability matrix)}
+\title{Visualize the posterior similarity matrix (i.e., posterior probability matrix)}
 \usage{
 ggnet2_network_plot(
   .matrix_graph,
@@ -28,14 +28,17 @@ the unique .subject_class_names whereas the vector values are required to be the
 
 \item{.class_shapes}{An optional named vector of shapes. The vector names are required to be
 the unique .subject_class_names whereas the vector values areq required to be integers
-(i.e. pch values like 15, 16, 17, and so on).}
+(i.e., pch values like 15, 16, 17, and so on).}
 
 \item{.random_seed}{The plot uses the random layout, so set a seed for reproducibility.}
 
-\item{.node_size}{The size of each node (i.e. vertex) in the graph plot.}
+\item{.node_size}{The size of each node (i.e., vertex) in the graph plot.}
 
-\item{.add_node_labels}{TRUE or FALSE. Should individual node labels be added to each node (i.e. vertex) in the graph plot?}
+\item{.add_node_labels}{TRUE or FALSE. Should individual node labels be added to each node (i.e., vertex) in the graph plot?}
+}
+\value{
+A network plot with respect to the undirected network given by .matrix_graph. This is used to visualize the posterior similarity matrix.
 }
 \description{
-A function that produces a ggnet2 network plot to visualize the posterior similarity matrix (i.e. the matrix of posterior probabilities).
+A function that produces a ggnet2 network plot to visualize the posterior similarity matrix (i.e., the matrix of posterior probabilities).
 }

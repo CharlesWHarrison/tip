@@ -10,8 +10,11 @@ ggplot_number_of_clusters_hist(.posterior_number_of_clusters)
 \item{.posterior_number_of_clusters}{A vector of the number of clusters after posterior sampling
 for each iteration in the Gibbs sampler.}
 }
+\value{
+A histogram of the posterior number of clusters taken from each sampling iteration in the Gibbs sampler.
+}
 \description{
-A function that produces a ggplot bar chart (i.e. geom_bar) that corresponds
+A function that produces a ggplot bar chart (i.e., geom_bar) that corresponds
 to the posterior number of clusters. The vertical axis is normalized so that it displays
 the posterior probability.
 }

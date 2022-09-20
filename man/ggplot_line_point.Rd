@@ -15,6 +15,9 @@ ggplot_line_point(.x, .y, .xlab = "", .ylab = "")
 
 \item{.ylab}{The label on the vertical axis.}
 }
+\value{
+A ggplot2 plot of .y versus .x with a label .xlab on the horizontal axis and label .ylab on the vertical axis.
+}
 \description{
 A function to that produces a ggplot2 plot of .y versus .x
 where points are added via geom_point() and the points are connected via geom_line().
