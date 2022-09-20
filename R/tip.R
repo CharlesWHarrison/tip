@@ -42,9 +42,9 @@ get_cpt_neighbors <- function(.distance_matrix){
 #' @importFrom stats cov rpois
 #' @noRd
 log_likelihood_fn <- function(.cluster_vector, .i, .prior_estimates_for_likelihood, .likelihood_model){
-  if(toupper(.likelihood_model) == "NONE"){
+  if(toupper(.likelihood_model) == "CONSTANT"){
     return(0)
-  }else if(toupper(.likelihood_model == "NIW")){
+  }else if(toupper(.likelihood_model) == "NIW"){
     # Extract the prior parameters
     .data <- data.matrix(.prior_estimates_for_likelihood$.data)
     .lambda_0 <- as.numeric(.prior_estimates_for_likelihood$.lambda_0)
@@ -144,7 +144,7 @@ log_likelihood_fn <- function(.cluster_vector, .i, .prior_estimates_for_likeliho
   }
     return(.log_likelihood_vector)
   }else{
-      stop("Choose a valid likelihood function. Options are \"NIW\" and \"NONE\".")
+      stop("Choose a valid likelihood function. Options are \"NIW\" and \"CONSTANT\".")
     }
 }
 
@@ -202,7 +202,7 @@ tip <- function(.data,
                 .samples,
                 .similarity_matrix,
                 .init_num_neighbors,
-                .likelihood_model = "NONE",
+                .likelihood_model = "CONSTANT",
                 .subject_names = vector(),
                 .num_cores = 1,
                 .tolerance = 0.001){
@@ -317,7 +317,8 @@ tip <- function(.data,
         # Add the log-likelihood for subject i to the log prior
         .posterior_vector_i = .posterior_vector_i + log_likelihood_fn(.cluster_vector = .temp_cluster,
                                                                       .i = .i,
-                                                                      .prior_estimates_for_likelihood = .prior_estimates_for_likelihood)
+                                                                      .prior_estimates_for_likelihood = .prior_estimates_for_likelihood,
+                                                                      .likelihood_model = .likelihood_model)
 
         # Convert to a posterior probability
         .posterior_vector_i <- sapply(.posterior_vector_i, function(qq) exp(qq - max(.posterior_vector_i)))
@@ -345,7 +346,8 @@ tip <- function(.data,
         # Add the log-likelihood for subject i to the log prior
         .posterior_vector_i = .posterior_vector_i + log_likelihood_fn(.cluster_vector = .temp_cluster,
                                                                       .i = .i,
-                                                                      .prior_estimates_for_likelihood = .prior_estimates_for_likelihood)
+                                                                      .prior_estimates_for_likelihood = .prior_estimates_for_likelihood,
+                                                                      .likelihood_model = .likelihood_model)
         # Convert to a posterior probability
         .posterior_vector_i <- sapply(.posterior_vector_i, function(qq) exp(qq - max(.posterior_vector_i)))
         .posterior_vector_i <- sapply(.posterior_vector_i, function(qq) qq/sum(.posterior_vector_i))
