@@ -40,6 +40,7 @@ get_cpt_neighbors <- function(.distance_matrix){
 #' the data and are used in the likelihood function.
 #' @param .likelihood_model The name of the likelihood model being used. Example: "NIW".
 #' @importFrom stats cov rpois
+#' @noRd
 log_likelihood_fn <- function(.cluster_vector, .i, .prior_estimates_for_likelihood, .likelihood_model){
   if(toupper(.likelihood_model) == "NONE"){
     return(0)
@@ -153,6 +154,7 @@ log_likelihood_fn <- function(.cluster_vector, .i, .prior_estimates_for_likeliho
 #' @param .similarity_matrix The matrix of similarity values.
 #' @param .current_assignments The posterior assignments after the invitation step.
 #' @param .num_clusters The number of clusters after the invitation step.
+#' @noRd
 prob_tip_i <- function(.i, .similarity_matrix, .current_assignments, .num_clusters){
   # --- A function to compute the conditional posterior probability of a
   # subject joining a cluster (table) ---
@@ -174,6 +176,7 @@ prob_tip_i <- function(.i, .similarity_matrix, .current_assignments, .num_cluste
 #' @param .i The subject index (i.e. row index in a matrix for vector-variate data).
 #' @param .similarity_matrix The matrix of similarity values.
 #' @param .num_candidates The number of similar subjects extracted.
+#' @noRd
 get_candidates <- function(.i, .similarity_matrix, .num_candidates){
   # --- A function to return the .num_candidates indices corresponding to
   # the subjects that are most similar to subject .i ---
