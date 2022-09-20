@@ -14,3 +14,8 @@ A function to "recode" a vector. For example, 2, 3, 5, 6, 10, 2, 2, 2, 5 needs
 to be recoded to 1, 2, 3, 4, 5, 1, 1, 1, 3. This function is used to ensure that the posterior
 cluster assignments start at 1 (otherwise an error occurs).
 }
+\examples{
+# cluster_vector <- c(2, 3, 5, 6, 10, 2, 2, 2, 5)
+# recode(.posterior_assignments = cluster_vector)
+# Result: c(1,2,3,4,5,1,1,1,3)
+}
