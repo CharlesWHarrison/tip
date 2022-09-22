@@ -1,8 +1,5 @@
 # An R implementation of Bayesian clustering with the Table Invitation Prior (TIP)
 
-# Global variables
-globalVariables(c("%dopar%"))
-
 # Read in some utility and plotting functions
 # source("util.R")
 
@@ -197,6 +194,7 @@ get_candidates <- function(.i, .similarity_matrix, .num_candidates){
 #' @param .num_cores The number of cores to use.
 #' @param .tolerance A parameter used to ensure matrices are invertible. A small number is iteratively added to a matrix diagonal (if necessary) until the matrix is invertible.
 #' @importFrom utils setTxtProgressBar txtProgressBar
+#' @importFrom foreach %dopar%
 #' @export
 tip <- function(.data,
                 .burn,
@@ -308,16 +306,16 @@ tip <- function(.data,
       parallel::clusterEvalQ(cl, c(library(LaplacesDemon)))
 
       # Compute the conditional probabilities in parallel
-      .posterior_assignment_temp <- foreach::foreach(.i = 1:.n) %dopar% {
-        # Compute the log-prior for subject i for each cluster in the modified cluster vector
-        .posterior_vector_i <- log(prob_tip_i(.i = .i,
+      .posterior_assignment_temp <- foreach::foreach(i = 1:.n) %dopar%{
+        # Compute the log-prior for subject .i for each cluster in the modified cluster vector
+        .posterior_vector_i <- log(prob_tip_i(.i = i,
                                               .similarity_matrix = .similarity_matrix,
                                               .num_clusters = .num_clusters,
                                               .current_assignments = .temp_cluster) + 1e-100)
 
         # Add the log-likelihood for subject i to the log prior
         .posterior_vector_i = .posterior_vector_i + log_likelihood_fn(.cluster_vector = .temp_cluster,
-                                                                      .i = .i,
+                                                                      .i = i,
                                                                       .prior_estimates_for_likelihood = .prior_estimates_for_likelihood,
                                                                       .likelihood_model = .likelihood_model)
 
@@ -380,12 +378,31 @@ tip <- function(.data,
   .posterior_assignments <- do.call(rbind.data.frame, .posterior_assignments)
   colnames(.posterior_assignments) <- ifelse(length(.subject_names) == 0, paste("Subject", 1:.n), .subject_names)
 
-  # Return the necessary information to the analyst
-  return(list(n = .n,
-              burn = .burn,
-              samples = .samples,
-              posterior_assignments = .posterior_assignments[(.burn + 1):(.burn + .samples),],
-              posterior_similarity_matrix = .posterior_similarity_matrix/.samples,
-              posterior_number_of_clusters = .num_cluster_vector[(.burn + 1):(.burn + .samples)],
-              prior_name = "TIP"))
+  return(new("bcm",
+             n = .n,
+             burn = .burn,
+             samples = .samples,
+             posterior_assignments = .posterior_assignments[(.burn + 1):(.burn + .samples),],
+             posterior_similarity_matrix = .posterior_similarity_matrix/.samples,
+             posterior_number_of_clusters = .num_cluster_vector[(.burn + 1):(.burn + .samples)],
+             prior_name = "TIP"))
+
+  # return(list(n = .n,
+  #             burn = .burn,
+  #             samples = .samples,
+  #             posterior_assignments = .posterior_assignments[(.burn + 1):(.burn + .samples),],
+  #             posterior_similarity_matrix = .posterior_similarity_matrix/.samples,
+  #             posterior_number_of_clusters = .num_cluster_vector[(.burn + 1):(.burn + .samples)],
+  #             prior_name = "TIP"))
 }
+
+# Define a class to store the results of the Gibbs sampler
+setClass("bcm",
+         slots=list(n = "numeric",
+                    burn = "numeric",
+                    samples = "numeric",
+                    posterior_assignments = "list",
+                    posterior_similarity_matrix = "matrix",
+                    posterior_number_of_clusters = "numeric",
+                    prior_name = "character"))
+
