@@ -44,11 +44,11 @@ init_num_neighbors = get_cpt_neighbors(.distance_matrix = distance_matrix)
 
 # Set the number of burn-in iterations in the Gibbs samlper
 # A very good result for Iris may be obtained by setting burn <- 1000
-burn <- 50
+burn <- 5
 
 # Set the number of sampling iterations in the Gibbs sampler
 # A very good result for Iris may be obtained by setting samples <- 1000
-samples <- 50
+samples <- 5
 
 # Set the subject names
 names_subjects <- paste(1:dim(iris)[1])
@@ -67,17 +67,17 @@ tip1 <- tip(.data = data.matrix(X),
 
 ```{r}
 # Show the posterior distribution of the number of clusters
-ggplot_number_of_clusters_hist(.posterior_number_of_clusters = tip1$posterior_number_of_clusters)
+ggplot_number_of_clusters_hist(.posterior_number_of_clusters = tip1@posterior_number_of_clusters)
 ```
 
 ```{r}
 # Show the trace plot of the posterior number of clusters
-ggplot_number_of_clusters_trace(.posterior_number_of_clusters =tip1$posterior_number_of_clusters)
+ggplot_number_of_clusters_trace(.posterior_number_of_clusters =tip1@posterior_number_of_clusters)
 ```
 
 ```{r}
 # Extract posterior cluster assignments using the Posterior Expected Adjusted Rand (PEAR) index
-cluster_assignments <- mcclust::maxpear(psm = tip1$posterior_similarity_matrix)$cl
+cluster_assignments <- mcclust::maxpear(psm = tip1@posterior_similarity_matrix)$cl
 
 # If the true labels are available, then show the cluster result via a contigency table
 table(data.frame(true_label = true_labels,
@@ -86,7 +86,7 @@ table(data.frame(true_label = true_labels,
 
 ```{r}
 # Create the one component graph with minimum entropy
-partition_list <- partition_undirected_graph(.graph_matrix = tip1$posterior_similarity_matrix,
+partition_list <- partition_undirected_graph(.graph_matrix = tip1@posterior_similarity_matrix,
                                              .num_components = 1,
                                              .step_size = 0.001)
 ```
