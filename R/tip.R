@@ -195,10 +195,11 @@ get_candidates <- function(.i, .similarity_matrix, .num_candidates){
 #' @param .tolerance A parameter used to ensure matrices are invertible. A small number is iteratively added to a matrix diagonal (if necessary) until the matrix is invertible.
 #' @importFrom utils setTxtProgressBar txtProgressBar
 #' @importFrom foreach %dopar%
+#' @importFrom methods new
 #' @export
 tip <- function(.data,
-                .burn,
-                .samples,
+                .burn = 1000,
+                .samples = 1000,
                 .similarity_matrix,
                 .init_num_neighbors,
                 .likelihood_model = "CONSTANT",
@@ -305,6 +306,9 @@ tip <- function(.data,
       # Export the following libraries to each core
       parallel::clusterEvalQ(cl, c(library(LaplacesDemon)))
 
+      # Initial value for i so that the warning from roxygen2 disappears
+      i <- 1
+
       # Compute the conditional probabilities in parallel
       .posterior_assignment_temp <- foreach::foreach(i = 1:.n) %dopar%{
         # Compute the log-prior for subject .i for each cluster in the modified cluster vector
@@ -396,13 +400,37 @@ tip <- function(.data,
   #             prior_name = "TIP"))
 }
 
-# Define a class to store the results of the Gibbs sampler
+#' @title Bayesian Clustering Model (bcm) S4 class.
+#' @description A class to store the results of the Gibbs sampler.
+#' @slot n Integer. The sample size (i.e. number of subjects)
+#' @slot burn Integer. The number of burn-in iterations in the Gibbs sampler.
+#' @slot samples Integer. The number of sampling iterations in the Gibbs sampler.
+#' @slot posterior_assignments List. A list of vectors of cluster assignments (integers) for each sampling iteration in the Gibbs sampler.
+#' @slot posterior_similarity_matrix Matrix. A matrix where the (i,j)th element is the posterior probability that subject i and subject j are in the same cluster.
+#' @slot posterior_number_of_clusters Vector. A vector where each element is the number of clusters after posterior sampling for each sampling iteration in the Gibbs sampler.
+#' @slot prior_name Character. The name of the prior used.
+#' @exportClass bcm
 setClass("bcm",
          slots=list(n = "numeric",
                     burn = "numeric",
                     samples = "numeric",
-                    posterior_assignments = "list",
+                    posterior_assignments = "data.frame",
                     posterior_similarity_matrix = "matrix",
                     posterior_number_of_clusters = "numeric",
                     prior_name = "character"))
+
+#' @title A function to return plots from a Bayesian Clustering Model (bcm) object
+#' @rdname plot.bcm
+#' @aliases plot
+#' @param x A Bayesian Clustering Model (bcm) object
+#' @param y Not used.
+#' @param ... Not used.
+#' @exportMethod plot
+setMethod("plot", signature(x="bcm",y="missing"), function(x,y,...){
+  return(list(trace_plot_posterior_number_of_clusters = ggplot_number_of_clusters_trace(.posterior_number_of_clusters = x@posterior_number_of_clusters),
+              histogram_posterior_number_of_clusters = ggplot_number_of_clusters_hist(.posterior_number_of_clusters = x@posterior_number_of_clusters)))
+}
+)
+
+# setMethod("plot", signature("bcm"), function(x, ...) ggplot_number_of_clusters_hist(.posterior_number_of_clusters = x@posterior_number_of_clusters))
 
