@@ -125,19 +125,3 @@ ggnet2_network_plot <- function(.matrix_graph, .subject_names = vector(), .subje
     ggnet2(.network_temp, label = .add_node_labels)
   }
 }
-
-#' @title Bayesian Clustering Visualizations
-#' @description A function that produces plots of the Bayesian clustering output.
-#' @param A Bayesian Clustering Model (bcm) object
-#' @returns A ggplot2 histogram of the posterior number of clusters and a plot of the posterior number of clusters versus the Gibbs sampling iteration (i.e. a trace plot).
-#' @export
-plot.tip <- function(bcm, .subject_names = vector(), .node_size = 2, .add_node_labels = FALSE){
-  # Construct a histogram of the posterior number of clusters
-  .histogram_posterior_number_of_clusters <- ggplot_number_of_clusters_hist(.posterior_number_of_clusters = bcm@posterior_number_of_clusters)
-
-  # Construct a trace plot of the number of clusters
-  .trace_posterior_number_of_clusters <- ggplot_number_of_clusters_trace(.posterior_number_of_clusters = bcm@posterior_number_of_clusters)
-
-  return(list(histogram_posterior_number_of_clusters = .histogram_posterior_number_of_clusters,
-              trace_posterior_number_of_clusters = .trace_posterior_number_of_clusters))
-}
