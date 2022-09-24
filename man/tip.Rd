@@ -6,8 +6,8 @@
 \usage{
 tip(
   .data,
-  .burn,
-  .samples,
+  .burn = 1000,
+  .samples = 1000,
   .similarity_matrix,
   .init_num_neighbors,
   .likelihood_model = "CONSTANT",
