@@ -19,6 +19,7 @@ Imports:
     parallel,
     doParallel, 
     foreach,
+    methods,
     sna
 RoxygenNote: 7.2.1
 Suggests: 
