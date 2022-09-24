@@ -1,4 +1,4 @@
-# Table Invitation Prior in R (tip)
+# Clustering vectors, matrices, and tensors using the Table Invitation Prior (TIP) in R 
 This R library provides a Gibbs sampler for Bayesian clustering models that utilize the Table Invitation Prior (Harrison, He, and Huang 2022). TIP utilizes pairwise distance information between each observation (i.e. subject) and TIP may be used for clustering vectors, matrices, and higher-order tensors. 
 
 Although the prior used is TIP, there are different options with respect to the likelihood functions. Two options include "CONSTANT" and "NIW". 
