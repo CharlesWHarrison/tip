@@ -35,12 +35,12 @@ temperature <- 1/median(distance_matrix[upper.tri(distance_matrix)])
 init_num_neighbors = get_cpt_neighbors(.distance_matrix = distance_matrix)
 
 # Set the number of burn-in iterations in the Gibbs samlper
-# RECOMENDATION: *** burn <- 1000 ***
-burn <- 50
+# RECOMENDATION: *** burn >= 1000 ***
+burn <- 5
 
 # Set the number of sampling iterations in the Gibbs sampler
-# RECOMENDATION: *** samples <- 1000 ***
-samples <- 50
+# RECOMENDATION: *** samples >= 1000 ***
+samples <- 5
 
 # Extract the state names 
 names_subjects <- rownames(USArrests)
@@ -55,18 +55,21 @@ tip1 <- tip(.data = data.matrix(X),
             .likelihood_model = "NIW",
             .subject_names = names_subjects,
             .num_cores = 1)
-
-plot.tip(tip1)
 ```
 
 ```{r}
-# Show the posterior distribution of the number of clusters
-ggplot_number_of_clusters_hist(.posterior_number_of_clusters = tip1@posterior_number_of_clusters)
+# Produce plots for the Bayesian Clustering Model
+tip_plots <- plot(tip1)
 ```
 
 ```{r}
-# Show the trace plot of the posterior number of clusters
-ggplot_number_of_clusters_trace(.posterior_number_of_clusters =tip1@posterior_number_of_clusters)
+# View the posterior distribution of the number of clusters
+tip_plots$trace_plot_posterior_number_of_clusters
+```
+
+```{r}
+# View the trace plot with respect to the posterior number of clusters
+tip_plots$trace_plot_posterior_number_of_clusters
 ```
 
 ```{r}
