@@ -50,11 +50,11 @@ init_num_neighbors = get_cpt_neighbors(.distance_matrix = distance_matrix)
 
 # Set the number of burn-in iterations in the Gibbs samlper
 # A very good result for Iris may be obtained by setting burn <- 1000
-burn <- 50
+burn <- 1000
 
 # Set the number of sampling iterations in the Gibbs sampler
 # A very good result for Iris may be obtained by setting samples <- 1000
-samples <- 50
+samples <- 1000
 
 # Set the subject names
 names_subjects <- paste(1:dim(iris)[1])
