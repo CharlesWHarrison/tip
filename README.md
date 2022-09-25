@@ -1,26 +1,26 @@
 # Clustering vectors, matrices, and tensors using the Table Invitation Prior (TIP) in R 
-This R library provides a Gibbs sampler for Bayesian clustering models that utilize the Table Invitation Prior (TIP) introduced by Harrison, He, and Huang (2022). TIP utilizes pairwise distance and pairwise similarity information between the observed data (i.e. subjects). The term ``subject'' is used to refer to an individual vector, matrix, or higher-order tensors. 
-1. Vector-variate subject example: in the well-known Iris dataset there are 150 observed flowers; each flower is considered as an individual subject.
-2. Matrix-variate subject example: a single x-ray is taken for 57 adults, and each x-ray image is stored as a matrix where each value in the matrix varies between zero and one. In this case, there are 57 subjects (i.e. each x-ray is a subject).
-3. Tensor-variate subject example: 57 adults have their photograph taken in color. Each photograph corresponds to a 3-way tensor, and each of the 57 tensors correspond to a subject.
-
-Although the prior used is TIP, there are different options with respect to the likelihood functions. Currently there are two options for the likelihood model:
-
-1. The ```.likelihood_model = "CONSTANT"``` (fastest option) option refers to the scenario where the likleihood function returns a constant value regardless of the input (i.e. vectors, matrices, tensors) so that likelihood function has no role in the clustering. The "CONSTANT" likelihood may be applied to vector-variate datasets (e.g. the Iris dataset, US Arrests dataset, etc.), matrix-variate datasets (e.g. data pertaining to electroencephalograms (EEGs), grayscale images, etc.), and tensor-variate datasets (i.e. videos, colored-pictures, etc.). 
-
-2. The ```.likelihood_model = "NIW"``` option refers to the scenario where the likelihood function uses a "Normal-Inverse-Wishart" likelihood function with respect to the current clusters in a given iteration in the Gibbs sampler. The "NIW" model is applicable to vector-variate datasets only (i.e. the Iris dataset, US Arrests dataset, etc.). 
-
-## Installing tip
 ``` 
-# From CRAN
+# Install from CRAN
 install.packages("tip") 
 ```
 
 ```
-# From GitHub
+# Install from GitHub
 devtools::install_github("STATS-ML/tip")
 ```
 
+This R library provides a Gibbs sampler for Bayesian clustering models that utilize the Table Invitation Prior (TIP) introduced by Harrison, He, and Huang (2022). TIP utilizes pairwise distance and pairwise similarity information between the observed data (i.e. subjects). The term ''subject'' is used to refer to an individual vector, matrix, or higher-order tensors. 
+1. **Vector-variate subject example**: in the Iris dataset there are 150 observed flowers, and each flower's characteristics (not including their species) is captured by a ``4 x 1`` vector. Each flower is considered as an individual subject, so there are 150 subjects.
+2. **Matrix-variate subject example**: a single X-ray is taken for 57 adults, and each X-ray image is stored as a ``512 x 512`` matrix where each value in the matrix varies between zero and one (i.e., a grayscale image). Each X-ray is considered as an individual subject, so there are 57 subjects.
+3. **Tensor-variate subject example**: 23 adults have an fMRI taken. Each fMRI image corresponds to a 3-way tensor, each of the 23 3-way tensors correspond to an individual subject, so there are 23 subjects.
+
+Although the prior used is TIP, there are different options with respect to the likelihood functions. Currently there are three options for the likelihood model:
+
+1. The ``.likelihood_model = "CONSTANT"`` is the fastest option and can be used for vectors, matrices, and higher-order tensors (i.e., ``.data`` is not used). The "CONSTANT" option returns a constant likelihood function value regardless of the observed data so that likelihood function has no role in the clustering. The "CONSTANT" likelihood option may be used for vector-variate datasets (e.g. the Iris dataset, US Arrests dataset, etc.), matrix-variate datasets (e.g. data pertaining to electroencephalograms (EEGs), grayscale images, etc.), and higher-order tensor-variate datasets (i.e. videos, colored-pictures, etc.). 
+
+2. The ``.likelihood_model = "NIW"`` option can be used for vector-datasets only (i.e., ``.data`` is a ``.data.frame``). The "NIW" option uses a "Normal-Inverse-Wishart" likelihood function with respect to the current clusters and the new cluster in a given iteration in the Gibbs sampler. Examples of vector-variate data include the Iris dataset, US Arrests dataset, and so on.  
+
+3. The ``.likelihood_model = "MNIW"`` option can be used for matrix-variate data (i.e., ``.data`` is a ``list`` of matrices). The "MNIW" option uses a "Matrix-Normal-Inverse-Wishart" likelihood function with respect to the current clusters and the new cluster in a given iteration in the Gibbs sampler. Examples of matrix-variate data include EEG data, grayscale images (i.e., X-rays or black and white photographs), graph data, and so on. Note that "MNIW" may be used for vector-variate data by passing a list of matrices that have either 1 row and multiple columns or matrices that have one column and multiple rows.
 
 ## Clustering the Iris Dataset (i.e. vectors) with a Normal-Inverse-Wishart (NIW) likelihood and a TIP prior
 ```
