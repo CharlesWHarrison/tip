@@ -11,10 +11,12 @@ devtools::install_github("STATS-ML/tip")
 
 This R library provides a Gibbs sampler for Bayesian clustering models that utilize the Table Invitation Prior (TIP) introduced by Harrison, He, and Huang (2022). TIP utilizes pairwise distance and pairwise similarity information between the observed data (i.e. subjects). The term ''subject'' is used to refer to an individual vector, matrix, or higher-order tensors. 
 1. **Vector-variate subject example**: in the Iris dataset there are 150 observed flowers, and each flower's characteristics (not including their species) is captured by a ``4 x 1`` vector. Each flower is considered as an individual subject, so there are 150 subjects.
-2. **Matrix-variate subject example**: a single X-ray is taken for 57 adults, and each X-ray image is stored as a ``512 x 512`` matrix where each value in the matrix varies between zero and one (i.e., a grayscale image). Each X-ray is considered as an individual subject, so there are 57 subjects.
+2. **Matrix-variate subject example**: a single X-ray is taken for 57 adults, and each X-ray image is stored as a ``512 x 512`` matrix where each value in each matrix varies between zero and one (i.e., a grayscale image). Each X-ray is considered as an individual subject, so there are 57 subjects.
 3. **Tensor-variate subject example**: 23 adults have an fMRI taken. Each fMRI image corresponds to a 3-way tensor, each of the 23 3-way tensors correspond to an individual subject, so there are 23 subjects.
 
-Although the prior used is TIP, there are different options with respect to the likelihood functions. Currently there are three options for the likelihood model:
+In Bayesian clustering, the goal is sample from the posterior distribution which is given by 
+$$P(\mathbf{c}|\mathbf{x}) \propto P(\mathbf{X}|\mathbf{c})P(\mathbf{c})$$ 
+where $P(\mathbf{X}|\mathbf{c})$ is the likelihood function and $P(\mathbf{c})$ is the Table Invitation Prior (TIP). The current options for the likliehood function are the following:
 
 1. The ``.likelihood_model = "CONSTANT"`` is the fastest option and can be used for vectors, matrices, and higher-order tensors (i.e., ``.data`` is not used). The "CONSTANT" option returns a constant likelihood function value regardless of the observed data so that likelihood function has no role in the clustering. The "CONSTANT" likelihood option may be used for vector-variate datasets (e.g. the Iris dataset, US Arrests dataset, etc.), matrix-variate datasets (e.g. data pertaining to electroencephalograms (EEGs), grayscale images, etc.), and higher-order tensor-variate datasets (i.e. videos, colored-pictures, etc.). 
 
