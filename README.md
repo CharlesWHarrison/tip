@@ -16,7 +16,7 @@ This R library provides a Gibbs sampler for Bayesian clustering models that util
 
 In Bayesian clustering, the goal is sample from the posterior distribution which is given by 
 $$P(\mathbf{c}|\mathbf{x}) \propto P(\mathbf{X}|\mathbf{c})P(\mathbf{c})$$ 
-where $P(\mathbf{X}|\mathbf{c})$ is the likelihood function and $P(\mathbf{c})$ is the Table Invitation Prior (TIP). The current options for the likliehood function are the following:
+where $P(\mathbf{X}|\mathbf{c})$ is the likelihood function and $P(\mathbf{c})$ is the prior distribution. In this case, $P(\mathbf{c})$ refers to the Table Invitation Prior (TIP). TIP is flexible and may be incorporated with a variety of different likelihood functions designed for different types of data. The current options for the likliehood function are the following:
 
 1. The ``.likelihood_model = "CONSTANT"`` is the fastest option and can be used for vectors, matrices, and higher-order tensors (i.e., ``.data`` is not used). The "CONSTANT" option returns a constant likelihood function value regardless of the observed data so that likelihood function has no role in the clustering. The "CONSTANT" likelihood option may be used for vector-variate datasets (e.g. the Iris dataset, US Arrests dataset, etc.), matrix-variate datasets (e.g. data pertaining to electroencephalograms (EEGs), grayscale images, etc.), and higher-order tensor-variate datasets (i.e. videos, colored-pictures, etc.). 
 
