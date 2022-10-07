@@ -20,7 +20,8 @@ Imports:
     doParallel, 
     foreach,
     methods,
-    sna
+    sna,
+    mniw
 RoxygenNote: 7.2.1
 Suggests: 
     knitr,
