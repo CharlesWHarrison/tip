@@ -349,7 +349,7 @@ get_candidates <- function(.i, .similarity_matrix, .num_candidates){
 
 #' @title Bayesian Clustering with the Table Invitation Prior
 #' @description Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihood functions.
-#' @param .data A list of vectors, matrices, or tensors that the analyst wishes to cluster.
+#' @param .data Data Frame (vectors comprise a row in a data frame; NIW only) or a list of matrices (MNIW only) that the analyst wishes to cluster. Note: if .likelihood_model = "CONSTANT", then the .data argument has no effect.
 #' @param .burn The number of burn-in iterations in the Gibbs sampler.
 #' @param .samples The number of sampling iterations in the Gibbs sampler.
 #' @param .similarity_matrix An n x x marix of simlarity values.
@@ -362,7 +362,7 @@ get_candidates <- function(.i, .similarity_matrix, .num_candidates){
 #' @importFrom foreach %dopar%
 #' @importFrom methods new
 #' @export
-tip <- function(.data = NA,
+tip <- function(.data = list(),
                 .burn = 1000,
                 .samples = 1000,
                 .similarity_matrix,
