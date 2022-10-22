@@ -2,7 +2,7 @@
 title: "usarrests-NIW-vignette"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{usarrests-vignette}
+  %\VignetteIndexEntry{usarrests-NIW-vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -36,11 +36,11 @@ init_num_neighbors = get_cpt_neighbors(.distance_matrix = distance_matrix)
 
 # Set the number of burn-in iterations in the Gibbs samlper
 # RECOMENDATION: *** burn >= 1000 ***
-burn <- 5
+burn <- 10
 
 # Set the number of sampling iterations in the Gibbs sampler
 # RECOMENDATION: *** samples >= 1000 ***
-samples <- 5
+samples <- 10
 
 # Extract the state names 
 names_subjects <- rownames(USArrests)

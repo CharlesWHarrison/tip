@@ -2,7 +2,7 @@
 title: "matrix-clustering-CONSTANT-vignette"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{matrix_clustering-vignette}
+  %\VignetteIndexEntry{matrix-clustering-CONSTANT-vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -26,24 +26,22 @@ random_mat_normal <- function(mu, num_rows, num_cols){
                            V = diag(num_cols))
 }
 
-# Generate 4 clusters of matrices 
+# Generate 3 clusters of matrices 
 p <- 5
 m <- 3
 c1 <- lapply(1:20, function(x) random_mat_normal(mu = 0, num_rows = m, num_cols = p))
 c2 <- lapply(1:25, function(x) random_mat_normal(mu = 5, num_rows = m, num_cols = p))
 c3 <- lapply(1:30, function(x) random_mat_normal(mu = -5, num_rows = m, num_cols = p))
-c4 <- lapply(1:35, function(x) random_mat_normal(mu = 10, num_rows = m, num_cols = p))
 
 # Put all the data into a list
-data_list <- c(c1,c2,c3,c4)
+data_list <- c(c1,c2,c3)
 
 # Create a vector of true labels. True labels are only necessary 
 # for constructing network graphs that incorporate the true labels;
 # this is often useful for research. 
 true_labels <- c(rep("Cluster 1", 20),
                  rep("Cluster 2", 25),
-                 rep("Cluster 3", 30),
-                 rep("Cluster 4", 35))
+                 rep("Cluster 3", 30))
 
 distance_matrix <- matrix(NA, 
                           nrow = length(true_labels),
@@ -66,18 +64,19 @@ init_num_neighbors = get_cpt_neighbors(.distance_matrix = distance_matrix)
 
 # Set the number of burn-in iterations in the Gibbs samlper
 # RECOMMENDATION: burn >= 1000
-burn <- 50
+burn <- 10
 
 # Set the number of sampling iterations in the Gibbs sampler
 # RECOMMENDATION: samples >= 1000
-samples <- 50
+samples <- 10
 
 # Set the subject names
 names_subjects <- paste(1:dim(iris)[1])
 
 # Run TIP clustering using only the prior
 # --> That is, the likelihood function is constant
-tip1 <- tip(.burn = burn,
+tip1 <- tip(.data = data_list,
+            .burn = burn,
             .samples = samples,
             .similarity_matrix = exp(-1.0*temperature*distance_matrix),
             .init_num_neighbors = init_num_neighbors,
@@ -93,7 +92,7 @@ tip_plots <- plot(tip1)
 
 ```{r}
 # View the posterior distribution of the number of clusters
-tip_plots$trace_plot_posterior_number_of_clusters
+tip_plots$histogram_posterior_number_of_clusters
 ```
 
 ```{r}
@@ -121,14 +120,12 @@ partition_list <- partition_undirected_graph(.graph_matrix = tip1@posterior_simi
 # Associate class labels and colors for the plot
 class_palette_colors <- c("Cluster 1" = "blue",
                           "Cluster 2" = 'green',
-                          "Cluster 3" = "red",
-                          "Cluster 4" = "black")
+                          "Cluster 3" = "red")
 
 # Associate class labels and shapes for the plot
 class_palette_shapes <- c("Cluster 1" = 19,
                           "Cluster 2" = 18,
-                          "Cluster 3" = 17,
-                          "Cluster 4" = 16)
+                          "Cluster 3" = 17)
 
 # Visualize the posterior similarity matrix by constructing a graph plot of 
 # the one-cluster graph. The true labels are used here (below they are not).

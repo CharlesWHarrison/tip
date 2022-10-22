@@ -2,7 +2,7 @@
 title: "iris-NIW-vignette"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{iris-vignette}
+  %\VignetteIndexEntry{iris-NIW-vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -44,11 +44,11 @@ init_num_neighbors = get_cpt_neighbors(.distance_matrix = distance_matrix)
 
 # Set the number of burn-in iterations in the Gibbs samlper
 # A very good result for Iris may be obtained by setting burn <- 1000
-burn <- 25
+burn <- 5
 
 # Set the number of sampling iterations in the Gibbs sampler
 # A very good result for Iris may be obtained by setting samples <- 1000
-samples <- 25
+samples <- 5
 
 # Set the subject names
 names_subjects <- paste(1:dim(iris)[1])
