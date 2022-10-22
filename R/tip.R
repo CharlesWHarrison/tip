@@ -362,7 +362,7 @@ get_candidates <- function(.i, .similarity_matrix, .num_candidates){
 #' @importFrom foreach %dopar%
 #' @importFrom methods new
 #' @export
-tip <- function(.data,
+tip <- function(.data = NA,
                 .burn = 1000,
                 .samples = 1000,
                 .similarity_matrix,
