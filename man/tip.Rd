@@ -5,7 +5,7 @@
 \title{Bayesian Clustering with the Table Invitation Prior}
 \usage{
 tip(
-  .data,
+  .data = list(),
   .burn = 1000,
   .samples = 1000,
   .similarity_matrix,
@@ -17,7 +17,7 @@ tip(
 )
 }
 \arguments{
-\item{.data}{A list of vectors, matrices, or tensors that the analyst wishes to cluster.}
+\item{.data}{Data Frame (vectors comprise a row in a data frame; NIW only) or a list of matrices (MNIW only) that the analyst wishes to cluster. Note: if .likelihood_model = "CONSTANT", then the .data argument has no effect.}
 
 \item{.burn}{The number of burn-in iterations in the Gibbs sampler.}
 
