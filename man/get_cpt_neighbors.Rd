@@ -7,7 +7,7 @@
 get_cpt_neighbors(.distance_matrix)
 }
 \arguments{
-\item{.distance_matrix}{A symmetric n x n matrix of distances}
+\item{.distance_matrix}{A symmetric n x n matrix of distance values.}
 }
 \value{
 A vector of integers where the (i)th integer corresponds to the number of subjects (observations) that are similar to the (i)th subject (observation).
