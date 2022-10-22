@@ -13,7 +13,7 @@ tip(
   .likelihood_model = "CONSTANT",
   .subject_names = vector(),
   .num_cores = 1,
-  .tolerance = 0.001
+  .step_size = 0.001
 )
 }
 \arguments{
@@ -33,7 +33,7 @@ tip(
 
 \item{.num_cores}{The number of cores to use.}
 
-\item{.tolerance}{A parameter used to ensure matrices are invertible. A small number is iteratively added to a matrix diagonal (if necessary) until the matrix is invertible.}
+\item{.step_size}{A parameter used to ensure matrices are invertible. A small number is iteratively added to a matrix diagonal (if necessary) until the matrix is invertible.}
 }
 \description{
 Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihood functions.
