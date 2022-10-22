@@ -6,7 +6,7 @@
 #' @title Estimate The Number of Similar Subjects
 #' @description Estimate the number of similar subjects \
 #' using univariate multiple change point detection (i.e. binary segmentation).
-#' @param .distance_matrix A symmetric n x n matrix of distances
+#' @param .distance_matrix A symmetric n x n matrix of distance values.
 #' @returns A vector of integers where the (i)th integer corresponds to the number of subjects (observations) that are similar to the (i)th subject (observation).
 #' @export
 get_cpt_neighbors <- function(.distance_matrix){
@@ -36,7 +36,7 @@ get_cpt_neighbors <- function(.distance_matrix){
 #' @param .i The integer subject index that the likelihood is computed for.
 #' @param  .prior_estimates_for_likelihood A list of hyperparameters that are computed using
 #' the data and are used in the likelihood function.
-#' @param .likelihood_model The string corresponding to the likelihood model being used. Example: "NIW".
+#' @param .likelihood_model The character corresponding to the likelihood model being used. Options: "CONSTANT" (i.e. likelihood has no role in clustering), "NIW" for Normal-Inverse-Wishart likelihood model, "MNIW" for Matrix Normal-Inverse-Wishart likelihood model.
 #' @importFrom stats cov rpois
 #' @noRd
 log_likelihood_fn <- function(.cluster_vector, .i, .prior_estimates_for_likelihood, .likelihood_model){
@@ -128,7 +128,7 @@ log_likelihood_fn <- function(.cluster_vector, .i, .prior_estimates_for_likeliho
 
       # Add a small number to the diagonal until .S_temp is invertible
       # If .S_temp is already invertible, then do nothing
-      .S_temp <- make_invertible(.matrix = .S_temp, .tolerance = 0.001)
+      .S_temp <- make_invertible(.matrix = .S_temp, .step_size = 0.001)
 
       # Compute the Normal-Inverse-Wishart log-likelihood
       .log_likelihood_vector[k] <- LaplacesDemon::dnorminvwishart(mu = .yi,
@@ -139,10 +139,11 @@ log_likelihood_fn <- function(.cluster_vector, .i, .prior_estimates_for_likeliho
                                                                   nu = as.numeric(.nu_n),
                                                                   log = TRUE)
 
-  }
+    }
     return(.log_likelihood_vector)
   }else if(toupper(.likelihood_model) == "MNIW"){
     # Extract the prior parameters
+    .data <- .prior_estimates_for_likelihood$.data
     .row_cov <- .prior_estimates_for_likelihood$.row_cov
     .nu_c0 <- .prior_estimates_for_likelihood$.nu_c0
     .nu_r0 <- .prior_estimates_for_likelihood$.nu_r0
@@ -192,7 +193,7 @@ log_likelihood_fn <- function(.cluster_vector, .i, .prior_estimates_for_likeliho
       # ******************************************************************************************
 
       # Compute the cluster size
-      .n_k <- dim(.cluster_data)[1]
+      .n_k <- length(.cluster_data)
 
       # .Ybar_k: the m x .p mean matrix for the kth cluster
       .Ybar_k <- Reduce("+", .cluster_data)/length(.cluster_indices)
@@ -212,7 +213,7 @@ log_likelihood_fn <- function(.cluster_vector, .i, .prior_estimates_for_likeliho
 
       # If .Sigma_rk is not invertible, then use the ridge trick to make it invertible;
       # that is, add the minimum amount of bias to make it invertible; otherwise do nothing.
-      .Sigma_rk <- make_invertible(.Sigma_rk)
+      .Sigma_rk <- make_invertible_det(.Sigma_rk)
 
       # Compute the inverse of Sigma_rk
       .Sigma_rk_inv = solve(.Sigma_rk)
@@ -221,7 +222,7 @@ log_likelihood_fn <- function(.cluster_vector, .i, .prior_estimates_for_likeliho
       .Lambda_k = .Ybar_k
 
       # Omega_k: row covariance of the Beta prior
-      .Omega_k <- solve(.Sigma_rk)*.n_k
+      .Omega_k <- .Sigma_rk_inv*.n_k
 
       # .Omega_k_hat: posterior row covariance of the
       # joint posterior distribution of .Beta_k and .Sigma_ck
@@ -231,7 +232,8 @@ log_likelihood_fn <- function(.cluster_vector, .i, .prior_estimates_for_likeliho
       # If .Omega_k_hat is not invertible, then use the ridge trick to make it invertible;
       # that is, add the minimum amount of bias to make it invertible.
       # Otherwise do nothing.
-      .Omega_k_hat <- make_invertible(.Omega_k_hat)
+
+      .Omega_k_hat <- make_invertible_det(.Omega_k_hat)
 
       # .Omega_k_hat_inv: the inverse of .Omega_k_hat
       .Omega_k_hat_inv = solve(.Omega_k_hat)
@@ -247,7 +249,7 @@ log_likelihood_fn <- function(.cluster_vector, .i, .prior_estimates_for_likeliho
 
       # If Psi_ck_hat is not invertible, then use the ridge trick to make it invertible;
       # that is, add the minimum amount of bias to make it invertible.
-      .Psi_ck_hat <- make_invertible(.Psi_ck_hat)
+      .Psi_ck_hat <- make_invertible_det(.Psi_ck_hat)
 
       # Compute .nu_ck
       .nu_ck = .nu_c0 + .m
@@ -305,16 +307,16 @@ log_likelihood_fn <- function(.cluster_vector, .i, .prior_estimates_for_likeliho
     }
     return(.log_likelihood_vector)
   }else{
-      stop("Choose a valid likelihood function. Options are \"NIW\" and \"CONSTANT\".")
-    }
+    stop("Choose a valid likelihood function. Options are \"NIW\" and \"CONSTANT\".")
+  }
 }
 
 #' @title Table Invitation Prior Probability
 #' @description Compute the prior probability that a subject belongs to a cluster.
-#' @param .i The subject index (i.e. row index in a matrix for vector-variate data).
-#' @param .similarity_matrix The matrix of similarity values.
-#' @param .current_assignments The posterior assignments after the invitation step.
-#' @param .num_clusters The number of clusters after the invitation step.
+#' @param .i Integer. The subject index (i.e. row index in a matrix for vector-variate data).
+#' @param .similarity_matrix Matrix. A matrix of similarity values.
+#' @param .current_assignments Vector. A vector of the posterior assignments after the invitation step.
+#' @param .num_clusters Integer. The number of clusters after the invitation step.
 #' @noRd
 prob_tip_i <- function(.i, .similarity_matrix, .current_assignments, .num_clusters){
   # --- A function to compute the conditional posterior probability of a
@@ -387,6 +389,7 @@ tip <- function(.data,
                                            .nu_0 = .nu_0,
                                            .mu_0 = .mu_0)
   }else if(toupper(.likelihood_model) == "MNIW"){
+
     # Average the Y values over all list elements
     # .Ybar is .m x .p and each Yi is .m x .p
     # This checks if all matrices are the same size
@@ -436,6 +439,8 @@ tip <- function(.data,
     # Create a list of prior parameters
     .prior_estimates_for_likelihood = list(.data = .data,
                                            .row_cov = .row_cov,
+                                           .p = .p,
+                                           .m = .m,
                                            .nu_c0 = .nu_c0,
                                            .nu_r0 = .nu_r0,
                                            .n = .n)
