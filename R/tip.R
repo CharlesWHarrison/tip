@@ -357,7 +357,7 @@ get_candidates <- function(.i, .similarity_matrix, .num_candidates){
 #' @param .likelihood_model The name of the likelihood model used to compute the posterior probabilities.
 #' @param .subject_names An optional vector of names for the individual subjects.
 #' @param .num_cores The number of cores to use.
-#' @param .tolerance A parameter used to ensure matrices are invertible. A small number is iteratively added to a matrix diagonal (if necessary) until the matrix is invertible.
+#' @param .step_size A parameter used to ensure matrices are invertible. A small number is iteratively added to a matrix diagonal (if necessary) until the matrix is invertible.
 #' @importFrom utils setTxtProgressBar txtProgressBar
 #' @importFrom foreach %dopar%
 #' @importFrom methods new
@@ -370,7 +370,7 @@ tip <- function(.data,
                 .likelihood_model = "CONSTANT",
                 .subject_names = vector(),
                 .num_cores = 1,
-                .tolerance = 0.001){
+                .step_size = 0.001){
 
   # Compute the total number of subjects
   .n <- dim(.similarity_matrix)[1]
