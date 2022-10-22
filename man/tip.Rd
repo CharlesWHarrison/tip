@@ -17,23 +17,23 @@ tip(
 )
 }
 \arguments{
-\item{.data}{Data Frame (vectors comprise a row in a data frame; NIW only) or a list of matrices (MNIW only) that the analyst wishes to cluster. Note: if .likelihood_model = "CONSTANT", then the .data argument has no effect.}
+\item{.data}{Data frame (vectors comprise a row in a data frame; NIW only) or a list of matrices (MNIW only) that the analyst wishes to cluster. Note: if .likelihood_model = "CONSTANT", then the .data argument has no effect.}
 
-\item{.burn}{The number of burn-in iterations in the Gibbs sampler.}
+\item{.burn}{Non-negative integer; the number of burn-in iterations in the Gibbs sampler.}
 
-\item{.samples}{The number of sampling iterations in the Gibbs sampler.}
+\item{.samples}{Positive integer; the number of sampling iterations in the Gibbs sampler.}
 
-\item{.similarity_matrix}{An n x x marix of simlarity values.}
+\item{.similarity_matrix}{Matrix; an n x n marix of simlarity values.}
 
-\item{.init_num_neighbors}{A vector of integers corresponding to the estimate of the number of subjects that are similar to the (i)th subject.}
+\item{.init_num_neighbors}{vector of positive integers; each (i)th positive integer corresponds to the estimate of the number of subjects that are similar to the (i)th subject.}
 
-\item{.likelihood_model}{The name of the likelihood model used to compute the posterior probabilities.}
+\item{.likelihood_model}{Character; the name of the likelihood model used to compute the posterior probabilities.}
 
-\item{.subject_names}{An optional vector of names for the individual subjects.}
+\item{.subject_names}{Vector of characters; an optional vector of names for the individual subjects. This is useful for the plotting function.}
 
-\item{.num_cores}{The number of cores to use.}
+\item{.num_cores}{Positive integer; the number of cores to use.}
 
-\item{.step_size}{A parameter used to ensure matrices are invertible. A small number is iteratively added to a matrix diagonal (if necessary) until the matrix is invertible.}
+\item{.step_size}{Positive numeric. A parameter used to ensure matrices are invertible. A small number is iteratively added to a matrix diagonal (if necessary) until the matrix is invertible.}
 }
 \description{
 Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihood functions.
