@@ -32,11 +32,11 @@
   init_num_neighbors = get_cpt_neighbors(.distance_matrix = distance_matrix)
 
   # Set the number of burn-in iterations in the Gibbs samlper
-  # A very good result for Iris may be obtained by setting burn <- 1000
+  # RECOMMENDATION: burn >= 1000
   burn <- 1000
 
   # Set the number of sampling iterations in the Gibbs sampler
-  # A very good result for Iris may be obtained by setting samples <- 1000
+  # RECOMMENDATION: burn >= 1000
   samples <- 1000
 
   # Set the subject names
@@ -128,11 +128,11 @@
 
   # Set the number of burn-in iterations in the Gibbs samlper
   # RECOMENDATION: *** burn >= 1000 ***
-  burn <- 10
+  burn <- 1000
 
   # Set the number of sampling iterations in the Gibbs sampler
   # RECOMENDATION: *** samples >= 1000 ***
-  samples <- 10
+  samples <- 1000
 
   # Extract the state names
   names_subjects <- rownames(USArrests)
