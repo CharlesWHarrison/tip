@@ -380,7 +380,10 @@
 
   # A function to generate an order-3 tensor
   generate_gaussian_tensor <- function(.tensor_dimension, .mean = 0, .sd = 1){
-    array(data = c(rnorm(n = prod(.tensor_dimension), mean = .mean, sd = .sd)), dim = .tensor_dimension)
+    array(data = c(rnorm(n = prod(.tensor_dimension),
+                         mean = .mean,
+                         sd = .sd)),
+          dim = .tensor_dimension)
   }
 
   # Define the tensor dimension
