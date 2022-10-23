@@ -1,14 +1,14 @@
 #' @title Bayesian Clustering with the Table Invitation Prior
 #' @description Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihood functions.
 #' @param .data Data frame (vectors comprise a row in a data frame; NIW only) or a list of matrices (MNIW only) that the analyst wishes to cluster. Note: if .likelihood_model = "CONSTANT", then the .data argument has no effect.
-#' @param .burn Non-negative integer; the number of burn-in iterations in the Gibbs sampler.
-#' @param .samples Positive integer; the number of sampling iterations in the Gibbs sampler.
-#' @param .similarity_matrix Matrix; an n x n marix of simlarity values.
+#' @param .burn Non-negative integer: the number of burn-in iterations in the Gibbs sampler.
+#' @param .samples Positive integer: the number of sampling iterations in the Gibbs sampler.
+#' @param .similarity_matrix Matrix: an n x n marix of simlarity values.
 #' @param .init_num_neighbors vector of positive integers; each (i)th positive integer corresponds to the estimate of the number of subjects that are similar to the (i)th subject.
-#' @param .likelihood_model Character; the name of the likelihood model used to compute the posterior probabilities. Options: "NIW" (vectors; .data is a dataframe), "MNIW" (matrices; .data is a list of matrices), or "CONSTANT" (vector, matrices, and tensors; .data is an empty list)
-#' @param .subject_names Vector of characters; an optional vector of names for the individual subjects. This is useful for the plotting function.
-#' @param .num_cores Positive integer; the number of cores to use.
-#' @param .step_size Positive numeric. A parameter used to ensure matrices are invertible. A small number is iteratively added to a matrix diagonal (if necessary) until the matrix is invertible.
+#' @param .likelihood_model Character: the name of the likelihood model used to compute the posterior probabilities. Options: "NIW" (vectors; .data is a dataframe), "MNIW" (matrices; .data is a list of matrices), or "CONSTANT" (vector, matrices, and tensors; .data is an empty list)
+#' @param .subject_names Vector of characters: an optional vector of names for the individual subjects. This is useful for the plotting function.
+#' @param .num_cores Positive integer: the number of cores to use.
+#' @param .step_size Positive numeric: A parameter used to ensure matrices are invertible. A small number is iteratively added to a matrix diagonal (if necessary) until the matrix is invertible.
 #' @example example/tip_examples.R
 #' @importFrom utils setTxtProgressBar txtProgressBar
 #' @importFrom foreach %dopar%
@@ -23,6 +23,20 @@ tip <- function(.data = list(),
                 .subject_names = vector(),
                 .num_cores = 1,
                 .step_size = 0.001){
+
+  # Some initial checks and informative error message.
+  if(.burn < 0){
+    stop(".burn must be an integer >= 0.")
+  }else if(.samples < 0){
+    stop(".samples must be an integer > 0.")
+  }else if(.likelihood_model %in% c("NIW", "MNIW", "CONSTANT") == FALSE){
+    stop(".likelihood_model must be one of the following characters
+         'NIW', 'MNIW', or 'CONSTANT'.")
+  }else if(.num_cores <= 0){
+    stop(".num_cores must be an integer > 0 like 1, 2, 3, ....")
+  }else if(.step_size <= 0){
+    stop(".step_size must be a float > 0.")
+  }else{1}
 
   # Compute the total number of subjects
   .n <- dim(.similarity_matrix)[1]
