@@ -4,7 +4,9 @@
   ##### Prior Distribution: Table Invitation Prior (TIP)
   ##### Likelihood Model: Normal Inverse Wishart (NIW)
 
+  # Import the tip library
   library(tip)
+
   # Import the iris dataset
   data(iris)
 
@@ -52,6 +54,7 @@
               .likelihood_model = "NIW",
               .subject_names = names_subjects,
               .num_cores = 1)
+
   # Produce plots for the Bayesian Clustering Model
   tip_plots <- plot(tip1)
 
@@ -64,7 +67,7 @@
   # Extract posterior cluster assignments using the Posterior Expected Adjusted Rand (PEAR) index
   cluster_assignments <- mcclust::maxpear(psm = tip1@posterior_similarity_matrix)$cl
 
-  # If the true labels are available, then show the cluster result via a contigency table
+  # If the true labels are available, then show the cluster result via a contingency table
   table(data.frame(true_label = true_labels,
                    cluster_assignment = cluster_assignments))
 
@@ -102,6 +105,8 @@
                       .add_node_labels = TRUE)
 
   ##### END EXAMPLE 1: Vector Clustering (NIW) #####
+
+
 
   ##### BEGIN EXAMPLE 2: Clustering the US Arrests Dataset (vector clustering) #####
   ##### Prior Distribution: Table Invitation Prior (TIP)
@@ -148,22 +153,14 @@
               .subject_names = names_subjects,
               .num_cores = 1)
 
-
-
   # Produce plots for the Bayesian Clustering Model
   tip_plots <- plot(tip1)
-
-
 
   # View the posterior distribution of the number of clusters
   tip_plots$trace_plot_posterior_number_of_clusters
 
-
-
   # View the trace plot with respect to the posterior number of clusters
   tip_plots$trace_plot_posterior_number_of_clusters
-
-
 
   # Extract posterior cluster assignments using the Posterior Expected Adjusted Rand (PEAR) index
   cluster_assignments <- mcclust::maxpear(psm = tip1@posterior_similarity_matrix)$cl
@@ -175,14 +172,10 @@
   }
   cluster_assignment_list
 
-
-
   # Create the one component graph with minimum entropy
   partition_list <- partition_undirected_graph(.graph_matrix = tip1@posterior_similarity_matrix,
                                                .num_components = 1,
                                                .step_size = 0.001)
-
-
 
   # View the state names
   # names_subjects
@@ -236,8 +229,6 @@
                       .node_size = 2,
                       .add_node_labels = FALSE)
 
-
-
   # Construct a network plot without class labels
   # Note: Subject labels may be suppressed using .add_node_labels = FALSE.
   ggnet2_network_plot(.matrix_graph = partition_list$partitioned_graph_matrix,
@@ -245,8 +236,8 @@
                       .node_size = 2,
                       .add_node_labels = TRUE)
 
-
   ##### END EXAMPLE 2: Clustering the US Arrests Dataset (vector clustering) #####
+
 
 
   ##### BEGIN EXAMPLE 3: Matrix Clustering (MNIW) #####
@@ -281,6 +272,7 @@
                    rep("Cluster 2", 25),
                    rep("Cluster 3", 30))
 
+  # Initialize a matrix of NA values
   distance_matrix <- matrix(NA,
                             nrow = length(true_labels),
                             ncol = length(true_labels))
@@ -322,22 +314,14 @@
               .subject_names = names_subjects,
               .num_cores = 1)
 
-
-
   # Produce plots for the Bayesian Clustering Model
   tip_plots <- plot(tip1)
-
-
 
   # View the posterior distribution of the number of clusters
   tip_plots$histogram_posterior_number_of_clusters
 
-
-
   # View the trace plot with respect to the posterior number of clusters
   tip_plots$trace_plot_posterior_number_of_clusters
-
-
 
   # Extract posterior cluster assignments using the Posterior Expected Adjusted Rand (PEAR) index
   cluster_assignments <- mcclust::maxpear(psm = tip1@posterior_similarity_matrix)$cl
@@ -346,14 +330,10 @@
   table(data.frame(true_label = true_labels,
                    cluster_assignment = cluster_assignments))
 
-
-
   # Create the one component graph with minimum entropy
   partition_list <- partition_undirected_graph(.graph_matrix = tip1@posterior_similarity_matrix,
                                                .num_components = 1,
                                                .step_size = 0.001)
-
-
 
   # Associate class labels and colors for the plot
   class_palette_colors <- c("Cluster 1" = "blue",
@@ -375,8 +355,6 @@
                       .node_size = 2,
                       .add_node_labels = FALSE)
 
-
-
   # If true labels are not available, then construct a network plot
   # of the one-cluster graph without any class labels.
   # Note: Subject labels may be suppressed using .add_node_labels = FALSE.
@@ -385,7 +363,6 @@
                       .node_size = 2,
                       .add_node_labels = TRUE)
 
-  ##### END EXAMPLE 3: Matrix Clustering (MNIW) #####\
-
+  ##### END EXAMPLE 3: Matrix Clustering (MNIW) #####
 
 }
