@@ -1,14 +1,15 @@
-#' @title Partition an Undirected Graph
+#' @title Partition an undirected graph
 #' @description A function that iteratively applies the transformation max(0, .graph_matrix - cutoff) until
 #' there are <.num_components> graph components where cutoff = cutoff + .step_size. This is used to generate the one-cluster graph and plot.
-#' @param .graph_matrix Matrix; a symmetric matrix that the analyst wishes to decompose into <.num_components> components.
-#' @param .num_components Positive integer; the number of components that the analyst wishes to decompose <.graph_matrix> into.
-#' @param .step_size Positive numeric; the size of the update for the cutoff in the transformation max(0, .graph_matrix - cutoff)
+#' @param .graph_matrix Matrix: a symmetric matrix that the analyst wishes to decompose into <.num_components> components.
+#' @param .num_components Positive integer: the number of components that the analyst wishes to decompose <.graph_matrix> into.
+#' @param .step_size Positive numeric: the size of the update for the cutoff in the transformation max(0, .graph_matrix - cutoff)
 #' where cutoff = cutoff + .step_size.
-#' @returns List; there are three elements.
+#' @returns List with three elements:
 #' 1) graph_component_members: a vector of graph component assignments;
 #' 2) cutoff: the value max(0, g_{i,j} - cutoff) so that there are <.num_components> components in the graph
-#' 3) partitioned_graph_matrix: the graph with <.num_components> components (parts)
+#' 3) partitioned_graph_matrix: the graph with <.num_components> components (parts).
+#' @example example/partition_undirected_graph_examples.R
 #' @export
 partition_undirected_graph <-function(.graph_matrix, .num_components, .step_size){
 

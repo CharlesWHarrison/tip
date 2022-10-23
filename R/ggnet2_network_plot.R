@@ -1,18 +1,19 @@
 #' @title Visualize the posterior similarity matrix (i.e., posterior probability matrix)
 #' @description A function that produces a ggnet2 network plot to visualize the posterior similarity matrix (i.e., the matrix of posterior probabilities).
-#' @param .matrix_graph Matrix. A matrix M where each element Mij corresponds to the posterior
+#' @param .matrix_graph Matrix: a matrix M where each element Mij corresponds to the posterior
 #' probability that subjects i and j are in the same cluster.
-#' @param .subject_names Vector of characters. An optional vector of subject names that will appear in the graph plot.
-#' @param .subject_class_names A vector of characters. An optional vector of class names that will influence each vertex's color and shape.
-#' @param .class_colors Named vector of characters. An optional named vector of colors. The vector names are required to be
+#' @param .subject_names Vector of characters: an optional vector of subject names that will appear in the graph plot.
+#' @param .subject_class_names A vector of characters: an optional vector of class names corresponding to each subject (i.e. vertex in the graph) which influences each vertex's color and shape.
+#' @param .class_colors Named vector of characters: an optional named vector of colors. The vector names are required to be
 #' the unique .subject_class_names whereas the vector values are required to be the colors.
-#' @param .class_shapes Named vector of integers. An optional named vector of shapes. The vector names are required to be
+#' @param .class_shapes Named vector of integers: an optional named vector of shapes. The vector names are required to be
 #' the unique .subject_class_names whereas the vector values are required to be positive integers
 #' (i.e., pch values like 15, 16, 17, and so on).
-#' @param .random_seed Numeric. The plot uses the random layout, so set a seed for reproducibility.
-#' @param .node_size Positive integer. The size of each node (i.e., vertex) in the graph plot.
-#' @param .add_node_labels Boolean. TRUE or FALSE. Should individual node labels be added to each node (i.e., vertex) in the graph plot?
-#' @returns ggnet2 plot. A network plot with respect to the undirected network given by .matrix_graph. This is used to visualize the posterior similarity matrix.
+#' @param .random_seed Numeric: the plot uses the random layout, so set a seed for reproducibility.
+#' @param .node_size Positive integer: the size of each node (i.e., vertex) in the graph plot.
+#' @param .add_node_labels Boolean (i.e., TRUE or FALSE): should individual node labels be added to each node (i.e., vertex) in the graph plot?
+#' @example example/ggnet2_network_plot_examples.R
+#' @returns ggnet2 network plot: a network plot with respect to the undirected network given by .matrix_graph. This is used to visualize the posterior similarity matrix.
 #' @import GGally
 #' @import network
 #' @export

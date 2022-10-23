@@ -1,10 +1,8 @@
-#' @title Estimate The Number of Similar Subjects
-#' @description Estimate the number of similar subjects using univariate multiple change point detection (i.e. binary segmentation).
-#' @param .distance_matrix Matrix. A symmetric n x n matrix of distance values.
-#' @returns Vector of positive integers. A vector of positive integers where the (i)th integer corresponds to the number of subjects (observations) that are similar to the (i)th subject (observation).
-#' @examples
-#' X <- matrix(rnorm(10*10),nrow=20,ncol=5)
-#' get_cpt_neighbors(.distance_matrix = data.matrix(dist(X)))
+#' @title Estimate the number of similar subjects
+#' @description Estimate the number of similar subjects using univariate multiple change point detection (i.e., binary segmentation in the changepoint package).
+#' @param .distance_matrix Matrix: a symmetric n x n matrix of distance values.
+#' @returns Vector of positive integers: a vector of positive integers where the (i)th integer corresponds to the number of subjects (observations) that are similar to the (i)th subject.
+#' @example example/get_cpt_neighbors_example.R
 #' @export
 get_cpt_neighbors <- function(.distance_matrix){
   # --- A function used to obtain the nearest
