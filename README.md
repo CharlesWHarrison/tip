@@ -10,9 +10,9 @@ devtools::install_github("STATS-ML/tip")
 ```
 
 This R library provides a Gibbs sampler for Bayesian clustering models that utilize the Table Invitation Prior (TIP) introduced by Harrison, He, and Huang (2022). TIP utilizes pairwise distance and pairwise similarity information between the observed data (i.e. subjects). The term ''subject'' is used to refer to an individual vector, matrix, or higher-order tensors. 
-1. **Vector-variate subject example**: in the Iris dataset there are 150 observed flowers, and each flower's characteristics (not including their species) is captured by a ``4 x 1`` vector. Each flower is considered as an individual subject, so there are 150 subjects.
-2. **Matrix-variate subject example**: a single X-ray is taken for 57 adults, and each X-ray image is stored as a ``512 x 512`` matrix where each value in each matrix varies between zero and one (i.e., a grayscale image). Each X-ray is considered as an individual subject, so there are 57 subjects.
-3. **Tensor-variate subject example**: 23 adults have an fMRI taken. Each fMRI image corresponds to a 3-way tensor, each of the 23 3-way tensors correspond to an individual subject, so there are 23 subjects.
+1. **Hypothetical Vector-variate subject example**: doctors measure the 5 vital signs of 19 people and thus there are 19 subjects that are each described by a ``5 x 1 `` vector. Each individual person is considered to be a subject, so there are 19 total subjects. 
+2. **Hypothetical Matrix-variate subject example**: a single X-ray is taken for 57 adults, and each X-ray image is stored as a ``512 x 512`` matrix where each value in each matrix varies between zero and one (i.e., a grayscale image). Each X-ray is considered as an individual subject, so there are 57 subjects.
+3. **Hypothetical Tensor-variate subject example**: 23 adults have an fMRI taken. Each fMRI image corresponds to a 3-way tensor, each of the 23 3-way tensors correspond to an individual subject, so there are 23 subjects.
 
 In Bayesian clustering, the goal is sample from the posterior distribution which is given by 
 $$P(\mathbf{c}|\mathbf{x}) \propto P(\mathbf{X}|\mathbf{c})P(\mathbf{c})$$ 
