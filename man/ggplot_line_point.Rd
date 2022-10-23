@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggplot_line_point.R
 \name{ggplot_line_point}
 \alias{ggplot_line_point}
-\title{Plot connected points using ggplot2.}
+\title{Plot connected points using ggplot2}
 \usage{
 ggplot_line_point(.x, .y, .xlab = "", .ylab = "")
 }

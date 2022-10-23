@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggplot_number_of_clusters_trace.R
 \name{ggplot_number_of_clusters_trace}
 \alias{ggplot_number_of_clusters_trace}
-\title{Plot the trace plot of the posterior number of clusters.}
+\title{Plot the trace plot of the posterior number of clusters}
 \usage{
 ggplot_number_of_clusters_trace(.posterior_number_of_clusters)
 }
