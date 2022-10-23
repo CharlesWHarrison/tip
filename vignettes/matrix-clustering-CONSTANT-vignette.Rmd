@@ -71,7 +71,7 @@ burn <- 10
 samples <- 10
 
 # Set the subject names
-names_subjects <- paste(1:dim(iris)[1])
+names_subjects <- paste(1:dim(distance_matrix)[1])
 
 # Run TIP clustering using only the prior
 # --> That is, the likelihood function is constant
