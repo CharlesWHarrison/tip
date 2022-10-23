@@ -7,11 +7,12 @@
 ggplot_number_of_clusters_hist(.posterior_number_of_clusters)
 }
 \arguments{
-\item{.posterior_number_of_clusters}{Vector of positive integers; each integers corresponds to the number of clusters after posterior sampling
-for each iteration in the Gibbs sampler.}
+\item{.posterior_number_of_clusters}{Vector of positive integers: each integers corresponds to the
+number of clusters after posterior sampling for each iteration in the Gibbs sampler.}
 }
 \value{
-ggplot2 plot; a histogram of the posterior number of clusters taken from each sampling iteration in the Gibbs sampler.
+ggplot2 geom_bar plot: a plot of the distribution of the posterior number of clusters
+computed after each sampling iteration in the Gibbs sampler.
 }
 \description{
 A function that produces a ggplot bar chart (i.e., geom_bar) that corresponds
@@ -19,6 +20,15 @@ to the posterior number of clusters. The vertical axis is normalized so that it 
 the posterior probability.
 }
 \examples{
+# Import the tip library
+library(tip)
+
+# Generate a vector of positive integers
+# Example: the posterior number of clusters computed after posterior
+# sampling in each sampling iteration of the Gibbs sampler.
 num_clusters <- c(1,2,2,2,2,3,3,1,2,3,3,3,1,3)
+
+# Generate the plot of the posterior number of clusters versus the
+# sampling iteration number in the Gibbs sampler.
 ggplot_number_of_clusters_hist(.posterior_number_of_clusters = num_clusters)
 }

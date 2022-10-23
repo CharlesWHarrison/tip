@@ -11,17 +11,33 @@ ggplot_line_point(.x, .y, .xlab = "", .ylab = "")
 
 \item{.y}{The variable on the vertical axis.}
 
-\item{.xlab}{Character; the label on the horizontal axis.}
+\item{.xlab}{Character: the label on the horizontal axis.}
 
-\item{.ylab}{Character; the label on the vertical axis.}
+\item{.ylab}{Character: the label on the vertical axis.}
 }
 \value{
-ggplot2 plot; a ggplot2 plot of .y versus .x with a label .xlab on the horizontal axis and label .ylab on the vertical axis.
+ggplot2 geom_line + geom_point plot: a ggplot2 plot of .y versus .x with a label .xlab on the horizontal axis and label .ylab on the vertical axis.
 }
 \description{
 A function to that produces a ggplot2 plot of .y versus .x
 where points are added via geom_point() and the points are connected via geom_line().
 }
 \examples{
-ggplot_line_point(.x = rnorm(10), .y = rnorm(10), .xlab = "x", .ylab = "y")
+# Import the tip library
+library(tip)
+
+# Create the variable that appears on the horizontal axis
+x <- 1:10
+
+# Create the variable that appears on the vertical axis
+y <- rnorm(n = length(x), mean = 3, sd = 1)
+
+# Create a label that appears on the horizontal axis
+xlab <- "x"
+
+# Create a label that appears on the vertical axis
+ylab <- "y"
+
+# Create the plot of y versus x with
+ggplot_line_point(.x = x, .y = y, .xlab = xlab, .ylab = ylab)
 }

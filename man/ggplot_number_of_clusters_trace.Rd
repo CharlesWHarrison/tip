@@ -7,17 +7,26 @@
 ggplot_number_of_clusters_trace(.posterior_number_of_clusters)
 }
 \arguments{
-\item{.posterior_number_of_clusters}{Vector of positive integers; each (t)th element denotes the number of clusters after posterior sampling
+\item{.posterior_number_of_clusters}{Vector of positive integers: each (t)th element denotes the number of clusters after posterior sampling
 for each iteration t in the Gibbs sampler.}
 }
 \value{
-ggplot2 plot; a plot of the posterior number of clusters in each Gibbs sampling iteration versus the Gibss sampling iteration number.
+ggplot2 geom_line plot: a plot of the posterior number of clusters in each Gibbs sampling iteration versus the Gibss sampling iteration number.
 }
 \description{
 A function that produces a ggplot2 trace plot (i.e., geom_line)
 with respect to the posterior number of clusters.
 }
 \examples{
+# Import the tip library
+library(tip)
+
+# Generate a vector of positive integers
+# Example: the posterior number of clusters computed after posterior
+# sampling in each sampling iteration of the Gibbs sampler.
 num_clusters <- c(1,2,2,2,2,3,3,1,2,3,3,3,1,3)
+
+# Generate the plot of the posterior number of clusters versus the
+# sampling iteration number in the Gibbs sampler.
 ggplot_number_of_clusters_trace(.posterior_number_of_clusters = num_clusters)
 }

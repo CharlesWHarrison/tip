@@ -2,22 +2,53 @@
 % Please edit documentation in R/partition_undirected_graph.R
 \name{partition_undirected_graph}
 \alias{partition_undirected_graph}
-\title{Partition an Undirected Graph}
+\title{Partition an undirected graph}
 \usage{
 partition_undirected_graph(.graph_matrix, .num_components, .step_size)
 }
 \arguments{
-\item{.graph_matrix}{A symmetric matrix that the analyst wishes to decompose into <.num_components> components.}
+\item{.graph_matrix}{Matrix: a symmetric matrix that the analyst wishes to decompose into <.num_components> components.}
 
-\item{.num_components}{The number of components that the analyst wishes to decompose <.graph_matrix> into.}
+\item{.num_components}{Positive integer: the number of components that the analyst wishes to decompose <.graph_matrix> into.}
 
-\item{.step_size}{The size of the update for the cutoff in the transformation max(0, .graph_matrix - cutoff)
+\item{.step_size}{Positive numeric: the size of the update for the cutoff in the transformation max(0, .graph_matrix - cutoff)
 where cutoff = cutoff + .step_size.}
 }
 \value{
-A list with three elements.
+List with three elements:
+1) graph_component_members: a vector of graph component assignments;
+2) cutoff: the value max(0, g_{i,j} - cutoff) so that there are <.num_components> components in the graph
+3) partitioned_graph_matrix: the graph with <.num_components> components (parts).
 }
 \description{
 A function that iteratively applies the transformation max(0, .graph_matrix - cutoff) until
-there are <.num_components> graph components where cutoff = cutoff + .step_size.
+there are <.num_components> graph components where cutoff = cutoff + .step_size. This is used to generate the one-cluster graph and plot.
+}
+\examples{
+# Import the tip library
+library(tip)
+
+# Choose an arbitrary random seed to generate the data
+set.seed(4*8*15*16*23*42)
+
+# Generate a symmetric posterior probability matrix
+# Each element is the probability that the two subjects belong
+# to the same cluster
+n1 <- 10
+posterior_prob_matrix <- matrix(NA, nrow = n1, ncol = n1)
+for(i in 1:n1){
+  for(j in i:n1){
+    if(i != j){
+      posterior_prob_matrix[i,j] <- runif(n=1,min=0,max=1)
+      posterior_prob_matrix[j,i] <- posterior_prob_matrix[i,j]
+    }else{
+      posterior_prob_matrix[i,j] <- 1.0
+    }
+  }
+}
+
+# Generate a one-cluster graph (i.e., partitioned_graph_matrix)
+partition_undirected_graph(.graph_matrix = posterior_prob_matrix,
+                           .num_components = 1,
+                           .step_size = 0.001)
 }

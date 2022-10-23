@@ -45,7 +45,9 @@ Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihoo
   ##### Prior Distribution: Table Invitation Prior (TIP)
   ##### Likelihood Model: Normal Inverse Wishart (NIW)
 
+  # Import the tip library
   library(tip)
+
   # Import the iris dataset
   data(iris)
 
@@ -73,11 +75,11 @@ Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihoo
   init_num_neighbors = get_cpt_neighbors(.distance_matrix = distance_matrix)
 
   # Set the number of burn-in iterations in the Gibbs samlper
-  # A very good result for Iris may be obtained by setting burn <- 1000
+  # RECOMMENDATION: burn >= 1000
   burn <- 1000
 
   # Set the number of sampling iterations in the Gibbs sampler
-  # A very good result for Iris may be obtained by setting samples <- 1000
+  # RECOMMENDATION: burn >= 1000
   samples <- 1000
 
   # Set the subject names
@@ -93,6 +95,7 @@ Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihoo
               .likelihood_model = "NIW",
               .subject_names = names_subjects,
               .num_cores = 1)
+
   # Produce plots for the Bayesian Clustering Model
   tip_plots <- plot(tip1)
 
@@ -105,7 +108,7 @@ Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihoo
   # Extract posterior cluster assignments using the Posterior Expected Adjusted Rand (PEAR) index
   cluster_assignments <- mcclust::maxpear(psm = tip1@posterior_similarity_matrix)$cl
 
-  # If the true labels are available, then show the cluster result via a contigency table
+  # If the true labels are available, then show the cluster result via a contingency table
   table(data.frame(true_label = true_labels,
                    cluster_assignment = cluster_assignments))
 
@@ -144,6 +147,8 @@ Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihoo
 
   ##### END EXAMPLE 1: Vector Clustering (NIW) #####
 
+
+
   ##### BEGIN EXAMPLE 2: Clustering the US Arrests Dataset (vector clustering) #####
   ##### Prior Distribution: Table Invitation Prior (TIP)
   ##### Likelihood Model: Normal Inverse Wishart (NIW)
@@ -169,11 +174,11 @@ Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihoo
 
   # Set the number of burn-in iterations in the Gibbs samlper
   # RECOMENDATION: *** burn >= 1000 ***
-  burn <- 10
+  burn <- 1000
 
   # Set the number of sampling iterations in the Gibbs sampler
   # RECOMENDATION: *** samples >= 1000 ***
-  samples <- 10
+  samples <- 1000
 
   # Extract the state names
   names_subjects <- rownames(USArrests)
@@ -189,22 +194,14 @@ Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihoo
               .subject_names = names_subjects,
               .num_cores = 1)
 
-
-
   # Produce plots for the Bayesian Clustering Model
   tip_plots <- plot(tip1)
-
-
 
   # View the posterior distribution of the number of clusters
   tip_plots$trace_plot_posterior_number_of_clusters
 
-
-
   # View the trace plot with respect to the posterior number of clusters
   tip_plots$trace_plot_posterior_number_of_clusters
-
-
 
   # Extract posterior cluster assignments using the Posterior Expected Adjusted Rand (PEAR) index
   cluster_assignments <- mcclust::maxpear(psm = tip1@posterior_similarity_matrix)$cl
@@ -216,14 +213,10 @@ Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihoo
   }
   cluster_assignment_list
 
-
-
   # Create the one component graph with minimum entropy
   partition_list <- partition_undirected_graph(.graph_matrix = tip1@posterior_similarity_matrix,
                                                .num_components = 1,
                                                .step_size = 0.001)
-
-
 
   # View the state names
   # names_subjects
@@ -277,8 +270,6 @@ Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihoo
                       .node_size = 2,
                       .add_node_labels = FALSE)
 
-
-
   # Construct a network plot without class labels
   # Note: Subject labels may be suppressed using .add_node_labels = FALSE.
   ggnet2_network_plot(.matrix_graph = partition_list$partitioned_graph_matrix,
@@ -286,8 +277,8 @@ Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihoo
                       .node_size = 2,
                       .add_node_labels = TRUE)
 
-
   ##### END EXAMPLE 2: Clustering the US Arrests Dataset (vector clustering) #####
+
 
 
   ##### BEGIN EXAMPLE 3: Matrix Clustering (MNIW) #####
@@ -322,6 +313,7 @@ Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihoo
                    rep("Cluster 2", 25),
                    rep("Cluster 3", 30))
 
+  # Initialize a matrix of NA values
   distance_matrix <- matrix(NA,
                             nrow = length(true_labels),
                             ncol = length(true_labels))
@@ -363,22 +355,14 @@ Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihoo
               .subject_names = names_subjects,
               .num_cores = 1)
 
-
-
   # Produce plots for the Bayesian Clustering Model
   tip_plots <- plot(tip1)
-
-
 
   # View the posterior distribution of the number of clusters
   tip_plots$histogram_posterior_number_of_clusters
 
-
-
   # View the trace plot with respect to the posterior number of clusters
   tip_plots$trace_plot_posterior_number_of_clusters
-
-
 
   # Extract posterior cluster assignments using the Posterior Expected Adjusted Rand (PEAR) index
   cluster_assignments <- mcclust::maxpear(psm = tip1@posterior_similarity_matrix)$cl
@@ -387,14 +371,10 @@ Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihoo
   table(data.frame(true_label = true_labels,
                    cluster_assignment = cluster_assignments))
 
-
-
   # Create the one component graph with minimum entropy
   partition_list <- partition_undirected_graph(.graph_matrix = tip1@posterior_similarity_matrix,
                                                .num_components = 1,
                                                .step_size = 0.001)
-
-
 
   # Associate class labels and colors for the plot
   class_palette_colors <- c("Cluster 1" = "blue",
@@ -416,8 +396,6 @@ Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihoo
                       .node_size = 2,
                       .add_node_labels = FALSE)
 
-
-
   # If true labels are not available, then construct a network plot
   # of the one-cluster graph without any class labels.
   # Note: Subject labels may be suppressed using .add_node_labels = FALSE.
@@ -426,8 +404,7 @@ Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihoo
                       .node_size = 2,
                       .add_node_labels = TRUE)
 
-  ##### END EXAMPLE 3: Matrix Clustering (MNIW) #####\
-
+  ##### END EXAMPLE 3: Matrix Clustering (MNIW) #####
 
 }
 }

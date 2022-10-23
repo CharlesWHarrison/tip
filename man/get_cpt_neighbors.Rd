@@ -2,17 +2,16 @@
 % Please edit documentation in R/get_cpt_neighbors.R
 \name{get_cpt_neighbors}
 \alias{get_cpt_neighbors}
-\title{Estimate The Number of Similar Subjects}
+\title{Estimate the number of similar subjects}
 \usage{
 get_cpt_neighbors(.distance_matrix)
 }
 \arguments{
-\item{.distance_matrix}{Matrix. A symmetric n x n matrix of distance values.}
+\item{.distance_matrix}{Matrix: a symmetric n x n matrix of distance values.}
 }
 \value{
-Vector of positive integers. A vector of positive integers where the (i)th integer corresponds to the number of subjects (observations) that are similar to the (i)th subject (observation).
+Vector of positive integers: a vector of positive integers where the (i)th integer corresponds to the number of subjects (observations) that are similar to the (i)th subject.
 }
 \description{
-Estimate the number of similar subjects \
-using univariate multiple change point detection (i.e. binary segmentation).
+Estimate the number of similar subjects using univariate multiple change point detection (i.e., binary segmentation in the changepoint package).
 }
