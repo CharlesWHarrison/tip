@@ -170,5 +170,4 @@ ggnet2_network_plot(.matrix_graph = partition_list$partitioned_graph_matrix,
                 .subject_names = names_subjects,
                 .node_size = 2,
                 .add_node_labels = TRUE)
-
 ```
