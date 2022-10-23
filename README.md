@@ -131,9 +131,9 @@ where $P(\mathbf{X}|\mathbf{c})$ is the likelihood function and $P(\mathbf{c})$ 
                       .add_node_labels = TRUE)
 
   ##### END EXAMPLE 1: Vector Clustering (NIW) #####
-
-
-
+```
+## Clustering the US Arrests Dataset (i.e. vectors) with a Normal-Inverse-Wishart (NIW) likelihood and a TIP prior
+```
   ##### BEGIN EXAMPLE 2: Clustering the US Arrests Dataset (vector clustering) #####
   ##### Prior Distribution: Table Invitation Prior (TIP)
   ##### Likelihood Model: Normal Inverse Wishart (NIW)
@@ -263,9 +263,10 @@ where $P(\mathbf{X}|\mathbf{c})$ is the likelihood function and $P(\mathbf{c})$ 
                       .add_node_labels = TRUE)
 
   ##### END EXAMPLE 2: Clustering the US Arrests Dataset (vector clustering) #####
+```
 
-
-
+## Clustering Matrix-variate Data with a Matrix-Normal-Inverse-Wishart (MNIW) likelihood and a TIP prior
+```
   ##### BEGIN EXAMPLE 3: Matrix Clustering (MNIW) #####
   ##### Prior Distribution: Table Invitation Prior
   ##### Likelihood Model: Matrix Normal Inverse Wishart (MNIW)
