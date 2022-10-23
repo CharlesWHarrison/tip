@@ -5,10 +5,11 @@
 #' @param .samples Positive integer; the number of sampling iterations in the Gibbs sampler.
 #' @param .similarity_matrix Matrix; an n x n marix of simlarity values.
 #' @param .init_num_neighbors vector of positive integers; each (i)th positive integer corresponds to the estimate of the number of subjects that are similar to the (i)th subject.
-#' @param .likelihood_model Character; the name of the likelihood model used to compute the posterior probabilities.
+#' @param .likelihood_model Character; the name of the likelihood model used to compute the posterior probabilities. Options: "NIW" (vectors; .data is a dataframe), "MNIW" (matrices; .data is a list of matrices), or "CONSTANT" (vector, matrices, and tensors; .data is an empty list)
 #' @param .subject_names Vector of characters; an optional vector of names for the individual subjects. This is useful for the plotting function.
 #' @param .num_cores Positive integer; the number of cores to use.
 #' @param .step_size Positive numeric. A parameter used to ensure matrices are invertible. A small number is iteratively added to a matrix diagonal (if necessary) until the matrix is invertible.
+#' @example example/tip_examples.R
 #' @importFrom utils setTxtProgressBar txtProgressBar
 #' @importFrom foreach %dopar%
 #' @importFrom methods new
