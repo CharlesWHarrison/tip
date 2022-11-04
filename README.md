@@ -9,7 +9,7 @@ install.packages("tip")
 devtools::install_github("STATS-ML/tip")
 ```
 
-This R library provides a Gibbs sampler for Bayesian clustering models that utilize the Table Invitation Prior (TIP) introduced by Harrison, He, and Huang (2022). TIP utilizes pairwise distance and pairwise similarity information between the observed data (i.e. subjects). The term ''subject'' is used to refer to an individual vector, matrix, or higher-order tensors. 
+This R library provides a Gibbs sampler for Bayesian clustering models that utilize the Table Invitation Prior (TIP) introduced by Harrison, He, and Huang (2022). TIP utilizes pairwise distance and pairwise similarity information between the observed data (i.e., subjects). The term ''subject'' is used to refer to an individual vector, matrix, or higher-order tensors. 
 1. **Hypothetical Vector-variate subject example**: doctors measure the 5 vital signs of 19 people and thus there are 19 subjects that are each described by a ``5 x 1 `` vector. Each individual person is considered to be a subject, so there are 19 total subjects. 
 2. **Hypothetical Matrix-variate subject example**: a single X-ray is taken for 57 adults, and each X-ray image is stored as a ``512 x 512`` matrix where each value in each matrix varies between zero and one (i.e., a grayscale image). Each X-ray is considered as an individual subject, so there are 57 subjects.
 3. **Hypothetical Tensor-variate subject example**: 23 adults have an fMRI taken. Each fMRI image corresponds to a 3-way tensor, each of the 23 3-way tensors correspond to an individual subject, so there are 23 subjects.
@@ -18,13 +18,13 @@ In Bayesian clustering, the goal is sample from the posterior distribution which
 $$P(\mathbf{c}|\mathbf{x}) \propto P(\mathbf{X}|\mathbf{c})P(\mathbf{c})$$ 
 where $P(\mathbf{X}|\mathbf{c})$ is the likelihood function and $P(\mathbf{c})$ is the prior distribution. In this case, $P(\mathbf{c})$ refers to the Table Invitation Prior (TIP). TIP is flexible and may be incorporated with a variety of different likelihood functions designed for different types of data. The current options for the likliehood function are the following:
 
-1. The ``.likelihood_model = "CONSTANT"`` is the fastest option and can be used for vectors, matrices, and higher-order tensors (i.e., ``.data`` is not used). The "CONSTANT" option returns a constant likelihood function value regardless of the observed data so that likelihood function has no role in the clustering. The "CONSTANT" likelihood option may be used for vector-variate datasets (e.g. the Iris dataset, US Arrests dataset, etc.), matrix-variate datasets (e.g. data pertaining to electroencephalograms (EEGs), grayscale images, etc.), and higher-order tensor-variate datasets (i.e. videos, colored-pictures, etc.). 
+1. The ``.likelihood_model = "CONSTANT"`` is the fastest option and can be used for vectors, matrices, and higher-order tensors (i.e., ``.data`` is not used). The "CONSTANT" option returns a constant likelihood function value regardless of the observed data so that likelihood function has no role in the clustering. The "CONSTANT" likelihood option may be used for vector-variate datasets (e.g. the Iris dataset, US Arrests dataset, etc.), matrix-variate datasets (e.g. data pertaining to electroencephalograms (EEGs), grayscale images, etc.), and higher-order tensor-variate datasets (i.e., videos, colored-pictures, etc.). 
 
 2. The ``.likelihood_model = "NIW"`` option can be used for vector-datasets only (i.e., ``.data`` is a ``data.frame``). The "NIW" option uses a "Normal-Inverse-Wishart" likelihood function with respect to the current clusters and the new cluster in a given iteration in the Gibbs sampler. Examples of vector-variate data include the Iris dataset, US Arrests dataset, and so on.  
 
 3. The ``.likelihood_model = "MNIW"`` option can be used for matrix-variate data (i.e., ``.data`` is a ``list`` of matrices). The "MNIW" option uses a "Matrix-Normal-Inverse-Wishart" likelihood function with respect to the current clusters and the new cluster in a given iteration in the Gibbs sampler. Examples of matrix-variate data include EEG data, grayscale images (i.e., X-rays or black and white photographs), graph data, and so on. Note that "MNIW" may be used for vector-variate data by passing a list of matrices that have either 1 row and multiple columns or matrices that have one column and multiple rows.
 
-## Clustering the Iris Dataset (i.e. vectors) with a Normal-Inverse-Wishart (NIW) likelihood and a TIP prior
+## Clustering the Iris Dataset (i.e., vectors) with a Normal-Inverse-Wishart (NIW) likelihood and a TIP prior
 ```
   library(tip)
   # Import the iris dataset
@@ -50,7 +50,7 @@ where $P(\mathbf{X}|\mathbf{c})$ is the likelihood function and $P(\mathbf{c})$ 
   temperature <- 1/median(distance_matrix[upper.tri(distance_matrix)])
 
   # For each subject, compute the point estimate for the number of similar
-  # subjects using  univariate multiple change point detection (i.e.)
+  # subjects using  univariate multiple change point detection
   init_num_neighbors = get_cpt_neighbors(.distance_matrix = distance_matrix)
 
   # Set the number of burn-in iterations in the Gibbs samlper
@@ -124,7 +124,7 @@ where $P(\mathbf{X}|\mathbf{c})$ is the likelihood function and $P(\mathbf{c})$ 
                       .node_size = 2,
                       .add_node_labels = TRUE)
 ```
-## Clustering the US Arrests Dataset (i.e. vectors) with a Normal-Inverse-Wishart (NIW) likelihood and a TIP prior
+## Clustering the US Arrests Dataset (i.e., vectors) with a Normal-Inverse-Wishart (NIW) likelihood and a TIP prior
 ```
   # Import the TIP library
   library(tip)
@@ -142,7 +142,7 @@ where $P(\mathbf{X}|\mathbf{c})$ is the likelihood function and $P(\mathbf{c})$ 
   temperature <- 1/median(distance_matrix[upper.tri(distance_matrix)])
 
   # For each subject, compute the point estimate for the number of similar
-  # subjects using  univariate multiple change point detection (i.e.)
+  # subjects using  univariate multiple change point detection
   init_num_neighbors = get_cpt_neighbors(.distance_matrix = distance_matrix)
 
   # Set the number of burn-in iterations in the Gibbs samlper
@@ -297,7 +297,7 @@ where $P(\mathbf{X}|\mathbf{c})$ is the likelihood function and $P(\mathbf{c})$ 
   temperature <- 1/median(distance_matrix[upper.tri(distance_matrix)])
 
   # For each subject, compute the point estimate for the number of similar
-  # subjects using  univariate multiple change point detection (i.e.)
+  # subjects using  univariate multiple change point detection
   init_num_neighbors = get_cpt_neighbors(.distance_matrix = distance_matrix)
 
   # Set the number of burn-in iterations in the Gibbs samlper
@@ -446,7 +446,7 @@ library(tip)
   temperature <- 1/median(distance_matrix[upper.tri(distance_matrix)])
 
   # For each subject, compute the point estimate for the number of similar
-  # subjects using  univariate multiple change point detection (i.e.)
+  # subjects using  univariate multiple change point detection
   init_num_neighbors = get_cpt_neighbors(.distance_matrix = distance_matrix)
 
   # Set the number of burn-in iterations in the Gibbs samlper
