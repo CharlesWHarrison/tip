@@ -188,10 +188,10 @@ log_likelihood_fn <- function(.cluster_vector, .i, .prior_estimates_for_likeliho
       # Lambda_k: mean of the Beta (i.e. a parameter referred to as "Beta") prior
       .Lambda_k = .Ybar_k
 
-      # Omega_k: row covariance of the Beta prior
+      # Omega_k: row precision matrix of the Beta prior
       .Omega_k <- .Sigma_rk_inv*.n_k
 
-      # .Omega_k_hat: posterior row covariance of the
+      # .Omega_k_hat: posterior row precision matrix of the
       # joint posterior distribution of .Beta_k and .Sigma_ck
       # (.Beta_k, .Sigma_ck) ~ MNIW(.Lambda_k_hat, .Omega_k_hat_inv, .Psi_ck_hat, .nu_ck)
       .Omega_k_hat <- .Sigma_rk_inv + .Omega_k
