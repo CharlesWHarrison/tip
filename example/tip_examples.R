@@ -407,6 +407,7 @@
   ##### Prior Distribution: Table Invitation Prior
   ##### Likelihood Model: Matrix Normal Inverse Wishart (MNIW)
 
+  # Import the tip library
   library(tip)
 
   # A function to generate random matrices from a matrix normal distribution
@@ -538,6 +539,7 @@
   ##### Prior Distribution: Table Invitation Prior
   ##### Likelihood Model: CONSTANT
 
+  # Import the tip library
   library(tip)
 
   # ################## NOTE ##################
