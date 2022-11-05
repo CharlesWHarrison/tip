@@ -182,13 +182,13 @@ log_likelihood_fn <- function(.cluster_vector, .i, .prior_estimates_for_likeliho
       # that is, add the minimum amount of bias to make it invertible; otherwise do nothing.
       .Sigma_rk <- make_invertible_det(.Sigma_rk)
 
-      # Compute the inverse of Sigma_rk
+      # Compute the inverse of .Sigma_rk
       .Sigma_rk_inv = solve(.Sigma_rk)
 
-      # Lambda_k: mean of the Beta (i.e. a parameter referred to as "Beta") prior
+      # .Lambda_k: mean of the Beta (i.e. a parameter referred to as "Beta") prior
       .Lambda_k = .Ybar_k
 
-      # Omega_k: row precision matrix of the Beta prior
+      # .Omega_k: row precision matrix of the Beta prior
       .Omega_k <- .Sigma_rk_inv*.n_k
 
       # .Omega_k_hat: posterior row precision matrix of the
