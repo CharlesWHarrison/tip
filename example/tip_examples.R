@@ -236,9 +236,161 @@
 
   ##### END EXAMPLE 2: Clustering the US Arrests Dataset (vector clustering) #####
 
+  ##### BEGIN EXAMPLE 3: Clustering gene expression data (vector clustering) #####
+  ##### Prior Distribution: Table Invitation Prior (TIP)
+  ##### Likelihood Model: Normal Inverse Wishart (NIW)
+
+  # Import the TIP library
+  library(tip)
+
+  # ----- Dataset information -----
+  # The data were accessed from the UCI machine learning repository
+  # Original link: https://archive.ics.uci.edu/ml/datasets/gene+expression+cancer+RNA-Seq
+  # Source: Samuele Fiorini, samuele.fiorini '@' dibris.unige.it, University of Genoa, redistributed under Creative Commons license (http://creativecommons.org/licenses/by/3.0/legalcode) from https://www.synapse.org/#!Synapse:syn4301332.
+  # Data Set Information: Samples (instances) are stored row-wise. Variables (attributes) of each sample are RNA-Seq gene expression levels measured by illumina HiSeq platform.
+  # Relevant Papers: Weinstein, John N., et al. 'The cancer genome atlas pan-cancer analysis project.' Nature genetics 45.10 (2013): 1113-1120.
+  # -------------------------------
+
+  # Import the data (see the provided link above)
+  X <- read.csv("data.csv")
+  true_labels <- read.csv("labels.csv")
+
+  # Extract the true indices
+  subject_names <- true_labels$X
+
+  # Extract the true classes
+  true_labels <- true_labels$Class
+
+  # Convert the dataset into a matrix
+  X <- data.matrix(X)
+
+  ##### BEGIN: Apply PCA to the dataset #####
+
+  # Step 1: perform Prinicpal Components Analysis (PCA) on the dataset
+  pca1 <- prcomp(X)
+
+  # Step 2: compute summary information
+  summary1 <- summary(pca1)
+
+  # Step 3: plot the cumulative percentage of the variance
+  # explained against the number of principal components
+  tip::ggplot_line_point(.x = 1:length(summary1$importance['Cumulative Proportion',]),
+                         .y = summary1$importance['Cumulative Proportion',],
+                         .xlab = "Number of Principal Components",
+                         .ylab = "Cumulative Percentage of the Variance Explained")
+
+  # The number of principal components chosen is 7, and
+  # the 7 principal components explain roughly 80% of
+  # the variance
+  num_principal_components <- which(summary1$importance['Cumulative Proportion',] <= 0.8)
+
+  # The clustering is applied to the principal component dataset
+  X <- pca1$x[,as.numeric(num_principal_components)]
+  ##### END: Apply PCA to the dataset #####
+
+  # Compute the distance matrix
+  distance_matrix <- data.matrix(dist(X))
+
+  # Compute the temperature parameter estiamte
+  temperature <- 1/median(distance_matrix[upper.tri(distance_matrix)])
+
+  # For each subject, compute the point estimate for the number of similar
+  # subjects using  univariate multiple change point detection (i.e.)
+  init_num_neighbors = get_cpt_neighbors(.distance_matrix = distance_matrix)
+
+  # Set the number of burn-in iterations in the Gibbs samlper
+  # RECOMENDATION: *** burn >= 1000 ***
+  burn <- 1000
+
+  # Set the number of sampling iterations in the Gibbs sampler
+  # RECOMENDATION: *** samples >= 1000 ***
+  samples <- 1000
+
+  # Run TIP clustering using only the prior
+  # --> That is, the likelihood function is constant
+  tip1 <- tip(.data = data.matrix(X),
+              .burn = burn,
+              .samples = samples,
+              .similarity_matrix = exp(-1.0*temperature*distance_matrix),
+              .init_num_neighbors = init_num_neighbors,
+              .likelihood_model = "NIW",
+              .subject_names = c(),
+              .num_cores = 1)
+
+  # Produce plots for the Bayesian Clustering Model
+  tip_plots <- plot(tip1)
+
+  # View the posterior distribution of the number of clusters
+  tip_plots$trace_plot_posterior_number_of_clusters
+
+  # View the trace plot with respect to the posterior number of clusters
+  tip_plots$trace_plot_posterior_number_of_clusters
+
+  # Extract posterior cluster assignments using the Posterior Expected Adjusted Rand (PEAR) index
+  cluster_assignments <- mcclust::maxpear(psm = tip1@posterior_similarity_matrix)$cl
+
+  # Create a list where each element stores the cluster assignments
+  cluster_assignment_list <- list()
+  for(k in 1:length(unique(cluster_assignments))){
+    cluster_assignment_list[[k]] <- true_labels[which(cluster_assignments == k)]
+  }
+  cluster_assignment_list
+
+  # Create the one component graph with minimum entropy
+  partition_list <- partition_undirected_graph(.graph_matrix = tip1@posterior_similarity_matrix,
+                                               .num_components = 1,
+                                               .step_size = 0.001)
+
+  # Associate class labels and shapes for the plot
+  class_palette_shapes <- c("PRAD" = 19,
+                            "BRCA" = 18,
+                            "KIRC" = 17,
+                            "LUAD" = 16,
+                            "COAD" = 15)
+
+  # Associate class labels and colors for the plot
+  class_palette_colors <- c("PRAD" = "blue",
+                            "BRCA" = "red",
+                            "KIRC" = "black",
+                            "LUAD" = "green",
+                            "COAD" = "orange")
+
+  # Visualize the posterior similarity matrix by constructing a graph plot of
+  # the one-cluster graph. The true labels are used here (below they are not).
+  ggnet2_network_plot(.matrix_graph = partition_list$partitioned_graph_matrix,
+                      .subject_names = subject_names,
+                      .subject_class_names = true_labels,
+                      .class_colors = class_palette_colors,
+                      .class_shapes = class_palette_shapes,
+                      .node_size = 2,
+                      .add_node_labels = TRUE)
+
+  # Visualize the posterior similarity matrix by constructing a graph plot of
+  # the one-cluster graph. The true labels are used here (below they are not).
+  # Remove the subject names with .add_node_labels = FALSE
+  ggnet2_network_plot(.matrix_graph = partition_list$partitioned_graph_matrix,
+                      .subject_names = subject_names,
+                      .subject_class_names = true_labels,
+                      .class_colors = class_palette_colors,
+                      .class_shapes = class_palette_shapes,
+                      .node_size = 2,
+                      .add_node_labels = FALSE)
+
+  # Construct a network plot without class labels but with subject labels
+  ggnet2_network_plot(.matrix_graph = partition_list$partitioned_graph_matrix,
+                      .subject_names = subject_names,
+                      .node_size = 2,
+                      .add_node_labels = TRUE)
+
+  # Construct a network plot without class labels and subject labels
+  ggnet2_network_plot(.matrix_graph = partition_list$partitioned_graph_matrix,
+                      .subject_names = subject_names,
+                      .node_size = 2,
+                      .add_node_labels = FALSE)
+  ##### END EXAMPLE 3: Clustering gene expression data (vector clustering) #####
 
 
-  ##### BEGIN EXAMPLE 3: Matrix Clustering (MNIW) #####
+  ##### BEGIN EXAMPLE 4: Matrix Clustering (MNIW) #####
   ##### Prior Distribution: Table Invitation Prior
   ##### Likelihood Model: Matrix Normal Inverse Wishart (MNIW)
 
@@ -360,9 +512,9 @@
                       .node_size = 2,
                       .add_node_labels = TRUE)
 
-  ##### END EXAMPLE 3: Matrix Clustering (MNIW) #####
+  ##### END EXAMPLE 4: Matrix Clustering (MNIW) #####
 
-  ##### BEGIN EXAMPLE 4: Tensor Clustering #####
+  ##### BEGIN EXAMPLE 5: Tensor Clustering #####
   ##### Prior Distribution: Table Invitation Prior
   ##### Likelihood Model: CONSTANT
 
@@ -511,5 +663,5 @@
                       .node_size = 2,
                       .add_node_labels = TRUE)
 
-  ##### END EXAMPLE 4: Tensor Clustering #####
+  ##### END EXAMPLE 5: Tensor Clustering #####
 }
