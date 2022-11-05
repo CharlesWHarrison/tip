@@ -9,7 +9,7 @@ install.packages("tip")
 devtools::install_github("STATS-ML/tip")
 ```
 # Paper Citation
-Harrison CW, He Q, Huang H-H. Clustering Gene Expressions Using the Table Invitation Prior. Genes. 2022; 13(11):2036. https://doi.org/10.3390/genes13112036
+Charles W. Harrison, Qing He, and Hsin-Hsiung Huang. “Clustering Gene Expressions Using the Table Invitation Prior”. In: Genes 13.11 (2022). issn: 2073-4425. doi: 10.3390/genes13112036. url: https://www.mdpi.com/2073-4425/13/11/2036.
 
 # Introduction
 This R library provides a Gibbs sampler for Bayesian clustering models that utilize the Table Invitation Prior (TIP) introduced by Harrison, He, and Huang (2022). TIP utilizes pairwise distance and pairwise similarity information between the observed data (i.e., subjects). The term ''subject'' is used to refer to an individual vector, matrix, or higher-order tensors. 
