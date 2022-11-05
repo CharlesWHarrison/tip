@@ -4,7 +4,9 @@
   ##### Prior Distribution: Table Invitation Prior (TIP)
   ##### Likelihood Model: Normal Inverse Wishart (NIW)
 
+  # Import the tip library
   library(tip)
+
   # Import the iris dataset
   data(iris)
 
@@ -96,12 +98,18 @@
 
   # If true labels are not available, then construct a network plot
   # of the one-cluster graph without any class labels.
-  # Note: Subject labels may be suppressed using .add_node_labels = FALSE.
   ggnet2_network_plot(.matrix_graph = partition_list$partitioned_graph_matrix,
                       .subject_names = names_subjects,
                       .node_size = 2,
                       .add_node_labels = TRUE)
 
+  # If true labels are not available, then construct a network plot
+  # of the one-cluster graph without any class labels. Also, suppress
+  # the subject labels.
+  ggnet2_network_plot(.matrix_graph = partition_list$partitioned_graph_matrix,
+                      .subject_names = names_subjects,
+                      .node_size = 2,
+                      .add_node_labels = FALSE)
   ##### END EXAMPLE 1: Vector Clustering (NIW) #####
 
 
@@ -228,12 +236,17 @@
                       .add_node_labels = FALSE)
 
   # Construct a network plot without class labels
-  # Note: Subject labels may be suppressed using .add_node_labels = FALSE.
   ggnet2_network_plot(.matrix_graph = partition_list$partitioned_graph_matrix,
                       .subject_names = names_subjects,
                       .node_size = 2,
                       .add_node_labels = TRUE)
 
+  # Construct a network plot without class labels. Also, suppress
+  # the subject labels.
+  ggnet2_network_plot(.matrix_graph = partition_list$partitioned_graph_matrix,
+                      .subject_names = names_subjects,
+                      .node_size = 2,
+                      .add_node_labels = FALSE)
   ##### END EXAMPLE 2: Clustering the US Arrests Dataset (vector clustering) #####
 
   ##### BEGIN EXAMPLE 3: Clustering gene expression data (vector clustering) #####
@@ -506,11 +519,18 @@
 
   # If true labels are not available, then construct a network plot
   # of the one-cluster graph without any class labels.
-  # Note: Subject labels may be suppressed using .add_node_labels = FALSE.
   ggnet2_network_plot(.matrix_graph = partition_list$partitioned_graph_matrix,
                       .subject_names = names_subjects,
                       .node_size = 2,
                       .add_node_labels = TRUE)
+
+  # If true labels are not available, then construct a network plot
+  # of the one-cluster graph without any class labels. Also, suppress the
+  # subject labels.
+  ggnet2_network_plot(.matrix_graph = partition_list$partitioned_graph_matrix,
+                      .subject_names = names_subjects,
+                      .node_size = 2,
+                      .add_node_labels = FALSE)
 
   ##### END EXAMPLE 4: Matrix Clustering (MNIW) #####
 
@@ -657,11 +677,18 @@
 
   # If true labels are not available, then construct a network plot
   # of the one-cluster graph without any class labels.
-  # Note: Subject labels may be suppressed using .add_node_labels = FALSE.
   ggnet2_network_plot(.matrix_graph = partition_list$partitioned_graph_matrix,
                       .subject_names = names_subjects,
                       .node_size = 2,
                       .add_node_labels = TRUE)
+
+  # If true labels are not available, then construct a network plot
+  # of the one-cluster graph without any class labels. Also, suppress
+  # the subject labels.
+  ggnet2_network_plot(.matrix_graph = partition_list$partitioned_graph_matrix,
+                      .subject_names = names_subjects,
+                      .node_size = 2,
+                      .add_node_labels = FALSE)
 
   ##### END EXAMPLE 5: Tensor Clustering #####
 }
