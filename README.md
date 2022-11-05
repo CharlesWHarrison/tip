@@ -8,6 +8,8 @@ install.packages("tip")
 # Install from GitHub
 devtools::install_github("STATS-ML/tip")
 ```
+# Paper Citation
+Harrison CW, He Q, Huang H-H. Clustering Gene Expressions Using the Table Invitation Prior. Genes. 2022; 13(11):2036. https://doi.org/10.3390/genes13112036
 
 This R library provides a Gibbs sampler for Bayesian clustering models that utilize the Table Invitation Prior (TIP) introduced by Harrison, He, and Huang (2022). TIP utilizes pairwise distance and pairwise similarity information between the observed data (i.e., subjects). The term ''subject'' is used to refer to an individual vector, matrix, or higher-order tensors. 
 1. **Hypothetical Vector-variate subject example**: doctors measure the 5 vital signs of 19 people and thus there are 19 subjects that are each described by a ``5 x 1 `` vector. Each individual person is considered to be a subject, so there are 19 total subjects. 
