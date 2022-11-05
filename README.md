@@ -1,4 +1,5 @@
-# Clustering vectors, matrices, and tensors using the Table Invitation Prior (TIP) in R 
+# Clustering vectors, matrices, and tensors using the Table Invitation Prior (TIP) in R   
+## Installation 
 ``` 
 # Install from CRAN
 install.packages("tip") 
@@ -8,10 +9,10 @@ install.packages("tip")
 # Install from GitHub
 devtools::install_github("STATS-ML/tip")
 ```
-# Paper Citation
+## Paper Citation
 Charles W. Harrison, Qing He, and Hsin-Hsiung Huang. “Clustering Gene Expressions Using the Table Invitation Prior”. In: Genes 13.11 (2022). issn: 2073-4425. doi: 10.3390/genes13112036. url: https://www.mdpi.com/2073-4425/13/11/2036.
 
-# Introduction
+## Introduction
 This R library provides a Gibbs sampler for Bayesian clustering models that utilize the Table Invitation Prior (TIP) introduced by Harrison, He, and Huang (2022). TIP utilizes pairwise distance and pairwise similarity information between the observed data (i.e., subjects). The term ''subject'' is used to refer to an individual vector, matrix, or higher-order tensors. 
 1. **Hypothetical Vector-variate subject example**: doctors measure the 5 vital signs of 19 people and thus there are 19 subjects that are each described by a ``5 x 1 `` vector. Each individual person is considered to be a subject, so there are 19 total subjects. 
 2. **Hypothetical Matrix-variate subject example**: a single X-ray is taken for 57 adults, and each X-ray image is stored as a ``512 x 512`` matrix where each value in each matrix varies between zero and one (i.e., a grayscale image). Each X-ray is considered as an individual subject, so there are 57 subjects.
