@@ -189,7 +189,7 @@ log_likelihood_fn <- function(.cluster_vector, .i, .prior_estimates_for_likeliho
       .Lambda_k = .Ybar_k
 
       # .Omega_k: row precision matrix of the Beta prior
-      .Omega_k <- .Sigma_rk_inv*.n_k
+      .Omega_k <- .Sigma_rk_inv#*.n_k
 
       # .Omega_k_hat: posterior row precision matrix of the
       # joint posterior distribution of .Beta_k and .Sigma_ck
