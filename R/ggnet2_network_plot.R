@@ -12,7 +12,7 @@
 #' @param .random_seed Numeric: the plot uses the random layout, so set a seed for reproducibility.
 #' @param .node_size Positive integer: the size of each node (i.e., vertex) in the graph plot.
 #' @param .add_node_labels Boolean (i.e., TRUE or FALSE): should individual node labels be added to each node (i.e., vertex) in the graph plot?
-#' @example example/ggnet2_network_plot_examples.R
+#' @example man/example/ggnet2_network_plot_examples.R
 #' @returns ggnet2 network plot: a network plot with respect to the undirected network given by .matrix_graph. This is used to visualize the posterior similarity matrix.
 #' @import GGally
 #' @import network

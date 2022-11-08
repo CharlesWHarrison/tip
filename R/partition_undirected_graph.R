@@ -9,7 +9,7 @@
 #' 1) graph_component_members: a vector of graph component assignments;
 #' 2) cutoff: the value max(0, g_{i,j} - cutoff) so that there are <.num_components> components in the graph
 #' 3) partitioned_graph_matrix: the graph with <.num_components> components (parts).
-#' @example example/partition_undirected_graph_examples.R
+#' @example man/example/partition_undirected_graph_examples.R
 #' @export
 partition_undirected_graph <-function(.graph_matrix, .num_components, .step_size){
 

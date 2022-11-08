@@ -8,7 +8,7 @@
 #' @importFrom rlang .data
 #' @returns ggplot2 geom_bar plot: a plot of the distribution of the posterior number of clusters
 #' computed after each sampling iteration in the Gibbs sampler.
-#' @example example/ggplot_number_of_clusters_hist_examples.R
+#' @example man/example/ggplot_number_of_clusters_hist_examples.R
 #' @export
 ggplot_number_of_clusters_hist <- function(.posterior_number_of_clusters){
   .table = table(.posterior_number_of_clusters)

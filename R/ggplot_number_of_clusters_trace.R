@@ -6,7 +6,7 @@
 #' @returns ggplot2 geom_line plot: a plot of the posterior number of clusters in each Gibbs sampling iteration versus the Gibss sampling iteration number.
 #' @importFrom ggplot2 ggplot aes geom_line xlab ylab
 #' @importFrom rlang .data
-#' @example example/ggplot_number_of_clusters_trace_examples.R
+#' @example man/example/ggplot_number_of_clusters_trace_examples.R
 #' @export
 ggplot_number_of_clusters_trace <- function(.posterior_number_of_clusters){
   # --- A function to construct the posterior distribution of the number of clusters ---
