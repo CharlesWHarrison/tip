@@ -276,5 +276,6 @@ tip <- function(.data = list(),
              posterior_assignments = .posterior_assignments[(.burn + 1):(.burn + .samples),],
              posterior_similarity_matrix = .posterior_similarity_matrix/.samples,
              posterior_number_of_clusters = .num_cluster_vector[(.burn + 1):(.burn + .samples)],
-             prior_name = "TIP"))
+             prior_name = "TIP",
+             likelihood_name = .likelihood_model))
 }
