@@ -15,6 +15,7 @@ setClass("bcm",
                     posterior_assignments = "data.frame",
                     posterior_similarity_matrix = "matrix",
                     posterior_number_of_clusters = "numeric",
-                    prior_name = "character"))
+                    prior_name = "character",
+                    likelihood_name = "character"))
 
 
