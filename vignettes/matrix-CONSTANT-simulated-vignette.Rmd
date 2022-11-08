@@ -29,9 +29,9 @@ random_mat_normal <- function(mu, num_rows, num_cols){
 # Generate 3 clusters of matrices 
 p <- 5
 m <- 3
-c1 <- lapply(1:20, function(x) random_mat_normal(mu = 0, num_rows = m, num_cols = p))
-c2 <- lapply(1:25, function(x) random_mat_normal(mu = 5, num_rows = m, num_cols = p))
-c3 <- lapply(1:30, function(x) random_mat_normal(mu = -5, num_rows = m, num_cols = p))
+c1 <- lapply(1:10, function(x) random_mat_normal(mu = 0, num_rows = m, num_cols = p))
+c2 <- lapply(1:10, function(x) random_mat_normal(mu = 5, num_rows = m, num_cols = p))
+c3 <- lapply(1:10, function(x) random_mat_normal(mu = -5, num_rows = m, num_cols = p))
 
 # Put all the data into a list
 data_list <- c(c1,c2,c3)
@@ -39,9 +39,9 @@ data_list <- c(c1,c2,c3)
 # Create a vector of true labels. True labels are only necessary 
 # for constructing network graphs that incorporate the true labels;
 # this is often useful for research. 
-true_labels <- c(rep("Cluster 1", 20),
-                 rep("Cluster 2", 25),
-                 rep("Cluster 3", 30))
+true_labels <- c(rep("Cluster 1", length(c1)),
+                 rep("Cluster 2", length(c2)),
+                 rep("Cluster 3", length(c3)))
 
 distance_matrix <- matrix(NA, 
                           nrow = length(true_labels),

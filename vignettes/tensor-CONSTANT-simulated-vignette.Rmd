@@ -39,19 +39,19 @@ generate_gaussian_tensor <- function(.tensor_dimension, .mean = 0, .sd = 1){
 tensor_dimension <- c(256,256,3)
 
 # Generate clusters of tensors
-c1 <- lapply(1:30, function(x) generate_gaussian_tensor(.tensor_dimension = tensor_dimension,
+c1 <- lapply(1:10, function(x) generate_gaussian_tensor(.tensor_dimension = tensor_dimension,
                                                         .mean = 0,
                                                         .sd = 1))
 
 
 # Generate clusters of tensors
-c2 <- lapply(1:40, function(x) generate_gaussian_tensor(.tensor_dimension = tensor_dimension,
+c2 <- lapply(1:10, function(x) generate_gaussian_tensor(.tensor_dimension = tensor_dimension,
                                                         .mean = 5,
                                                         .sd = 1))
 
 
 # Generate clusters of tensors
-c3 <- lapply(1:50, function(x) generate_gaussian_tensor(.tensor_dimension = tensor_dimension,
+c3 <- lapply(1:10, function(x) generate_gaussian_tensor(.tensor_dimension = tensor_dimension,
                                                         .mean = -5,
                                                         .sd = 1))
 
