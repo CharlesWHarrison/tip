@@ -23,5 +23,7 @@ An S4 class to store the results of the Gibbs sampler.
 \item{\code{posterior_number_of_clusters}}{Vector of positive integers: each vector element is the number of clusters after posterior sampling for each sampling iteration in the Gibbs sampler.}
 
 \item{\code{prior_name}}{Character: the name of the prior used.}
+
+\item{\code{likelihood_name}}{Character: the name of the likelihood used.}
 }}
 
