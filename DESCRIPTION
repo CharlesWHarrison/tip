@@ -5,7 +5,7 @@ Version: 0.1.0
 Author: Charles W. Harrison, Qing He, Hsin-Hsiung Huang
 Description: Cluster data without specifying the number of clusters using the Table Invitation Prior (TIP). TIP is a Bayesian nonparametric prior that uses pairwise distance and similarity information to cluster vectors, matrices, or tensors.
 Maintainer: Charles W. Harrison <charleswharrison@knights.ucf.edu>
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
@@ -20,11 +20,11 @@ Imports:
     doParallel, 
     foreach,
     methods,
-    sna,
     mniw
 RoxygenNote: 7.2.1
 Suggests: 
     knitr,
+    sna,
     mcclust,
     SMFilter,
     rmarkdown
