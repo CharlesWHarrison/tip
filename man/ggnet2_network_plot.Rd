@@ -43,6 +43,8 @@ ggnet2 network plot: a network plot with respect to the undirected network given
 A function that produces a ggnet2 network plot to visualize the posterior similarity matrix (i.e., the matrix of posterior probabilities).
 }
 \examples{
+\dontrun{
+
 # Import the tip library
 library(tip)
 
@@ -150,4 +152,5 @@ ggnet2_network_plot(.matrix_graph = posterior_prob_matrix,
                     .add_node_labels = add_node_labels)
 
 # --- END GRAPH PLOT 3: ADD COLORS AND NODE LABELS ---
+}
 }
