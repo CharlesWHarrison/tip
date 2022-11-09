@@ -1,3 +1,5 @@
+\dontrun{
+
 # Import the tip library
 library(tip)
 
@@ -105,3 +107,4 @@ ggnet2_network_plot(.matrix_graph = posterior_prob_matrix,
                     .add_node_labels = add_node_labels)
 
 # --- END GRAPH PLOT 3: ADD COLORS AND NODE LABELS ---
+}
