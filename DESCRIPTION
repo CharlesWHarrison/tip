@@ -27,5 +27,7 @@ Suggests:
     sna,
     mcclust,
     SMFilter,
-    rmarkdown
+    rmarkdown,
+    spelling
 VignetteBuilder: knitr
+Language: en-US
