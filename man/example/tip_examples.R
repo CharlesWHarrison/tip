@@ -1,4 +1,4 @@
-\dontrun{
+\donttest{
 
   ##### BEGIN EXAMPLE 1: Clustering the Iris Dataset (vector clustering) #####
   ##### Prior Distribution: Table Invitation Prior (TIP)
@@ -248,6 +248,9 @@
                       .node_size = 2,
                       .add_node_labels = FALSE)
   ##### END EXAMPLE 2: Clustering the US Arrests Dataset (vector clustering) #####
+}
+
+\dontrun{
 
   ##### BEGIN EXAMPLE 3: Clustering gene expression data (vector clustering) #####
   ##### Prior Distribution: Table Invitation Prior (TIP)
@@ -407,7 +410,9 @@
                       .node_size = 2,
                       .add_node_labels = FALSE)
   ##### END EXAMPLE 3: Clustering gene expression data (vector clustering) #####
+}
 
+\donttest{
 
   ##### BEGIN EXAMPLE 4: Matrix Clustering (MNIW) #####
   ##### Prior Distribution: Table Invitation Prior

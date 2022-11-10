@@ -7,8 +7,8 @@
 ggplot_number_of_clusters_hist(.posterior_number_of_clusters)
 }
 \arguments{
-\item{.posterior_number_of_clusters}{Vector of positive integers: each integers corresponds to the
-number of clusters after posterior sampling for each iteration in the Gibbs sampler.}
+\item{.posterior_number_of_clusters}{Vector of positive integers: each integer corresponds to the
+number of clusters after posterior sampling for a given sampling iteration in the Gibbs sampler.}
 }
 \value{
 ggplot2 geom_bar plot: a plot of the distribution of the posterior number of clusters

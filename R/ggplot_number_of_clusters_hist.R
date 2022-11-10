@@ -2,8 +2,8 @@
 #' @description A function that produces a ggplot bar chart (i.e., geom_bar) that corresponds
 #' to the posterior number of clusters. The vertical axis is normalized so that it displays
 #' the posterior probability.
-#' @param .posterior_number_of_clusters Vector of positive integers: each integers corresponds to the
-#'  number of clusters after posterior sampling for each iteration in the Gibbs sampler.
+#' @param .posterior_number_of_clusters Vector of positive integers: each integer corresponds to the
+#'  number of clusters after posterior sampling for a given sampling iteration in the Gibbs sampler.
 #' @importFrom ggplot2 ggplot aes geom_bar xlab ylab scale_x_continuous
 #' @importFrom rlang .data
 #' @returns ggplot2 geom_bar plot: a plot of the distribution of the posterior number of clusters

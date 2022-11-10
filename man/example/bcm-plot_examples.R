@@ -1,4 +1,4 @@
-\dontrun{
+\donttest{
 
   # Import the tip library
   library(tip)

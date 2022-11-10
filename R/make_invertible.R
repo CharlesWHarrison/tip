@@ -1,6 +1,7 @@
 #' @title Automatic matrix inversion checking via an eigenvalue criterion
-#' @param .matrix Square matrix; the square matrix that may or may not be invertible.
-#' @param .step_size Positive numeric; if necessary, a small value that is ITERATIVELY added to each diagonal element of a matrix until the matrix is invertible.
+#' @param .matrix Square matrix: the square matrix that may or may not be invertible.
+#' @param .step_size Positive numeric: if necessary, a small value that is ITERATIVELY added to each diagonal element of a matrix until the matrix is invertible.
+#' @returns Matrix: a matrix that can be inverted.
 #' @noRd
 make_invertible <- function(.matrix, .step_size = 0.01){
   # --- A function used to make a matrix invertible by

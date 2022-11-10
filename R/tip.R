@@ -3,12 +3,21 @@
 #' @param .data Data frame (vectors comprise a row in a data frame; NIW only) or a list of matrices (MNIW only) that the analyst wishes to cluster. Note: if .likelihood_model = "CONSTANT", then the .data argument has no effect.
 #' @param .burn Non-negative integer: the number of burn-in iterations in the Gibbs sampler.
 #' @param .samples Positive integer: the number of sampling iterations in the Gibbs sampler.
-#' @param .similarity_matrix Matrix: an n x n marix of simlarity values.
-#' @param .init_num_neighbors vector of positive integers; each (i)th positive integer corresponds to the estimate of the number of subjects that are similar to the (i)th subject.
+#' @param .similarity_matrix Matrix: an n x n matrix of similarity values.
+#' @param .init_num_neighbors Vector of positive integers: each (i)th positive integer corresponds to the estimate of the number of subjects that are similar to the (i)th subject.
 #' @param .likelihood_model Character: the name of the likelihood model used to compute the posterior probabilities. Options: "NIW" (vectors; .data is a dataframe), "MNIW" (matrices; .data is a list of matrices), or "CONSTANT" (vector, matrices, and tensors; .data is an empty list)
 #' @param .subject_names Vector of characters: an optional vector of names for the individual subjects. This is useful for the plotting function.
 #' @param .num_cores Positive integer: the number of cores to use.
 #' @param .step_size Positive numeric: A parameter used to ensure matrices are invertible. A small number is iteratively added to a matrix diagonal (if necessary) until the matrix is invertible.
+#' @returns Object of class bcm: bcm denotes a "Bayesian Clustering Model" object that contains the results from a clustering model that uses the TIP prior.
+#' \item{n}{Positive integer: the sample size or number of subjects.}
+#' \item{burn}{Non-negative integer: the number of burn-in iterations in the Gibbs sampler.}
+#' \item{samples}{Positive integer: the number of sampling iterations in the Gibbs sampler.}
+#' \item{posterior_assignments}{List: a list of <\code{samples}> vectors where the ith element of each vector is the posterior cluster assignment for the ith subject.}
+#' \item{posterior_similarity_matrix}{Matrix: an \code{n} x \code{n} matrix where the (i,j)th element is the posterior probability that subject i and subject j are in the same cluster.}
+#' \item{posterior_number_of_clusters}{Vector of positive integers: a vector where the jth element is the number of clusters after posterior sampling (i.e., the posterior number of clusters).}
+#' \item{prior_name}{Character: the name of the prior used.}
+#' \item{likelihood_name}{Character: the name of the likelihood used.}
 #' @example man/example/tip_examples.R
 #' @importFrom utils setTxtProgressBar txtProgressBar
 #' @importFrom foreach %dopar%
@@ -129,10 +138,10 @@ tip <- function(.data = list(),
   .tip_cpt_pb = txtProgressBar(min = 2, max = .burn + .samples, style = 3)
 
   # Print message to the analyst
-  print(paste("Bayesian Clustering: Table Invitation Prior Gibbs Sampler"))
-  print(paste("burn-in: ", .burn, sep = ""))
-  print(paste("samples: ", .samples, sep = ""))
-  print(paste("Likelihood Model: ", toupper(.likelihood_model), sep = ""))
+  message(paste("Bayesian Clustering: Table Invitation Prior Gibbs Sampler"))
+  message(paste("burn-in: ", .burn, sep = ""))
+  message(paste("samples: ", .samples, sep = ""))
+  message(paste("Likelihood Model: ", toupper(.likelihood_model), sep = ""))
 
   # Iteration .t = 1, 2, ..., .burn + .samples gives <.samples> .samples from the posterior
   for(.t in 2:(.burn + .samples)){

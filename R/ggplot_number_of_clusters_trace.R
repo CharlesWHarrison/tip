@@ -1,9 +1,9 @@
 #' @title Plot the trace plot of the posterior number of clusters
 #' @description A function that produces a ggplot2 trace plot (i.e., geom_line)
 #' with respect to the posterior number of clusters.
-#' @param .posterior_number_of_clusters Vector of positive integers: each (t)th element denotes the number of clusters after posterior sampling
-#' for each iteration t in the Gibbs sampler.
-#' @returns ggplot2 geom_line plot: a plot of the posterior number of clusters in each Gibbs sampling iteration versus the Gibss sampling iteration number.
+#' @param .posterior_number_of_clusters Vector of positive integers: each (s)th element denotes the number of clusters after posterior sampling
+#' for each iteration s = 1, 2, ..., \code{samples} + \code{burn} in the Gibbs sampler.
+#' @returns ggplot2 geom_line plot: a plot of the posterior number of clusters in each Gibbs sampling iteration versus the Gibbs sampling iteration number.
 #' @importFrom ggplot2 ggplot aes geom_line xlab ylab
 #' @importFrom rlang .data
 #' @example man/example/ggplot_number_of_clusters_trace_examples.R

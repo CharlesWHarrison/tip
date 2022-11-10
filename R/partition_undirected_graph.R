@@ -6,9 +6,9 @@
 #' @param .step_size Positive numeric: the size of the update for the cutoff in the transformation max(0, .graph_matrix - cutoff)
 #' where cutoff = cutoff + .step_size.
 #' @returns List with three elements:
-#' 1) graph_component_members: a vector of graph component assignments;
-#' 2) cutoff: the value max(0, g_{i,j} - cutoff) so that there are <.num_components> components in the graph
-#' 3) partitioned_graph_matrix: the graph with <.num_components> components (parts).
+#' \item{graph_component_members}{Vector. A vector of positive integers: the ith element is the graph component assignment for the ith subject.}
+#' \item{cutoff}{Numeric. The value max(0, g_{i,j} - cutoff) so that there are <\code{.num_components}> components in the graph.}
+#' \item{partitioned_graph_matrix}{Matrix. The graph with <\code{.num_components}> components (parts).}
 #' @example man/example/partition_undirected_graph_examples.R
 #' @export
 partition_undirected_graph <-function(.graph_matrix, .num_components, .step_size){

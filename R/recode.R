@@ -3,6 +3,9 @@
 #' to be recoded to 1, 2, 3, 4, 5, 1, 1, 1, 3. This function is used to ensure that the posterior
 #' cluster assignments start at 1 (otherwise an error occurs).
 #' @param .posterior_assignments Vector of positive integers; each positive integer corresponds to a posterior cluster assignment.
+#' @returns Vector of positive integer values so that the values start at 1 and the
+#'  discrete values are contiguous. For example, 2, 3, 5, 6, 10, 2, 2, 2, 5 needs
+#' to be recoded to 1, 2, 3, 4, 5, 1, 1, 1, 3.
 #' @noRd
 recode <- function(.posterior_assignments){
   # --- A function to recode the current cluster assignments so that each

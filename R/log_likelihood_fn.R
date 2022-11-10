@@ -1,10 +1,11 @@
 #' @title Likelihood Models
-#' @param .cluster_vector Vector of positive integers. A vector of cluster assignments after the invitation step.
-#' @param .i Positive integer. The integer subject index that the likelihood is computed for.
-#' @param  .prior_estimates_for_likelihood List. A list of hyperparameters that are computed using
+#' @param .cluster_vector Vector of positive integers: a vector of cluster assignments after the invitation step.
+#' @param .i Positive integer: the integer subject index that the likelihood is computed for.
+#' @param  .prior_estimates_for_likelihood List: a list of hyperparameters that are computed using
 #' the data and are used in the likelihood function.
-#' @param .likelihood_model Character. The character corresponding to the likelihood model being used. Options: "CONSTANT" (i.e. likelihood has no role in clustering), "NIW" for Normal-Inverse-Wishart likelihood model, "MNIW" for Matrix Normal-Inverse-Wishart likelihood model.
+#' @param .likelihood_model Character: the character corresponding to the likelihood model being used. Options: "CONSTANT" (i.e. likelihood has no role in clustering), "NIW" for Normal-Inverse-Wishart likelihood model, "MNIW" for Matrix Normal-Inverse-Wishart likelihood model.
 #' @importFrom stats cov rpois
+#' @returns Vector of numeric values: each (k)th value corresponds to the log-likelihood of the (.i)th subject belonging to the (k)th cluster that does not include the (.i)th subject.
 #' @noRd
 log_likelihood_fn <- function(.cluster_vector, .i, .prior_estimates_for_likelihood, .likelihood_model){
   if(toupper(.likelihood_model) == "CONSTANT"){

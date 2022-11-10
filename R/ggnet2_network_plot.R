@@ -1,13 +1,17 @@
 #' @title Visualize the posterior similarity matrix (i.e., posterior probability matrix)
 #' @description A function that produces a ggnet2 network plot to visualize the posterior similarity matrix (i.e., the matrix of posterior probabilities).
 #' @param .matrix_graph Matrix: a matrix M where each element Mij corresponds to the posterior
-#' probability that subjects i and j are in the same cluster.
+#' probability that the (i)th subject and the (j)th subject are in the same cluster.
 #' @param .subject_names Vector of characters: an optional vector of subject names that will appear in the graph plot.
-#' @param .subject_class_names A vector of characters: an optional vector of class names corresponding to each subject (i.e. vertex in the graph) which influences each vertex's color and shape.
-#' @param .class_colors Named vector of characters: an optional named vector of colors. The vector names are required to be
-#' the unique .subject_class_names whereas the vector values are required to be the colors.
-#' @param .class_shapes Named vector of integers: an optional named vector of shapes. The vector names are required to be
-#' the unique .subject_class_names whereas the vector values are required to be positive integers
+#' @param .subject_class_names Vector of characters: an optional vector of class names corresponding to each subject (i.e. vertex in the graph)
+#' which influences each vertex's color and shape. For example, the subject class names can be the true label
+#' (for the purpose of research) or it can be any other label that analyst chooses.
+#' @param .class_colors Named vector of characters: an optional named vector of colors that
+#' correspond to each unique value in \code{.subject_class_names}. The vector names are
+#' required to be the unique .subject_class_names whereas the vector values are required to be the colors.
+#' @param .class_shapes Named vector of integers: an optional named vector of shapes that correspond
+#' to each unique value in the \code{.subject_class_names}. The vector names are required to be
+#' the unique \code{.subject_class_names} whereas the vector values are required to be positive integers
 #' (i.e., pch values like 15, 16, 17, and so on).
 #' @param .random_seed Numeric: the plot uses the random layout, so set a seed for reproducibility.
 #' @param .node_size Positive integer: the size of each node (i.e., vertex) in the graph plot.

@@ -23,9 +23,9 @@ tip(
 
 \item{.samples}{Positive integer: the number of sampling iterations in the Gibbs sampler.}
 
-\item{.similarity_matrix}{Matrix: an n x n marix of simlarity values.}
+\item{.similarity_matrix}{Matrix: an n x n matrix of similarity values.}
 
-\item{.init_num_neighbors}{vector of positive integers; each (i)th positive integer corresponds to the estimate of the number of subjects that are similar to the (i)th subject.}
+\item{.init_num_neighbors}{Vector of positive integers: each (i)th positive integer corresponds to the estimate of the number of subjects that are similar to the (i)th subject.}
 
 \item{.likelihood_model}{Character: the name of the likelihood model used to compute the posterior probabilities. Options: "NIW" (vectors; .data is a dataframe), "MNIW" (matrices; .data is a list of matrices), or "CONSTANT" (vector, matrices, and tensors; .data is an empty list)}
 
@@ -35,11 +35,22 @@ tip(
 
 \item{.step_size}{Positive numeric: A parameter used to ensure matrices are invertible. A small number is iteratively added to a matrix diagonal (if necessary) until the matrix is invertible.}
 }
+\value{
+Object of class bcm: bcm denotes a "Bayesian Clustering Model" object that contains the results from a clustering model that uses the TIP prior.
+\item{n}{Positive integer: the sample size or number of subjects.}
+\item{burn}{Non-negative integer: the number of burn-in iterations in the Gibbs sampler.}
+\item{samples}{Positive integer: the number of sampling iterations in the Gibbs sampler.}
+\item{posterior_assignments}{List: a list of <\code{samples}> vectors where the ith element of each vector is the posterior cluster assignment for the ith subject.}
+\item{posterior_similarity_matrix}{Matrix: an \code{n} x \code{n} matrix where the (i,j)th element is the posterior probability that subject i and subject j are in the same cluster.}
+\item{posterior_number_of_clusters}{Vector of positive integers: a vector where the jth element is the number of clusters after posterior sampling (i.e., the posterior number of clusters).}
+\item{prior_name}{Character: the name of the prior used.}
+\item{likelihood_name}{Character: the name of the likelihood used.}
+}
 \description{
 Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihood functions.
 }
 \examples{
-\dontrun{
+\donttest{
 
   ##### BEGIN EXAMPLE 1: Clustering the Iris Dataset (vector clustering) #####
   ##### Prior Distribution: Table Invitation Prior (TIP)
@@ -289,6 +300,9 @@ Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihoo
                       .node_size = 2,
                       .add_node_labels = FALSE)
   ##### END EXAMPLE 2: Clustering the US Arrests Dataset (vector clustering) #####
+}
+
+\dontrun{
 
   ##### BEGIN EXAMPLE 3: Clustering gene expression data (vector clustering) #####
   ##### Prior Distribution: Table Invitation Prior (TIP)
@@ -448,7 +462,9 @@ Bayesian clustering with the Table Invitation Prior (TIP) and optional likelihoo
                       .node_size = 2,
                       .add_node_labels = FALSE)
   ##### END EXAMPLE 3: Clustering gene expression data (vector clustering) #####
+}
 
+\donttest{
 
   ##### BEGIN EXAMPLE 4: Matrix Clustering (MNIW) #####
   ##### Prior Distribution: Table Invitation Prior
