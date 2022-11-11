@@ -12,7 +12,7 @@ Authors@R: c(person(family = "Harrison",
              person(family = "Huang", 
                     given = "Hsin-Hsiung",
                     role = c("aut", "cph")))
-Description: Cluster data without specifying the number of clusters using the Table Invitation Prior (TIP) introduced in the paper "Clustering Gene Expression Using the Table Invitation Prior" by Charles W. Harrison, Qing He, and Hsin-Hsiung Huang (2022) <doi:https://doi.org/10.3390/genes13112036>. TIP is a Bayesian prior that uses pairwise distance and similarity information to cluster vectors, matrices, or tensors.
+Description: Cluster data without specifying the number of clusters using the Table Invitation Prior (TIP) introduced in the paper "Clustering Gene Expression Using the Table Invitation Prior" by Charles W. Harrison, Qing He, and Hsin-Hsiung Huang (2022) <doi:10.3390/genes13112036>. TIP is a Bayesian prior that uses pairwise distance and similarity information to cluster vectors, matrices, or tensors.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
