@@ -8,6 +8,7 @@
 #' @slot posterior_number_of_clusters Vector of positive integers: each vector element is the number of clusters after posterior sampling for each sampling iteration in the Gibbs sampler.
 #' @slot prior_name Character: the name of the prior used.
 #' @slot likelihood_name Character: the name of the likelihood used.
+#' @returns An object of class bcm.
 #' @exportClass bcm
 setClass("bcm",
          slots=list(n = "numeric",

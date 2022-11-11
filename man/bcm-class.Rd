@@ -4,6 +4,9 @@
 \name{bcm-class}
 \alias{bcm-class}
 \title{Bayesian Clustering Model (bcm) S4 class.}
+\value{
+An object of class bcm.
+}
 \description{
 An S4 class to store the results of the Gibbs sampler.
 }

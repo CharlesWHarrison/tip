@@ -16,7 +16,7 @@ where cutoff = cutoff + .step_size.}
 }
 \value{
 List with three elements:
-\item{graph_component_members}{Vector. A vector of positive integers: the ith element is the graph component assignment for the ith subject.}
+\item{graph_component_members}{Vector. A vector of positive integers: the (i)th element is the graph component assignment for the (i)th subject.}
 \item{cutoff}{Numeric. The value max(0, g_{i,j} - cutoff) so that there are <\code{.num_components}> components in the graph.}
 \item{partitioned_graph_matrix}{Matrix. The graph with <\code{.num_components}> components (parts).}
 }

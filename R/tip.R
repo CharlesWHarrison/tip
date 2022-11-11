@@ -13,7 +13,7 @@
 #' \item{n}{Positive integer: the sample size or number of subjects.}
 #' \item{burn}{Non-negative integer: the number of burn-in iterations in the Gibbs sampler.}
 #' \item{samples}{Positive integer: the number of sampling iterations in the Gibbs sampler.}
-#' \item{posterior_assignments}{List: a list of <\code{samples}> vectors where the ith element of each vector is the posterior cluster assignment for the ith subject.}
+#' \item{posterior_assignments}{List: a list of <\code{samples}> vectors where the (i)th element of each vector is the posterior cluster assignment for the (i)th subject.}
 #' \item{posterior_similarity_matrix}{Matrix: an \code{n} x \code{n} matrix where the (i,j)th element is the posterior probability that subject i and subject j are in the same cluster.}
 #' \item{posterior_number_of_clusters}{Vector of positive integers: a vector where the jth element is the number of clusters after posterior sampling (i.e., the posterior number of clusters).}
 #' \item{prior_name}{Character: the name of the prior used.}
