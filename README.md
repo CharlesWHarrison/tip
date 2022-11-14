@@ -26,7 +26,7 @@ DOI = {10.3390/genes13112036}
 
 ## R Package Citation
 ```text
-@Manual{,
+@Manual{tip2022,
     title = {tip: Bayesian Clustering Using the Table Invitation Prior (TIP)},
     author = {Charles W. Harrison and Qing He and Hsin-Hsiung Huang},
     year = {2022},
