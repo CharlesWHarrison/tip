@@ -19,7 +19,6 @@ NUMBER = {11},
 ARTICLE-NUMBER = {2036},
 URL = {https://www.mdpi.com/2073-4425/13/11/2036},
 ISSN = {2073-4425},
-ABSTRACT = {A prior for Bayesian nonparametric clustering called the Table Invitation Prior (TIP) is used to cluster gene expression data. TIP uses information concerning the pairwise distances between subjects (e.g., gene expression samples) and automatically estimates the number of clusters. TIP&rsquo;s hyperparameters are estimated using a univariate multiple change point detection algorithm with respect to the subject distances, and thus TIP does not require an analyst&rsquo;s intervention for estimating hyperparameters. A Gibbs sampling algorithm is provided, and TIP is used in conjunction with a Normal-Inverse-Wishart likelihood to cluster 801 gene expression samples, each of which belongs to one of five different types of cancer.},
 DOI = {10.3390/genes13112036}
 }
 ```
