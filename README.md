@@ -8,6 +8,29 @@ install.packages("tip")
 ## Paper Citation
 Charles W. Harrison, Qing He, and Hsin-Hsiung Huang. “Clustering Gene Expressions Using the Table Invitation Prior”. In: Genes 13.11 (2022). issn: 2073-4425. doi: 10.3390/genes13112036. url: https://www.mdpi.com/2073-4425/13/11/2036.
 
+@Article{genes13112036,
+AUTHOR = {Harrison, Charles W. and He, Qing and Huang, Hsin-Hsiung},
+TITLE = {Clustering Gene Expressions Using the Table Invitation Prior},
+JOURNAL = {Genes},
+VOLUME = {13},
+YEAR = {2022},
+NUMBER = {11},
+ARTICLE-NUMBER = {2036},
+URL = {https://www.mdpi.com/2073-4425/13/11/2036},
+ISSN = {2073-4425},
+ABSTRACT = {A prior for Bayesian nonparametric clustering called the Table Invitation Prior (TIP) is used to cluster gene expression data. TIP uses information concerning the pairwise distances between subjects (e.g., gene expression samples) and automatically estimates the number of clusters. TIP&rsquo;s hyperparameters are estimated using a univariate multiple change point detection algorithm with respect to the subject distances, and thus TIP does not require an analyst&rsquo;s intervention for estimating hyperparameters. A Gibbs sampling algorithm is provided, and TIP is used in conjunction with a Normal-Inverse-Wishart likelihood to cluster 801 gene expression samples, each of which belongs to one of five different types of cancer.},
+DOI = {10.3390/genes13112036}
+}
+
+## R Package Citation
+@Manual{,
+    title = {tip: Bayesian Clustering Using the Table Invitation Prior (TIP)},
+    author = {Charles W. Harrison and Qing He and Hsin-Hsiung Huang},
+    year = {2022},
+    note = {R package version 0.1.0},
+    url = {https://CRAN.R-project.org/package=tip},
+  }
+
 ## Introduction
 This R library provides a Gibbs sampler for Bayesian clustering models that utilize the Table Invitation Prior (TIP) introduced by Harrison, He, and Huang (2022). TIP utilizes pairwise distance and pairwise similarity information between the observed data (i.e., subjects). The term ''subject'' is used to refer to an individual vector, matrix, or higher-order tensors. 
 1. **Hypothetical Vector-variate subject example**: doctors measure the 5 vital signs of 19 people and thus there are 19 subjects that are each described by a ``5 x 1 `` vector. Each individual person is considered to be a subject, so there are 19 total subjects. 
