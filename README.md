@@ -24,6 +24,9 @@ DOI = {10.3390/genes13112036}
 ```
 
 ## R Package Citation
+Charles W. Harrison, Qing He, and Hsin-Hsiung Huang. tip: Bayesian Clus-
+tering Using the Table Invitation Prior (TIP). R package version 0.1.0.
+2022. url: https://CRAN.R-project.org/package=tip.
 ```text
 @Manual{tip2022,
     title = {tip: Bayesian Clustering Using the Table Invitation Prior (TIP)},
