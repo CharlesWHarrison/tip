@@ -5,7 +5,7 @@ Version: 0.1.0
 Authors@R: c(person(family = "Harrison", 
                     given = "Charles W.", 
                     role = c("cre","aut", "cph"), 
-                    email = "charleswharrison@knights.ucf.edu"),
+                    email = "cwhstat@gmail.com"),
              person(family = "He", 
                     given = "Qing", 
                     role = c("aut", "cph")),
